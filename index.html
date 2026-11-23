@@ -279,6 +279,62 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top
 #l3res{margin-top:14px;display:grid;gap:10px}
 #l3res .q{padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--card)}
 .tbl3{border-collapse:collapse;width:100%;margin-top:8px;font-size:13.5px}.tbl3 td,.tbl3 th{border:1px solid var(--line);padding:6px 8px;text-align:center}.tbl3 th{background:var(--card2)}
+
+/* WORKSHEETS */
+.wsfilter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}.wsfilter button{border:1px solid var(--line);background:var(--card);color:var(--mut);padding:7px 13px;border-radius:999px;font-weight:700;font-size:13px}.wsfilter button.on{background:var(--acc);color:#04241a;border-color:var(--acc)}
+.wsgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.wscard{position:relative;overflow:hidden;text-align:left;display:flex;flex-direction:column;gap:6px;padding:18px 18px 16px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(165deg,color-mix(in srgb,var(--c) 22%,transparent),var(--card) 55%);color:var(--txt);transition:.25s;min-height:190px}
+.wscard:before{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:var(--c);opacity:.18;filter:blur(4px)}
+.wscard:hover{transform:translateY(-4px) rotate(-.4deg);border-color:var(--c);box-shadow:0 16px 40px color-mix(in srgb,var(--c) 30%,transparent)}
+.wsico{font-size:40px;line-height:1}.wsgr{align-self:flex-start;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:999px;background:var(--c);color:#fff}.wscard b{font-size:16px;line-height:1.3}.wscard small{color:var(--mut);font-size:12.5px}.wscard em{font-style:normal;margin-top:auto;font-weight:800;color:var(--c);filter:brightness(1.5)}
+.wsbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;position:sticky;top:64px;z-index:5;padding:8px;border-radius:14px;background:rgba(3,18,13,.85);backdrop-filter:blur(8px)}
+.paper{--ink:#1e293b;max-width:920px;margin:0 auto;background:#fffdf8;color:var(--ink);border-radius:18px;padding:34px 40px 26px;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.05);background-image:linear-gradient(#eef2f7 1px,transparent 1px);background-size:100% 30px;position:relative;font-family:Montserrat,sans-serif}
+.paper:before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;border-radius:18px 0 0 18px;background:var(--c)}
+.phead{display:flex;gap:16px;align-items:center;padding:16px 18px;border-radius:16px;background:linear-gradient(120deg,var(--c),color-mix(in srgb,var(--c) 55%,#0f172a));color:#fff;margin-bottom:14px;position:relative}
+.phead small{font-size:11px;letter-spacing:.08em;opacity:.85;font-weight:700}.phead h2{font-size:24px;margin:4px 0 0;color:#fff}.pico{font-size:46px;background:rgba(255,255,255,.18);border-radius:16px;width:72px;height:72px;display:grid;place-items:center;flex:0 0 72px}
+.pstamp{margin-left:auto;width:92px;height:92px;flex:0 0 92px;border-radius:50%;border:4px dashed rgba(255,255,255,.35);display:grid;place-items:center;text-align:center;opacity:.35}
+.pstamp.on{opacity:1;background:#fff;border:5px double var(--sc);color:var(--sc);transform:rotate(-12deg);animation:stamp .45s cubic-bezier(.3,1.6,.5,1)}
+.pstamp b{font-size:40px;line-height:1;display:block}.pstamp small{font-size:10px;font-weight:800;text-transform:uppercase}
+.pstamp.g5{--sc:#16a34a}.pstamp.g4{--sc:#2563eb}.pstamp.g3{--sc:#d97706}.pstamp.g2{--sc:#dc2626}
+@keyframes stamp{from{transform:scale(2.2) rotate(-30deg);opacity:0}to{transform:scale(1) rotate(-12deg);opacity:1}}
+.pmeta{display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:13px;font-weight:600;margin:4px 0 18px;padding:10px 14px;border:1.5px dashed #cbd5e1;border-radius:12px;background:#fff}
+.pmeta input{border:0;border-bottom:1.5px solid #94a3b8;background:transparent;color:var(--ink);font:inherit;width:190px;padding:2px 4px}
+.wstask{margin:16px 0;padding:16px 18px;border-radius:16px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 2px 0 #e2e8f0}
+.wst{display:flex;align-items:center;gap:10px;margin-bottom:12px}.wst b{font-size:15.5px;flex:1}.wsn{width:32px;height:32px;border-radius:10px;background:var(--c);color:#fff;display:grid;place-items:center;font-weight:900;flex:0 0 32px}.wspt{font-size:11.5px;font-weight:800;color:var(--c);border:1.5px solid var(--c);padding:3px 8px;border-radius:999px;white-space:nowrap}
+.paper select,.paper input[type=text],.paper textarea{background:#f8fafc;color:var(--ink);border:1.5px solid #cbd5e1;border-radius:9px;padding:6px 8px;font:500 13.5px Montserrat,sans-serif;max-width:100%}
+.paper textarea{width:100%;resize:vertical}.paper .okb{border-color:#16a34a!important;background:#dcfce7!important}.paper .badb{border-color:#dc2626!important;background:#fee2e2!important}
+.wslab{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;align-items:center}.wssvg svg{width:100%;background:linear-gradient(#f8fafc,#eef6ff);border-radius:14px;border:1px solid #e2e8f0}
+.wsli{display:flex;flex-direction:column;gap:7px}.wsli label{display:flex;gap:8px;align-items:center}.wsli label span{width:26px;height:26px;border-radius:50%;border:2.5px solid #0f766e;color:#0f766e;display:grid;place-items:center;font-weight:800;font-size:13px;flex:0 0 26px}.wsli select{flex:1}
+.wstw{overflow-x:auto}.wstab{width:100%;border-collapse:collapse;font-size:13.5px}.wstab th{background:color-mix(in srgb,var(--c) 15%,#fff);padding:8px;border:1px solid #e2e8f0;text-align:left}.wstab td{padding:6px 8px;border:1px solid #e2e8f0}.wstab select{width:100%}
+.wsmatch{display:grid;grid-template-columns:1fr 1.4fr;gap:14px}.wsml,.wsmr{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:6px;font-size:13.5px;background:#fff}.wsml select{margin-left:auto;width:64px}.wsml span,.wsmr span{font-weight:900;color:var(--c);min-width:18px}
+.wsbank{padding:8px 10px;border-radius:10px;background:#fefce8;border:1px dashed #eab308;font-size:13px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}.wsbank span{background:#fff;border:1px solid #fde68a;padding:2px 9px;border-radius:8px;font-weight:700}
+.wsfill{font-size:14px;line-height:2.1;margin:2px 0}.wsfill input{width:150px}
+.wstf{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:10px;margin-bottom:6px;font-size:13.5px}.wstf div{display:flex;gap:4px}.wstf button{border:1.5px solid #cbd5e1;background:#fff;color:#334155;padding:5px 10px;border-radius:8px;font-weight:700;font-size:12px}.wstf button.on{background:var(--c);color:#fff;border-color:var(--c)}
+.wsmcq{padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:10px;margin-bottom:8px;font-size:13.5px}.wsmcq p{font-weight:700;margin:0 0 6px}.wsmcq div{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}.wsmcq label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.wsord{display:flex;gap:10px;align-items:center;padding:6px 8px;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:6px;font-size:13.5px}.wsord select{width:62px}
+.wscl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}.wscl label{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 8px;border:1px solid #e2e8f0;border-radius:10px;font-size:13.5px;font-weight:600}
+.wsnum{padding:8px 10px;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:8px;font-size:13.5px}.wsnum p{margin:0 0 6px}.wsnum div{display:flex;gap:8px;align-items:center}.wsnum span{font-weight:700;color:var(--c)}.wsnum input{width:110px}
+.wspun table{border-collapse:collapse;margin:0 auto}.wspun th,.wspun td{border:2px solid #475569;width:84px;height:62px;text-align:center;font-size:20px;font-weight:800}.wspun th{background:color-mix(in srgb,var(--c) 15%,#fff)}.wspun input{width:58px;text-align:center;font-size:18px!important;font-weight:800!important}.wshint{text-align:center;font-size:12.5px;color:#64748b}
+.wsmodel{margin-top:8px;padding:10px;border-radius:10px;background:#ecfdf5;border:1px solid #86efac;font-size:13.5px}
+.pfoot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12.5px;color:#64748b;border-top:1.5px dashed #cbd5e1;padding-top:12px;margin-top:10px}.pfoot b{color:var(--ink)}
+@media(max-width:700px){.paper{padding:20px 14px}.wslab,.wsmatch{grid-template-columns:1fr}.wsmcq div{grid-template-columns:1fr}.pstamp{width:64px;height:64px;flex-basis:64px}.pstamp b{font-size:26px}}
+@media print{body *{visibility:hidden}#wsPaper .paper,#wsPaper .paper *{visibility:visible}#wsPaper .paper{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0;padding:10mm}.wsbar{display:none}.wstask{break-inside:avoid}}
+
+/* TASKS 2 */
+.tkchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}.tkchips button{border:1px solid var(--line);background:var(--card);color:var(--txt);padding:8px 14px;border-radius:12px;font-weight:700;font-size:13.5px}.tkchips button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04241a;border-color:transparent}
+.cwwrap{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}@media(max-width:900px){.cwwrap{grid-template-columns:1fr}}
+.cwscroll{overflow:auto;max-width:100%;padding:10px;border-radius:16px;background:linear-gradient(160deg,#0b2a20,#06160f);border:1px solid var(--line)}
+.cwgrid{--cs:34px;display:grid;gap:3px}.cwgrid>div{width:var(--cs);height:var(--cs)}.cwc{position:relative;background:#fffdf5;border-radius:6px;box-shadow:0 2px 0 #b8c4b0}
+.cwc i{position:absolute;left:3px;top:1px;font-size:9px;font-style:normal;font-weight:800;color:#0f766e}.cwc input{width:100%;height:100%;border:0;background:transparent;text-align:center;font:800 17px Montserrat,sans-serif;color:#0f172a;text-transform:uppercase;padding:6px 0 0;border-radius:6px}
+.cwc input:focus{outline:3px solid var(--acc);background:#ecfdf5}.cwc input.okb{background:#bbf7d0!important}.cwc input.badb{background:#fecaca!important}
+.cwclues h4{margin:4px 0 6px;color:var(--acc)}.cwclues ol{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-direction:column;gap:5px;font-size:13.5px}.cwclues small{color:var(--mut)}
+.tfg{display:flex;flex-direction:column;align-items:center;gap:16px;max-width:640px;margin:0 auto}
+.tfcard{width:100%;min-height:150px;display:grid;place-items:center;text-align:center;padding:24px;border-radius:22px;font-size:21px;font-weight:700;line-height:1.4;background:linear-gradient(145deg,rgba(56,189,248,.16),rgba(52,229,160,.12));border:1px solid var(--line);transition:.2s}
+.tfcard.ok{background:rgba(52,229,160,.3);border-color:var(--acc);transform:scale(1.02)}.tfcard.bad{background:rgba(248,113,113,.3);border-color:var(--bad);animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.tfbtns{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}.tfbtns button{padding:18px;border-radius:16px;border:0;font:800 19px Montserrat,sans-serif;cursor:pointer}.tfy{background:var(--acc);color:#04241a}.tfn{background:var(--bad);color:#3a0a0a}.tfbtns button:disabled{opacity:.35;cursor:default}
+.gentask{display:grid;gap:14px}.genq p{margin:6px 0}.genx{font-size:20px}.gpun table{margin:0}.gpun th,.gpun td{border-color:var(--line)!important;background:rgba(255,255,255,.04)}.gpun input{background:#fffdf5;color:#0f172a;border-radius:8px;border:2px solid #94a3b8}
+.genqs{display:flex;flex-direction:column;gap:10px}.genqs label{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -306,7 +362,7 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top
       <h1>Тірі табиғатты <b>3D әлемде</b> зертте</h1>
       <p>Анимациялық бейнесабақтар, виртуалды зертхана, дайын жұмыс парақтары, ойындар мен викториналар, адам ағзасы мен жасушаның 3D модельдері, Қазақстан қорықтары және олимпиадаға дайындық — бәрі бір сайтта.</p>
       <div class="row"><a class="btn" href="#lab">🧪 3D зертханаға кіру</a><a class="btn ghost" href="#models">🫀 3D модельдер</a><a class="btn blue" href="#ai">🤖 ЖИ көмекші</a></div>
-      <div class="stats"><div><b>8</b>бөлім</div><div><b>13</b>3D модель</div><div><b>17</b>зертханалық жұмыс</div><div><b>4</b>3D тур</div></div>
+      <div class="stats"><div><b>8</b>бөлім</div><div><b>15</b>3D модель</div><div><b>17</b>зертханалық жұмыс</div><div><b>4</b>3D тур</div></div>
     </div>
   </div>
   <div class="cards" id="homeCards"></div>
@@ -448,49 +504,27 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top
 
 <!-- 3 SHEETS -->
 <section class="view" id="v-sheets">
-  <div class="sec-h"><h2><span class="num">3</span>Жұмыс <span>парақтары</span></h2><p>Дайын тапсырмалар: суретпен жұмыс, кесте толтыру, сәйкестендіру және бос орынды толтыру. Әр парақ автоматты түрде тексеріледі.</p></div>
-  <div class="tabs" data-tabs="ws">
-    <button data-t="pic" class="on">🖼 Суретпен жұмыс</button>
-    <button data-t="tab">📊 Кесте толтыру</button>
-    <button data-t="mat">🔗 Сәйкестендіру</button>
-    <button data-t="fill">✏️ Бос орынды толтыр</button>
-  </div>
-  <div class="tp on" data-p="ws-pic"><div class="panel">
-    <h3>№1 жұмыс парағы. Өсімдік жасушасының құрылысы</h3>
-    <p class="muted">Тапсырма: суреттегі нөмірленген бөліктердің атауын таңда.</p>
-    <div class="wsfig" style="margin-top:12px"><div id="wsSvg"></div><div><div class="wsl" id="wsLabels"></div>
-    <div class="row" style="margin-top:14px"><button class="btn" id="wsPicChk">Тексеру</button><button class="btn ghost" id="wsPicRe">Қайта бастау</button><span class="score" id="wsPicSc"></span></div></div></div>
-  </div></div>
-  <div class="tp" data-p="ws-tab"><div class="panel">
-    <h3>№2 жұмыс парағы. Адам ағзасының мүшелер жүйесі</h3>
-    <p class="muted">Тапсырма: кестені толтыр — әр жүйенің негізгі мүшелері мен қызметін таңда.</p>
-    <div style="overflow-x:auto"><table class="tbl" id="wsTab"></table></div>
-    <div class="row" style="margin-top:14px"><button class="btn" id="wsTabChk">Тексеру</button><button class="btn ghost" id="wsTabRe">Қайта бастау</button><span class="score" id="wsTabSc"></span></div>
-  </div></div>
-  <div class="tp" data-p="ws-mat"><div class="panel">
-    <h3>№3 жұмыс парағы. Ұғымдарды сәйкестендір</h3>
-    <p class="muted">Тапсырма: алдымен сол жақтағы ұғымды, сосын оған сәйкес анықтаманы бас. Жұптар бір түспен белгіленеді.</p>
-    <div class="match" id="wsMatch" style="margin-top:12px"></div>
-    <div class="row" style="margin-top:14px"><button class="btn" id="wsMatChk">Тексеру</button><button class="btn ghost" id="wsMatRe">Қайта бастау</button><span class="score" id="wsMatSc"></span></div>
-  </div></div>
-  <div class="tp" data-p="ws-fill"><div class="panel fill">
-    <h3>№4 жұмыс парағы. Сөйлемдерді толықтыр</h3>
-    <p class="muted">Тапсырма: бос орынға тиісті сөзді таңда.</p>
-    <div id="wsFill"></div>
-    <div class="row" style="margin-top:14px"><button class="btn" id="wsFillChk">Тексеру</button><button class="btn ghost" id="wsFillRe">Қайта бастау</button><span class="score" id="wsFillSc"></span></div>
-  </div></div>
+  <div class="sec-h"><h2><span class="num">3</span>Жұмыс <span>парақтары</span></h2><p>7–11 сыныптарға арналған 12 жұмыс парағы: суретпен жұмыс, кесте, сәйкестендіру, сөйлем толықтыру, ақиқат/жалған, тест, реттеу, жіктеу, есептер, Пеннет торы және ойлану сұрақтары. Әр парақ автоматты тексеріліп, баға қойылады және басып шығаруға дайын.</p></div>
+  <div id="wsLib"></div>
+  <div id="wsPaper" style="display:none"></div>
 </section>
 
 <!-- 4 TASKS -->
 <section class="view" id="v-tasks">
-  <div class="sec-h"><h2><span class="num">4</span>Интерактивті <span>тапсырмалар</span></h2><p>Тесттер, пазлдар, биологиялық ойындар мен топтық викторина — сабақты қызықты етуге арналған.</p></div>
+  <div class="sec-h"><h2><span class="num">4</span>Интерактивті <span>тапсырмалар</span></h2><p>5 тақырып бойынша 40 тест сұрағы, биологиялық кроссворд, «Жылдам жауап» ойыны, шексіз генетика тренажері, пазлдар, ойындар және топтық викторина — сабақты қызықты өткізуге арналған.</p></div>
   <div class="tabs" data-tabs="tk">
-    <button data-t="test" class="on">✅ Тест</button>
+    <button data-t="test" class="on">✅ Тесттер</button>
+    <button data-t="cw">🔤 Кроссворд</button>
+    <button data-t="tf">⚡ Жылдам жауап</button>
+    <button data-t="gen">🧬 Генетика тренажері</button>
     <button data-t="puz">🧩 Пазлдар</button>
     <button data-t="game">🎮 Биологиялық ойындар</button>
     <button data-t="quiz">🏅 Викторина</button>
   </div>
-  <div class="tp on" data-p="tk-test"><div class="panel qcard" id="testBox"></div></div>
+  <div class="tp on" data-p="tk-test"><div id="tk2tests"></div></div>
+  <div class="tp" data-p="tk-cw"><div class="panel"><h3>🔤 Биологиялық кроссворд</h3><p class="muted">Шаршыны басып, әріптерді жаз. Әр жолы жаңа кроссворд құрастырылады.</p><div id="cwBox" style="margin-top:12px"></div></div></div>
+  <div class="tp" data-p="tk-tf"><div class="panel"><h3>⚡ Жылдам жауап: ақиқат па, жалған ба?</h3><div id="tfBox" style="margin-top:12px"></div></div></div>
+  <div class="tp" data-p="tk-gen"><div class="panel"><h3>🧬 Генетика тренажері</h3><p class="muted">Шексіз есептер: Пеннет торын толтыр, ұрпақтың фенотипі мен генотип бойынша ажырауын анықта.</p><div id="genBox" style="margin-top:12px"></div></div></div>
   <div class="tp" data-p="tk-puz"><div class="grid2b">
     <div class="panel"><h3>Пазл: жасушаны жина</h3><p class="muted">Екі бөлікті кезекпен басып, орнын ауыстыр. Суретті толық жина!</p>
       <div class="jig" id="jig" style="margin-top:12px"></div>
@@ -520,7 +554,7 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top
 
 <!-- 5 MODELS -->
 <section class="view" id="v-models">
-  <div class="sec-h"><h2><span class="num">5</span>3D <span>модельдер</span></h2><p>Жасушалар, адам мүшелері (жүрек, ми, өкпе, бүйрек, нефрон, көз, нейрон, ас қорыту жүйесі), өсімдіктер және ДНҚ-ның шынайы үшөлшемді модельдері. Айналдыр, жақындат, бөлікті басып сипаттамасын оқы. «Қима» режимі ішкі құрылысты көрсетеді.</p></div>
+  <div class="sec-h"><h2><span class="num">5</span>3D <span>модельдер</span></h2><p>Адам қаңқасы мен мүшелерінің нақты томографиялық деректерден жасалған шынайы 3D модельдері, сондай-ақ жасушалар, мүше қималары, өсімдіктер және ДНҚ. Айналдыр, жақындат, бөлікті басып сипаттамасын оқы. «Қима» режимі ішкі құрылысты көрсетеді.</p></div>
   <div class="seg" id="m3sel" style="margin-bottom:14px"></div>
   <div class="grid2">
     <div class="m3wrap"><canvas id="m3d"></canvas>
@@ -529,6 +563,7 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top
     <div class="panel" id="m3info"><span class="pill" id="m3cat"></span><h3 id="m3name"></h3><p class="muted" id="m3txt"></p>
       <div style="margin-top:14px;font-weight:700;font-size:13px">Бөліктері:</div><div class="chips" id="m3parts"></div></div>
   </div>
+  <p class="muted" style="font-size:11.5px;margin-top:10px">Адам мүшелері мен қаңқаның нақты анатомиялық модельдері: BodyParts3D, © The Database Center for Life Science (DBCLS), CC BY-SA 2.1 JP лицензиясы.</p>
 </section>
 
 <!-- 6 RESERVES -->
@@ -637,8 +672,8 @@ const onTab={};
 const SECTIONS=[
  ['lessons','🎬','Бейнесабақтар','Тақырыптарға арналған анимациялық видеолар мен 3D түсіндірмелер: фотосинтез, митоз, қан айналымы, жасуша.'],
  ['lab','🔬','Виртуалды зертхана','11 интерактивті 3D зертханалық жұмыс (микроскоп, ферменттер, ДНҚ бөлу, хроматография…) — өзің орында! + 6 деректерді талдау жұмысы.'],
- ['sheets','📝','Жұмыс парақтары','Дайын тапсырмалар: суретпен жұмыс, кесте толтыру, сәйкестендіру, бос орынды толтыру.'],
- ['tasks','🧩','Интерактивті тапсырмалар','Тесттер, пазлдар, биологиялық ойындар және топтық викторина.'],
+ ['sheets','📝','Жұмыс парақтары','12 әдемі жұмыс парағы: 11 түрлі тапсырма, автотексеру, баға және басып шығару.'],
+ ['tasks','🧩','Интерактивті тапсырмалар','Тақырыптық тесттер, кроссворд, жылдам жауап ойыны, генетика тренажері, пазлдар және топтық викторина.'],
  ['models','🫀','3D модельдер','Шынайы 3D модельдер: қимасы бар жасушалар, адам ағзасы, жүрек, ДНҚ, өсімдік және жапырақтың ішкі құрылысы.'],
  ['reserves','🏞️','Қазақстан қорықтары','Ақсу-Жабағылы, Қорғалжын, Наурызым, Барсакелмес және басқа қорғалатын аумақтар.'],
  ['olymp','🏆','Олимпиадаға дайындық','Күрделі тесттер, логикалық есептер, генетика және биологиялық жағдаяттар.'],
@@ -751,40 +786,6 @@ function plLoop(ts){const dt=Math.min(.1,(ts-PL.last)/1000);PL.last=ts;if(cur===
  let cap='';L.caps.forEach(k=>{if(PL.t>=k[0])cap=k[1]});const el=$('#plCap');if(el.textContent!==cap)el.textContent=cap}requestAnimationFrame(plLoop)}
 
 /* ---------- 3. WORKSHEETS ---------- */
-const WS_PARTS=['Жасуша қабырғасы','Жасуша мембранасы','Ядро','Хлоропласт','Орталық вакуоль','Митохондрия','Цитоплазма'];
-function wsSvg(){return `<svg viewBox="0 0 520 360" style="width:100%;background:#f8fafc;border-radius:16px">
-<rect x="40" y="40" width="380" height="280" rx="26" fill="#bbf7d0" stroke="#15803d" stroke-width="12"/>
-<rect x="54" y="54" width="352" height="252" rx="18" fill="#fef9c3" stroke="#ca8a04" stroke-width="2.5"/>
-<ellipse cx="250" cy="185" rx="120" ry="85" fill="#bae6fd" stroke="#0284c7" stroke-width="2.5"/>
-<circle cx="100" cy="105" r="30" fill="#c4b5fd" stroke="#6d28d9" stroke-width="2.5"/><circle cx="106" cy="100" r="9" fill="#6d28d9"/>
-${[[95,250,.4],[140,285,-.2],[385,90,.6],[390,250,-.5],[210,80,0],[300,290,.2],[380,170,1.4]].map(([x,y,r])=>`<ellipse cx="${x}" cy="${y}" rx="17" ry="9" transform="rotate(${r*57} ${x} ${y})" fill="#16a34a" stroke="#14532d" stroke-width="1.5"/>`).join('')}
-${[[85,180],[330,78]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="13" ry="7" fill="#fb923c" stroke="#9a3412" stroke-width="1.5"/>`).join('')}
-${[[1,30,30,470,40],[2,58,140,470,95],[3,100,105,470,150],[4,385,90,470,205],[5,250,185,470,260],[6,85,180,470,315]].map(([n,x,y,lx,ly])=>`<line x1="${x}" y1="${y}" x2="${lx-14}" y2="${ly}" stroke="#334155" stroke-width="1.6"/>`).join('')}
-<line x1="170" y1="290" x2="456" y2="345" stroke="#334155" stroke-width="1.6"/>
-${[[1,470,40],[2,470,95],[3,470,150],[4,470,205],[5,470,260],[6,470,315],[7,470,345]].map(([n,x,y])=>`<circle cx="${x}" cy="${y}" r="13" fill="#fbbf24" stroke="#92400e"/><text x="${x}" y="${y+5}" text-anchor="middle" font-size="14" font-weight="800" fill="#3a2500" font-family="Montserrat">${n}</text>`).join('')}
-</svg>`}
-const WS_PIC_ANS=['Жасуша қабырғасы','Жасуша мембранасы','Ядро','Хлоропласт','Орталық вакуоль','Митохондрия','Цитоплазма'];
-function wsPicInit(){$('#wsSvg').innerHTML=wsSvg();const opts=shuffle(WS_PARTS);$('#wsLabels').innerHTML=WS_PIC_ANS.map((a,i)=>`<div><b>${i+1}</b><select data-i="${i}"><option value="">— таңда —</option>${opts.map(o=>`<option>${o}</option>`).join('')}</select></div>`).join('');$('#wsPicSc').textContent=''}
-$('#wsPicChk').onclick=()=>{let s=0;$$('#wsLabels select').forEach(x=>{const ok=x.value===WS_PIC_ANS[+x.dataset.i];if(ok)s++;x.classList.toggle('okb',ok);x.classList.toggle('badb',!ok)});$('#wsPicSc').innerHTML=`Нәтиже: <span class="${s===7?'ok':''}">${s} / 7</span>`};
-$('#wsPicRe').onclick=wsPicInit;
-const SYS=[['Тыныс алу жүйесі','Өкпе, кеңірдек, бронхылар','Газ алмасу: оттек алу, CO₂ шығару'],['Қан айналым жүйесі','Жүрек, қан тамырлары','Заттар мен газдарды тасымалдау'],['Ас қорыту жүйесі','Асқазан, ішек, бауыр','Қоректі ыдырату және сіңіру'],['Зәр шығару жүйесі','Бүйрек, несепағар, қуық','Зиянды заттарды ағзадан шығару'],['Жүйке жүйесі','Ми, жұлын, жүйкелер','Ағза қызметін реттеу және басқару'],['Тірек-қимыл жүйесі','Сүйектер, бұлшықеттер','Тірек, қорғау және қозғалыс']];
-function wsTabInit(){const o1=shuffle(SYS.map(s=>s[1])),o2=shuffle(SYS.map(s=>s[2]));$('#wsTab').innerHTML=`<tr><th>Мүшелер жүйесі</th><th>Негізгі мүшелері</th><th>Қызметі</th></tr>`+SYS.map((s,i)=>`<tr><td><b>${s[0]}</b></td><td><select data-r="${i}" data-c="1" style="width:100%"><option value="">—</option>${o1.map(o=>`<option>${o}</option>`).join('')}</select></td><td><select data-r="${i}" data-c="2" style="width:100%"><option value="">—</option>${o2.map(o=>`<option>${o}</option>`).join('')}</select></td></tr>`).join('');$('#wsTabSc').textContent=''}
-$('#wsTabChk').onclick=()=>{let s=0;$$('#wsTab select').forEach(x=>{const ok=x.value===SYS[+x.dataset.r][+x.dataset.c];if(ok)s++;x.classList.toggle('okb',ok);x.classList.toggle('badb',!ok)});$('#wsTabSc').innerHTML=`Нәтиже: ${s} / 12`};
-$('#wsTabRe').onclick=wsTabInit;
-const MATCH=[['Фотосинтез','Жарық энергиясы арқылы органикалық зат түзу'],['Тыныс алу','Органикалық заттарды тотықтырып, энергия алу'],['Митоз','Жасушаның генетикалық бірдей екі жасушаға бөлінуі'],['Фермент','Биохимиялық реакцияны жылдамдататын белок'],['Ген','ДНҚ-ның белгілі бір белгіні анықтайтын бөлігі'],['Экожүйе','Тірі ағзалар мен қоршаған ортаның бірлестігі']];
-const MCOL=['#f87171','#60a5fa','#facc15','#4ade80','#c084fc','#fb923c'];let MSEL=null,MPAIR={};
-function wsMatInit(){MSEL=null;MPAIR={};const R=shuffle(MATCH.map((m,i)=>i));$('#wsMatch').innerHTML=MATCH.map((m,i)=>`<button class="mi" data-l="${i}">${m[0]}</button><button class="mi" data-r="${R[i]}">${MATCH[R[i]][1]}</button>`).join('');
- $$('#wsMatch [data-l]').forEach(b=>b.onclick=()=>{$$('#wsMatch [data-l]').forEach(x=>x.classList.remove('sel'));MSEL=+b.dataset.l;b.classList.add('sel')});
- $$('#wsMatch [data-r]').forEach(b=>b.onclick=()=>{if(MSEL==null)return;const r=+b.dataset.r;for(const k in MPAIR)if(MPAIR[k]===r)delete MPAIR[k];MPAIR[MSEL]=r;MSEL=null;wsMatPaint()});$('#wsMatSc').textContent='';wsMatPaint()}
-function wsMatPaint(){$$('#wsMatch .mi').forEach(b=>{b.classList.remove('sel','okb','badb');b.style.borderColor='';b.style.boxShadow=''});for(const k in MPAIR){const col=MCOL[k];[$(`#wsMatch [data-l="${k}"]`),$(`#wsMatch [data-r="${MPAIR[k]}"]`)].forEach(b=>{b.style.borderColor=col;b.style.boxShadow=`inset 6px 0 0 ${col}`})}}
-$('#wsMatChk').onclick=()=>{let s=0;for(let i=0;i<MATCH.length;i++){const ok=MPAIR[i]===i;if(ok)s++;const b=$(`#wsMatch [data-l="${i}"]`);b.classList.add(ok?'okb':'badb')}$('#wsMatSc').innerHTML=`Нәтиже: ${s} / ${MATCH.length}`};
-$('#wsMatRe').onclick=wsMatInit;
-const FILL=[['Фотосинтез жүретін органоид — ','хлоропласт','.'],['Тұқым қуалау ақпаратын сақтайтын молекула — ','ДНҚ','.'],['Оттекті тасымалдайтын қан жасушалары — ','эритроциттер','.'],['Жүректің ең қалың қабырғалы бөлігі — ','сол жақ қарынша','.'],['Өсімдік тамыры топырақтан ','су',' мен минерал тұздарды сіңіреді.'],['Өкпеде газ алмасу ','альвеолаларда',' жүреді.'],['Қоректік тізбекті әрқашан ','продуценттер',' бастайды.']];
-function wsFillInit(){const o=shuffle(FILL.map(f=>f[1]).concat(['митохондрия','лейкоциттер','консументтер']));$('#wsFill').innerHTML=FILL.map((f,i)=>`<p>${i+1}. ${f[0]}<select class="blank" data-i="${i}"><option value="">..........</option>${o.map(x=>`<option>${x}</option>`).join('')}</select>${f[2]}</p>`).join('');$('#wsFillSc').textContent=''}
-$('#wsFillChk').onclick=()=>{let s=0;$$('#wsFill select').forEach(x=>{const ok=x.value===FILL[+x.dataset.i][1];if(ok)s++;x.classList.toggle('okb',ok);x.classList.toggle('badb',!ok)});$('#wsFillSc').innerHTML=`Нәтиже: ${s} / ${FILL.length}`};
-$('#wsFillRe').onclick=wsFillInit;
-
-/* ---------- 4. TASKS ---------- */
 function runTest(box,Q,title,withExpl){let i=0,s=0;const order=shuffle(Q);function show(){if(i>=order.length){const p=Math.round(s/order.length*100);box.innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:60px">${p>=85?'🏆':p>=60?'👍':'📚'}</div><h3 style="font-size:26px;margin:10px 0">Нәтиже: ${s} / ${order.length} (${p}%)</h3><p class="muted">${p>=85?'Тамаша! Өте жақсы білесің.':p>=60?'Жақсы! Тағы аздап қайталап ал.':'Тақырыпты қайталап, қайта тапсыр.'}</p><button class="btn" style="margin-top:16px">🔄 Қайта бастау</button></div>`;$('button',box).onclick=()=>runTest(box,Q,title,withExpl);return}
  const q=order[i],ops=shuffle(q.o.map((o,k)=>({o,k})));box.innerHTML=`<div class="row" style="justify-content:space-between"><span class="pill">${title} • ${i+1} / ${order.length}</span><span class="pill">Ұпай: ${s}</span></div><div class="prog" style="margin-top:12px;cursor:default"><i style="width:${i/order.length*100}%"></i></div><div class="qtitle">${q.q}</div><div class="q" style="background:none;border:0;padding:0"><div class="opts">${ops.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div></div><div class="muted" id="qx" style="margin-top:10px"></div>`;
  $$('.opt',box).forEach(b=>b.onclick=()=>{const ok=+b.dataset.k===q.a;if(ok)s++;$$('.opt',box).forEach(x=>{x.disabled=true;if(+x.dataset.k===q.a)x.classList.add('okb')});if(!ok)b.classList.add('badb');
@@ -923,12 +924,14 @@ $('#vPlayer').addEventListener('play',()=>{PL.play=false;updPlay()});
 window.addEventListener('hashchange',()=>{if(location.hash!=='#lessons')$('#vPlayer').pause()});
 /* ---------- INIT ---------- */
 initTabs();lessonsBuild();
-wsPicInit();wsTabInit();wsMatInit();wsFillInit();
-runTest($('#testBox'),TEST,'Тест',false);jigNew();ordNew();memNew();jeoDraw();
+
+jigNew();ordNew();memNew();jeoDraw();
 resInit();runTest($('#hardBox'),HARD,'Олимпиада тесті',true);logicInit();caseInit();genSelDraw();
 route();
 </script>
 <script src="js/labs.js"></script>
+<script src="js/sheets.js"></script>
+<script src="js/tasks2.js"></script>
 <script src="js/ai.js"></script>
 <script type="importmap">{"imports":{"three":"./lib/three.module.min.js","three/addons/":"./lib/addons/"}}</script>
 <script type="module" src="js/models3d.js"></script>
