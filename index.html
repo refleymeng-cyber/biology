@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIO 3D ӘЛЕМІ — биологияның цифрлық платформасы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#03120d;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.08);--line:rgba(120,255,200,.16);--acc:#34e5a0;--acc2:#38bdf8;--acc3:#f472b6;--warn:#fbbf24;--bad:#f87171;--txt:#e8fff6;--mut:#9cc9b8}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Montserrat,system-ui,sans-serif;color:var(--txt);min-height:100vh;background:radial-gradient(1100px 600px at 85% -10%,#0e4632 0%,transparent 60%),radial-gradient(900px 500px at -10% 25%,#07314d 0%,transparent 55%),var(--bg);background-attachment:fixed}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+header{position:sticky;top:0;z-index:50;background:rgba(3,18,13,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:10px clamp(12px,3vw,32px)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;letter-spacing:.5px;white-space:nowrap;font-size:18px}
+.logo i{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--acc),var(--acc2));font-style:normal;font-size:20px;box-shadow:0 0 22px rgba(52,229,160,.45)}
+.logo b{background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
+nav.nav::-webkit-scrollbar{display:none}
+nav.nav a{text-decoration:none;font-size:13px;font-weight:600;color:var(--mut);padding:8px 12px;border-radius:10px;white-space:nowrap;transition:.2s}
+nav.nav a:hover{color:var(--txt);background:var(--card)}
+nav.nav a.on{color:#03120d;background:var(--acc)}
+.view{display:none;padding:28px clamp(12px,3.5vw,44px) 70px;max-width:1320px;margin:0 auto}
+.view.active{display:block;animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h1,h2,h3{line-height:1.15}
+.sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.sec-h h2{font-size:clamp(24px,3.2vw,36px);font-weight:900}
+.sec-h h2 span{color:var(--acc)}
+.sec-h p{color:var(--mut);max-width:640px;font-size:14px;line-height:1.55}
+.num{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--card2);border:1px solid var(--line);font-size:15px;font-weight:800;margin-right:10px;color:var(--acc);vertical-align:middle}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px}
+.grid2b{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media(max-width:900px){.grid2,.grid2b{grid-template-columns:1fr}}
+.btn{border:0;border-radius:12px;padding:10px 16px;font-weight:700;font-size:14px;background:var(--acc);color:#04261a;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn.ghost{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+.btn.blue{background:var(--acc2);color:#04213a}
+.btn.pink{background:var(--acc3);color:#3b0720}
+.btn.sm{padding:7px 12px;font-size:13px;border-radius:10px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--card);color:var(--mut);padding:9px 15px;border-radius:12px;font-weight:700;font-size:13px}
+.tabs button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#03120d;border-color:transparent}
+.tp{display:none}.tp.on{display:block;animation:fade .35s}
+label.ctl{display:block;font-size:13px;font-weight:600;color:var(--mut);margin:12px 0 6px}
+label.ctl b{color:var(--txt)}
+input[type=range]{width:100%;accent-color:var(--acc)}
+select,input[type=text],input[type=number],textarea{font-family:inherit;background:#082a20;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px}
+textarea{width:100%;min-height:110px;resize:vertical}
+canvas{display:block;max-width:100%}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.tbl th,.tbl td{border:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top}
+.tbl th{background:rgba(52,229,160,.12);font-weight:700}
+.muted{color:var(--mut);font-size:13px;line-height:1.55}
+.ok{color:var(--acc)!important}.badc{color:var(--bad)!important}
+.okb{border-color:var(--acc)!important;background:rgba(52,229,160,.15)!important}
+.badb{border-color:var(--bad)!important;background:rgba(248,113,113,.15)!important}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:var(--card2);border:1px solid var(--line)}
+.score{font-weight:800;font-size:15px}
+/* HOME */
+.hero{position:relative;border-radius:28px;overflow:hidden;border:1px solid var(--line);min-height:430px;background:linear-gradient(120deg,rgba(6,40,30,.9),rgba(6,30,50,.85))}
+#heroCv{position:absolute;inset:0;width:100%;height:100%}
+.hero-in{position:relative;z-index:2;padding:clamp(26px,5vw,60px);max-width:640px}
+.hero h1{font-size:clamp(34px,5.6vw,64px);font-weight:900;letter-spacing:-.5px}
+.hero h1 b{background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin:16px 0 24px;color:#c4eee0;font-size:16px;line-height:1.6}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);border:1px solid var(--line);padding:6px 12px;border-radius:999px;margin-bottom:16px;background:rgba(52,229,160,.08)}
+.stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:28px}
+.stats div b{display:block;font-size:28px;font-weight:900;color:var(--acc)}
+.stats div{font-size:12px;color:var(--mut);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:26px}
+.card{position:relative;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;transition:.25s;overflow:hidden}
+.card:hover{transform:translateY(-4px);border-color:rgba(52,229,160,.5);box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.card .ic{font-size:30px;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--card2);margin-bottom:14px}
+.card h3{font-size:17px;font-weight:800;margin-bottom:8px}
+.card p{font-size:13px;color:var(--mut);line-height:1.5}
+.card .n{position:absolute;right:16px;top:12px;font-size:44px;font-weight:900;color:rgba(255,255,255,.06)}
+/* LESSONS */
+.llist{display:flex;flex-direction:column;gap:10px}
+.litem{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--txt);padding:12px;border-radius:14px;transition:.2s}
+.litem:hover{background:var(--card2)}
+.litem.on{border-color:var(--acc);background:rgba(52,229,160,.12)}
+.litem .ic{font-size:26px;width:46px;height:46px;flex:none;display:grid;place-items:center;border-radius:12px;background:rgba(0,0,0,.25)}
+.litem b{display:block;font-size:14px}.litem small{color:var(--mut);font-size:12px}
+.player{border-radius:18px;overflow:hidden;background:#000;border:1px solid var(--line)}
+#lessonCv{width:100%;aspect-ratio:16/9;background:#021}
+.pbar{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#04170f}
+.prog{position:relative;flex:1;height:8px;border-radius:9px;background:rgba(255,255,255,.12);cursor:pointer}
+.prog i{position:absolute;left:0;top:0;bottom:0;border-radius:9px;background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.prog em{position:absolute;top:-3px;width:3px;height:14px;background:#fff;opacity:.5;border-radius:2px}
+.cap{padding:14px 16px;min-height:74px;font-size:16px;font-weight:600;line-height:1.5;background:linear-gradient(180deg,#05211a,#03120d);border-top:1px solid var(--line)}
+.time{font-variant-numeric:tabular-nums;font-size:12px;color:var(--mut);min-width:84px;text-align:right}
+/* LAB */
+.labcv{width:100%;border-radius:16px;background:#062018;border:1px solid var(--line)}
+.micwrap{display:grid;place-items:center;padding:10px;background:radial-gradient(circle,#10251e,#020a07);border-radius:18px;border:1px solid var(--line)}
+#micCv{width:min(100%,460px);aspect-ratio:1;border-radius:50%;box-shadow:0 0 0 10px #111,0 0 0 13px #333,0 20px 50px rgba(0,0,0,.6)}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid var(--line);background:var(--card);color:var(--txt);padding:7px 12px;border-radius:10px;font-weight:700;font-size:13px}
+.seg button.on{background:var(--acc2);color:#04213a;border-color:transparent}
+.badge{display:inline-block;padding:5px 10px;border-radius:9px;font-weight:700;font-size:13px}
+.q{margin-top:14px;padding:14px;border-radius:14px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25)}
+.q .opts{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.opt{border:1px solid var(--line);background:var(--card);color:var(--txt);padding:9px 12px;border-radius:10px;text-align:left;font-size:14px;font-weight:500}
+.opt:hover{background:var(--card2)}
+/* SHEETS */
+.wsfig{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:800px){.wsfig{grid-template-columns:1fr}}
+.wsl{display:flex;flex-direction:column;gap:8px}
+.wsl div{display:flex;align-items:center;gap:8px}
+.wsl b{width:30px;height:30px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--warn);color:#3a2500;font-size:14px}
+.wsl select{flex:1}
+.match{display:grid;grid-template-columns:1fr 1.6fr;gap:10px 28px}
+.mi{border:1px solid var(--line);background:var(--card);color:var(--txt);border-radius:12px;padding:11px 13px;text-align:left;font-size:14px;font-weight:600;transition:.15s}
+.mi.sel{outline:2px solid var(--warn)}
+.blank{display:inline-block;min-width:150px;margin:0 4px}
+.fill p{margin:10px 0;line-height:2;font-size:15px}
+/* TASKS */
+.qcard{max-width:760px}
+.qtitle{font-size:19px;font-weight:700;line-height:1.45;margin:10px 0 14px}
+.jig{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:min(100%,420px);aspect-ratio:1;background:#000;border-radius:14px;overflow:hidden;border:2px solid var(--line)}
+.jig canvas{width:100%;height:100%;cursor:pointer;transition:.15s}
+.jig canvas.sel{outline:3px solid var(--warn);outline-offset:-3px;filter:brightness(1.2)}
+.ord{display:flex;flex-direction:column;gap:8px;max-width:460px}
+.ord button{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--card);color:var(--txt);padding:11px 14px;border-radius:12px;font-weight:700;font-size:14px;text-align:left}
+.ord button i{font-style:normal;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--card2);font-size:12px}
+.ord button.sel{outline:2px solid var(--warn)}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:560px}
+.mc{aspect-ratio:1/1;border-radius:14px;border:1px solid var(--line);background:linear-gradient(135deg,#0b3b2c,#0a2a44);color:var(--txt);font-weight:800;font-size:14px;display:grid;place-items:center;padding:6px;transition:transform .35s;position:relative}
+.mc span{opacity:0;transition:.2s}
+.mc.open span,.mc.done span{opacity:1}
+.mc.open{background:#134e4a;transform:rotateY(180deg) rotateY(180deg)}
+.mc.done{background:rgba(52,229,160,.25);border-color:var(--acc)}
+.mc .big{font-size:34px}
+.sortbox{text-align:center;padding:26px;border-radius:20px;background:var(--card2);border:1px solid var(--line)}
+.sortbox .item{font-size:clamp(24px,4vw,36px);font-weight:900;margin:14px 0 22px;min-height:44px}
+.sortbtns{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:520px;margin:0 auto}
+.jeo{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.jeo .hd{font-weight:800;text-align:center;padding:12px 6px;border-radius:12px;background:rgba(56,189,248,.15);font-size:14px}
+.jeo button{padding:22px 6px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(135deg,#0b3b2c,#0b2742);color:var(--warn);font-size:24px;font-weight:900}
+.jeo button.used{opacity:.25;pointer-events:none}
+.teams{display:flex;gap:14px;margin:16px 0;flex-wrap:wrap}
+.team{flex:1;min-width:180px;padding:14px;border-radius:16px;text-align:center;background:var(--card2);border:1px solid var(--line)}
+.team b{display:block;font-size:34px;color:var(--acc)}
+/* 3D */
+.m3wrap{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:radial-gradient(circle at 50% 40%,#0c3a2e,#020c08 75%);height:min(68vh,600px);min-height:380px}
+#m3d{width:100%;height:100%;touch-action:none;cursor:grab}
+.m3hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--mut);background:rgba(0,0,0,.45);padding:6px 10px;border-radius:9px}
+.m3tools{position:absolute;right:10px;top:10px;display:flex;gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips button{border:1px solid var(--line);background:var(--card);color:var(--txt);padding:6px 10px;border-radius:9px;font-size:12px;font-weight:600}
+.chips button.on{background:var(--warn);color:#3a2500}
+#m3info h3{font-size:20px;margin:6px 0 8px;color:var(--warn)}
+/* RESERVES */
+.mapbox{position:relative;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,#06283a,#052a1d);padding:10px}
+#kzmap{width:100%;height:auto}
+.mk{cursor:pointer}
+.mk circle.dot{transition:.2s}
+.mk:hover circle.dot,.mk.on circle.dot{r:11}
+.rlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:16px}
+.rcard{border:1px solid var(--line);background:var(--card);color:var(--txt);border-radius:14px;padding:12px;text-align:left}
+.rcard b{display:block;font-size:14px}
+.rcard small{color:var(--mut);font-size:12px}
+.rcard.on{border-color:var(--acc);background:rgba(52,229,160,.12)}
+#rinfo h3{font-size:24px;font-weight:900;color:var(--acc);margin-bottom:6px}
+#rinfo .facts{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;margin:12px 0}
+#rinfo .facts span{color:var(--mut)}
+#rinfo ul{margin:8px 0 0 18px;font-size:14px;line-height:1.6}
+.rhero{height:120px;border-radius:14px;margin-bottom:12px;display:grid;place-items:center;font-size:56px}
+/* OLYMP */
+.prob{margin-bottom:14px}
+.prob h4{font-size:16px;margin-bottom:6px}
+.sol{display:none;margin-top:10px;padding:12px;border-radius:12px;background:rgba(251,191,36,.08);border:1px dashed rgba(251,191,36,.4);font-size:14px;line-height:1.6}
+.sol.on{display:block}
+.pun{border-collapse:collapse;margin-top:12px}
+.pun td,.pun th{border:1px solid var(--line);padding:10px 12px;text-align:center;font-weight:700;min-width:58px}
+.pun th{background:rgba(56,189,248,.15)}
+.pun td.dom{background:rgba(52,229,160,.15)}
+.pun td.rec{background:rgba(244,114,182,.18)}
+.case{margin-bottom:16px}
+.case .chk label{display:block;font-size:14px;margin:6px 0}
+/* modal */
+#modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.7);display:none;place-items:center;padding:16px}
+#modal.on{display:grid}
+#modal .box{max-width:620px;width:100%;background:#062a1f;border:1px solid var(--line);border-radius:22px;padding:26px;animation:fade .3s}
+
+.lh h3{font-size:19px;margin:10px 0 8px;line-height:1.35}.lh p{font-size:14px;line-height:1.55}.pill.gr{background:rgba(56,189,248,.18);color:#7dd3fc}
+.lh details{margin-top:10px;font-size:14px}.lh summary{cursor:pointer;font-weight:700;color:var(--acc)}.lhg{display:grid;grid-template-columns:1fr 1.4fr;gap:16px;margin-top:10px}.lhg ol{margin:6px 0 0 18px;line-height:1.6}
+@media(max-width:800px){.lhg{grid-template-columns:1fr}}
+.labhead{margin-bottom:14px}.formula{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(251,191,36,.08);border:1px dashed rgba(251,191,36,.45);font-size:13.5px;font-weight:600;color:#fde68a}
+.sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:middle}.cnt{font-style:normal;opacity:.7;margin-left:4px;font-size:12px}
+.calc{margin-top:14px;padding:12px;border-radius:14px;background:rgba(52,229,160,.06);border:1px solid var(--line)}
+.tours{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:20px}
+.tourc{position:relative;text-align:left;border:1px solid var(--line);border-radius:20px;padding:18px;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));overflow:hidden;min-height:150px;transition:.25s}
+.tourc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.45)}.tourc i{font-style:normal;font-size:40px;display:block}.tourc b{display:block;font-size:19px;margin-top:6px}.tourc small{display:block;opacity:.85;font-size:12.5px;margin-top:4px}
+.tourc span{position:absolute;right:14px;bottom:14px;background:rgba(255,255,255,.92);color:#0b1d16;padding:6px 12px;border-radius:999px;font-weight:800;font-size:13px}
+#tour{position:fixed;inset:0;z-index:200;display:none;background:#000}#tour.on{display:block}#tview,#tourCv{position:absolute;inset:0;width:100%;height:100%}
+.tlabels{position:absolute;top:0;left:0}
+.hs{display:flex;align-items:center;gap:6px;border:0;background:rgba(3,18,13,.78);color:#fff;padding:5px 10px 5px 5px;border-radius:999px;font-family:inherit;font-weight:700;font-size:12px;cursor:pointer;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);transition:.2s;white-space:nowrap}
+.hs span{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--acc);color:#03120d;font-size:12px}.hs em{font-style:normal}.hs.on{background:var(--acc);color:#03120d}.hs.on span{background:#03120d;color:var(--acc)}
+.ttop{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);pointer-events:none}.ttop>*{pointer-events:auto}
+.ttitle{text-align:center;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}.ttitle b{display:block;font-size:clamp(16px,2.4vw,22px)}.ttitle small{opacity:.85;font-size:12px}
+.tcard{position:absolute;right:14px;top:70px;width:min(380px,calc(100% - 28px));max-height:calc(100% - 190px);overflow:auto;background:rgba(3,18,13,.84);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;padding:16px;color:var(--txt)}
+.tcard h3{font-size:19px;margin:10px 0 8px;color:var(--acc)}.tcard p{font-size:14px;line-height:1.6}.tcard ul{margin:10px 0 0 18px;font-size:13.5px;line-height:1.55;color:#c4eee0}.tcard.min>*:not(.row:first-child){display:none}
+.tstops{position:absolute;left:0;right:0;bottom:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 12px}
+.tstops button{border:1px solid rgba(255,255,255,.3);background:rgba(3,18,13,.78);backdrop-filter:blur(8px);color:#fff;padding:8px 12px;border-radius:12px;font-weight:600;font-size:12.5px}.tstops button.on{background:var(--acc);color:#03120d}
+.thint{position:absolute;left:14px;bottom:62px;font-size:11.5px;color:#e2e8f0;background:rgba(0,0,0,.45);padding:5px 9px;border-radius:8px}
+.tload{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle,#0b3b2c,#02100b);color:#c4eee0;text-align:center;font-weight:700}
+.spin{width:54px;height:54px;border-radius:50%;border:5px solid rgba(52,229,160,.2);border-top-color:var(--acc);margin:0 auto 14px;animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.m3tools{flex-wrap:wrap;justify-content:flex-end;left:10px}
+@media(max-width:700px){.tcard{top:auto;bottom:110px;max-height:38vh}.thint{display:none}}
+
+.vlist{display:flex;flex-direction:column;gap:10px}
+.vitem{display:flex;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--txt);padding:8px;border-radius:14px;transition:.2s}
+.vitem:hover{background:var(--card2)}.vitem.on{border-color:var(--acc);background:rgba(52,229,160,.12)}
+.vitem .th{position:relative;width:118px;flex:none;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000}
+.vitem .th img{width:100%;height:100%;object-fit:cover}.vitem .th em{position:absolute;right:4px;bottom:4px;font-style:normal;font-size:10.5px;font-weight:700;background:rgba(0,0,0,.75);padding:2px 5px;border-radius:5px}
+.vitem b{display:block;font-size:13.5px;line-height:1.3}.vitem small{color:var(--mut);font-size:11.5px}
+#vPlayer{width:100%;aspect-ratio:848/464;background:#000;display:block}
+#m3sel{display:flex;flex-direction:column;gap:8px}.mgrp{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.mgrp span{font-size:12.5px;font-weight:800;color:var(--acc);min-width:128px}
+
+.tctl{gap:6px}#tTod{gap:4px}
+#tPhoto{position:absolute;right:14px;bottom:62px;z-index:5}
+.tmap{position:absolute;left:14px;bottom:96px;width:170px;height:170px;border-radius:14px;border:2px solid rgba(255,255,255,.55);box-shadow:0 8px 24px rgba(0,0,0,.45);cursor:pointer}
+#tQuiz{position:absolute;inset:0;display:none;place-items:center;background:rgba(0,0,0,.45);z-index:8;padding:16px}#tQuiz.on{display:grid}
+#tQuiz .qbox{width:min(520px,100%);background:rgba(3,18,13,.94);border:1px solid var(--line);border-radius:20px;padding:20px;color:var(--txt);text-align:left}#tQuiz h3{font-size:19px;margin:12px 0;line-height:1.4}#tQuiz .opts{display:flex;flex-direction:column;gap:8px}
+#tour.photo .ttop,#tour.photo .tcard,#tour.photo .tstops,#tour.photo .thint,#tour.photo .tmap,#tour.photo .tlabels{display:none!important}
+@media(max-width:800px){.tmap{display:none}.ttop{flex-wrap:wrap}.tctl{justify-content:center}}
+
+.aitag{display:inline-block;margin-bottom:10px;padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:800;font-size:13px;color:#fff;background:linear-gradient(90deg,#7c3aed,#2563eb,#06b6d4);box-shadow:0 0 24px rgba(124,58,237,.45);animation:aiglow 3s ease-in-out infinite}
+@keyframes aiglow{50%{box-shadow:0 0 36px rgba(6,182,212,.6)}}
+.aihero{display:flex;gap:24px;align-items:center;justify-content:space-between;padding:28px;border-radius:24px;border:1px solid rgba(124,58,237,.4);background:radial-gradient(600px 300px at 90% 20%,rgba(124,58,237,.35),transparent),radial-gradient(500px 300px at 0% 100%,rgba(6,182,212,.25),transparent),#0a1530}
+.aihero h2{font-size:clamp(24px,3.4vw,40px);font-weight:900;margin:10px 0}.aihero h2 span{background:linear-gradient(90deg,#a78bfa,#38bdf8,#34e5a0);-webkit-background-clip:text;background-clip:text;color:transparent}.aihero p{color:#c7d2fe;line-height:1.6;max-width:720px}
+.aiorb{position:relative;width:150px;height:150px;flex:none}.aiorb b{position:absolute;inset:0;display:grid;place-items:center;font-size:56px}.aiorb i{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(167,139,250,.6);animation:orb 6s linear infinite}.aiorb i:nth-child(2){inset:14px;border-color:rgba(56,189,248,.6);animation-duration:4s;animation-direction:reverse}.aiorb i:nth-child(3){inset:30px;border-color:rgba(52,229,160,.6);animation-duration:3s}
+@keyframes orb{to{transform:rotate(360deg)}}.aiorb i::after{content:'';position:absolute;top:-5px;left:50%;width:10px;height:10px;border-radius:50%;background:#a78bfa;box-shadow:0 0 12px #a78bfa}
+@media(max-width:700px){.aiorb{display:none}}
+.ailog{height:380px;overflow:auto;display:flex;flex-direction:column;gap:10px;margin-top:12px;padding:12px;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid var(--line)}
+.msg{max-width:88%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.55;white-space:pre-wrap}.msg.ai{align-self:flex-start;background:rgba(124,58,237,.18);border:1px solid rgba(167,139,250,.35)}.msg.me{align-self:flex-end;background:rgba(52,229,160,.15);border:1px solid rgba(52,229,160,.35)}
+.aicards .card{cursor:default}
+#m3load{position:absolute;inset:0;display:none;place-items:center;text-align:center;color:#c4eee0;font-weight:700;background:rgba(2,12,8,.55);z-index:3}
+footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top:1px solid var(--line)}
+
+/* 3D LAB */
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:14px;background:var(--card);border:1px solid var(--line);margin-bottom:16px;flex-wrap:wrap}
+.seg button{border:0;background:none;color:var(--mut);padding:9px 14px;border-radius:10px;font-weight:700;font-size:14px}
+.seg button.on{background:var(--acc);color:#04241a}
+.l3grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.l3card{position:relative;text-align:left;display:flex;flex-direction:column;gap:7px;padding:16px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,var(--card2),var(--card));color:var(--txt);transition:.2s}
+.l3card:hover{transform:translateY(-3px);border-color:var(--acc);box-shadow:0 10px 30px rgba(52,229,160,.12)}
+.l3card .ic{font-size:34px}.l3card b{font-size:15px;line-height:1.3}.l3card small{color:var(--mut);font-size:12.5px;line-height:1.45}.l3card em{font-style:normal;color:var(--acc);font-weight:800;font-size:13px;margin-top:auto}
+.l3top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.l3lay{display:grid;grid-template-columns:1fr 340px;gap:14px}
+@media(max-width:980px){.l3lay{grid-template-columns:1fr}}
+#l3view{position:relative;height:min(68vh,620px);min-height:380px;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#24333d}
+#l3cv{width:100%;height:100%;display:block}
+.l3labels{position:absolute;inset:0;z-index:2}
+.l3tag{font:700 11px Montserrat,sans-serif;color:#fff;background:rgba(10,25,30,.72);padding:3px 7px;border-radius:7px;white-space:nowrap;pointer-events:none;border:1px solid rgba(255,255,255,.15)}
+.l3help{position:absolute;left:10px;bottom:10px;right:10px;font-size:11.5px;color:#cfe;background:rgba(5,15,20,.55);padding:6px 10px;border-radius:9px;pointer-events:none}
+.l3toast{position:absolute;left:50%;top:14px;transform:translate(-50%,-20px);opacity:0;transition:.25s;background:rgba(10,40,30,.92);border:1px solid var(--acc);color:#e8fff6;padding:9px 14px;border-radius:12px;font-size:13.5px;font-weight:600;max-width:86%;text-align:center;pointer-events:none;z-index:5}
+.l3toast.on{opacity:1;transform:translate(-50%,0)}.l3toast.bad{border-color:var(--bad);background:rgba(60,15,15,.92)}
+.l3side{max-height:min(68vh,620px);overflow:auto}
+.l3now{padding:11px 12px;border-radius:12px;background:rgba(52,229,160,.1);border:1px solid rgba(52,229,160,.4);font-size:14px;line-height:1.5}
+#l3steps{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+#l3steps li{display:flex;gap:8px;font-size:12.5px;color:var(--mut);padding:6px 8px;border-radius:9px;line-height:1.4}
+#l3steps li span{flex:0 0 20px;text-align:center}
+#l3steps li.on{background:var(--card2);color:var(--txt);font-weight:700}#l3steps li.ok{color:var(--acc)}
+.mchk{display:flex;gap:8px;align-items:center;padding:7px 9px;border:1px solid var(--line);border-radius:9px;margin-bottom:5px;font-size:13.5px;cursor:pointer}
+#l3eye{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:6;pointer-events:none}
+#l3eye.on{display:flex}
+#l3eye .eyeIn{position:relative;text-align:center;pointer-events:auto}
+#l3eyeCv{width:min(52vh,360px);height:min(52vh,360px);border-radius:50%;box-shadow:0 0 0 8px #111,0 0 0 10px #444,0 20px 60px rgba(0,0,0,.6);background:#000}
+#l3eye small{display:block;color:#cde;margin-top:10px;font-weight:600}
+#l3eyeX{position:absolute;right:-6px;top:-6px;width:34px;height:34px;border-radius:50%;border:0;background:#fff;color:#111;font-weight:800;cursor:pointer}
+#l3res{margin-top:14px;display:grid;gap:10px}
+#l3res .q{padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--card)}
+.tbl3{border-collapse:collapse;width:100%;margin-top:8px;font-size:13.5px}.tbl3 td,.tbl3 th{border:1px solid var(--line);padding:6px 8px;text-align:center}.tbl3 th{background:var(--card2)}
+</style>
+</head>
+<body>
+<header><div class="hwrap">
+  <a class="logo" href="#home"><i>🧬</i><span>BIO <b>3D</b> ӘЛЕМІ</span></a>
+  <nav class="nav">
+    <a href="#home" data-v="home">🏠</a>
+    <a href="#lessons" data-v="lessons">🎬 Бейнесабақтар</a>
+    <a href="#lab" data-v="lab">🔬 Зертхана</a>
+    <a href="#sheets" data-v="sheets">📝 Жұмыс парақтары</a>
+    <a href="#tasks" data-v="tasks">🧩 Тапсырмалар</a>
+    <a href="#models" data-v="models">🫀 3D модельдер</a>
+    <a href="#reserves" data-v="reserves">🏞️ Қорықтар</a>
+    <a href="#olymp" data-v="olymp">🏆 Олимпиада</a>
+    <a href="#ai" data-v="ai">🤖 ЖИ</a>
+  </nav>
+</div></header>
+
+<!-- HOME -->
+<section class="view" id="v-home">
+  <div class="hero">
+    <canvas id="heroCv"></canvas>
+    <div class="hero-in">
+      <a class="aitag" href="#ai">🤖 Жасанды интеллект — адамзат дамуының жаңа кезеңі</a><br><span class="tag">Биология • цифрлық білім беру платформасы</span>
+      <h1>Тірі табиғатты <b>3D әлемде</b> зертте</h1>
+      <p>Анимациялық бейнесабақтар, виртуалды зертхана, дайын жұмыс парақтары, ойындар мен викториналар, адам ағзасы мен жасушаның 3D модельдері, Қазақстан қорықтары және олимпиадаға дайындық — бәрі бір сайтта.</p>
+      <div class="row"><a class="btn" href="#lab">🧪 3D зертханаға кіру</a><a class="btn ghost" href="#models">🫀 3D модельдер</a><a class="btn blue" href="#ai">🤖 ЖИ көмекші</a></div>
+      <div class="stats"><div><b>8</b>бөлім</div><div><b>13</b>3D модель</div><div><b>17</b>зертханалық жұмыс</div><div><b>4</b>3D тур</div></div>
+    </div>
+  </div>
+  <div class="cards" id="homeCards"></div>
+</section>
+
+<!-- 1 LESSONS -->
+<section class="view" id="v-lessons">
+  <div class="sec-h"><h2><span class="num">1</span>Бейнесабақ<span>тар</span></h2><p>Тақырыптарға арналған бейнесабақтар және анимациялық 3D түсіндірмелер. Тізімнен сабақты таңда — бейне бірден ойнайды.</p></div>
+  <div class="grid2 vgrid" style="grid-template-columns:minmax(0,1fr) minmax(0,340px)">
+    <div><div class="player"><video id="vPlayer" controls playsinline preload="metadata"></video><div class="cap" id="vCap"></div></div></div>
+    <div><h3 style="font-size:16px;margin-bottom:10px">🎬 Бейнесабақтар</h3><div class="vlist" id="vList" style="max-height:620px;overflow:auto;padding-right:4px"></div></div>
+  </div>
+  <h3 style="font-size:20px;margin:30px 0 12px">✨ Анимациялық түсіндірмелер</h3>
+  <div class="grid2" style="grid-template-columns:minmax(0,320px) minmax(0,1fr)">
+    <div class="llist" id="lessonList"></div>
+    <div>
+      <div class="player">
+        <canvas id="lessonCv" width="960" height="540"></canvas>
+        <div class="pbar">
+          <button class="btn sm" id="plPlay">❚❚</button>
+          <button class="btn sm ghost" id="plRe" title="Басынан">⟲</button>
+          <div class="prog" id="plProg"><i id="plFill"></i></div>
+          <select id="plSpeed" title="Жылдамдық"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option></select>
+          <span class="time" id="plTime">0:00 / 0:00</span>
+        </div>
+        <div class="cap" id="plCap"></div>
+      </div>
+      <div class="panel" style="margin-top:14px"><b>3D түсіндірме:</b> <span class="muted" id="plLink"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 LAB -->
+<section class="view" id="v-lab">
+  <div class="sec-h"><h2><span class="num">2</span>Виртуалды <span>зертхана</span></h2><p>3D зертханада жұмысты өзің орында: құралдарды бас, сүйреп апар, реактив тамыз, микроскоппен қара, өлше және қорытынды жаса. Сонымен қатар 6 деректерді талдау зертханасы бар.</p></div>
+  <div class="seg" id="labMode"><button data-m="3d" class="on">🧪 3D зертхана — өзің жаса</button><button data-m="an">📈 Деректерді талдау (6 жұмыс)</button></div>
+  <div id="lab3dWrap">
+    <div id="l3cards" class="l3grid"></div>
+    <div id="l3work" style="display:none">
+      <div class="l3top"><button class="btn ghost sm" id="l3back">← Барлық жұмыстар</button><div><span class="pill" id="l3grade"></span> <b id="l3title"></b></div><div class="row" style="gap:6px"><button class="btn ghost sm" id="l3hint">💡 Көмек</button><button class="btn ghost sm" id="l3lbl">🏷 Атаулар</button><button class="btn ghost sm" id="l3re">↺ Қайта бастау</button></div></div>
+      <div class="l3lay">
+        <div id="l3view"><canvas id="l3cv"></canvas><div id="l3toast" class="l3toast"></div>
+          <div id="l3eye"><div class="eyeIn"><canvas id="l3eyeCv" width="420" height="420"></canvas><button id="l3eyeX">✕</button><small>Окуляр арқылы көрініс</small></div></div>
+          <div class="l3help">🖱 Айналдыру: тышқанмен сүйреу • Жақындату: дөңгелек • Жасыл шеңбер — қазіргі зат, сары — апаратын орын</div></div>
+        <div class="l3side panel"><div id="l3goal" class="muted" style="font-size:13px"></div><div id="l3cur" style="margin-top:10px"></div><h4 style="margin:14px 0 6px">Жұмыс барысы</h4><ol id="l3steps"></ol></div>
+      </div>
+      <div id="l3res"></div>
+    </div>
+  </div>
+  <div id="labAnWrap" style="display:none">
+  <div class="tabs" data-tabs="lab">
+    <button data-t="mit" class="on">№1 Митоздық индекс</button>
+    <button data-t="ph">№2 Фотосинтез факторлары</button>
+    <button data-t="enz">№3 Фермент кинетикасы</button>
+    <button data-t="wp">№4 Су потенциалы</button>
+    <button data-t="gel">№5 Гель-электрофорез</button>
+    <button data-t="chi">№6 Дрозофила және χ²</button>
+  </div>
+
+  <div class="tp on" data-p="lab-mit"><div class="labhead" data-lab="mit"></div><div class="grid2">
+    <div><canvas id="mitCv" class="labcv" width="720" height="540" style="cursor:crosshair"></canvas>
+      <div class="row" style="margin-top:10px"><span class="muted">Көру өрісі:</span><div class="seg" id="mitField"><button data-f="0" class="on">1</button><button data-f="1">2</button><button data-f="2">3</button></div><button class="btn sm ghost" id="mitClear">Белгілерді өшіру</button><button class="btn sm ghost" id="mitReveal">👁 Дұрыс жауап (мұғалімге)</button></div></div>
+    <div class="panel">
+      <b>1. Фазаны таңда да, жасушаны бас:</b>
+      <div class="seg" id="mitBrush" style="margin-top:8px"></div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="mitCheck">✓ Көру өрісін тексеру</button><span id="mitAcc" class="score"></span></div>
+      <b style="display:block;margin-top:14px">2. Нәтижелер кестесі</b>
+      <table class="tbl" id="mitTb"></table>
+      <div class="calc"><b>3. Есептеу</b><div class="row" style="margin-top:8px">МИ = <input type="text" id="mitMI" style="width:90px" placeholder="?"> % <button class="btn sm" id="mitMIchk">Тексеру</button><span id="mitMIr"></span></div>
+        <button class="btn sm ghost" id="mitDur" style="margin-top:10px">⏱ Фазалардың ұзақтығын есептеу (T = 24 сағ)</button><div id="mitDurOut"></div></div>
+      <div class="q" id="mitQ1"></div><div class="q" id="mitQ2"></div>
+    </div></div></div>
+
+  <div class="tp" data-p="lab-ph"><div class="labhead" data-lab="ph"></div><div class="grid2">
+    <div><canvas id="phCv" class="labcv" width="720" height="440"></canvas><canvas id="phChart" class="labcv" width="720" height="320" style="margin-top:12px"></canvas></div>
+    <div class="panel">
+      <label class="ctl">Шамға дейінгі қашықтық d: <b id="phDv">20</b> см</label><input type="range" id="phD" min="5" max="50" step="2.5" value="20">
+      <label class="ctl">CO₂ көзі — NaHCO₃ концентрациясы</label><div class="seg" id="phC"><button data-c="0.05">0,05%</button><button data-c="0.1" class="on">0,1%</button><button data-c="0.5">0,5%</button><button data-c="1">1,0%</button></div>
+      <label class="ctl">Су моншасының температурасы: <b id="phTv">25</b> °C</label><input type="range" id="phT" min="10" max="40" step="5" value="25">
+      <div class="row" style="margin-top:12px"><button class="btn" id="phRun">▶ 5 минут өлшеу</button><span class="pill" id="phTm">⏱ 0 мин</span><span class="pill" id="phL">L = 0 мм</span></div>
+      <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>№</th><th>d, см</th><th>I</th><th>NaHCO₃, %</th><th>t, °C</th><th>L, мм</th><th>V, мм³</th><th>v, мм³/мин</th></tr></thead><tbody id="phTb"></tbody></table></div>
+      <button class="btn ghost sm" id="phClr" style="margin-top:8px">Кестені тазалау</button>
+      <p class="muted" style="margin-top:8px">💡 Кеңес: алдымен 0,1% CO₂ және 25 °C кезінде 5–6 түрлі қашықтықта өлше, сосын 1,0% CO₂ кезінде қайтала. Графиктерді салыстыр.</p>
+      <div class="q" id="phQ1"></div><div class="q" id="phQ2"></div>
+    </div></div></div>
+
+  <div class="tp" data-p="lab-enz"><div class="labhead" data-lab="enz"></div><div class="grid2">
+    <div><canvas id="enCv" class="labcv" width="720" height="380"></canvas><div class="grid2b" style="margin-top:12px;gap:12px"><canvas id="enCurve" class="labcv" width="520" height="300"></canvas><canvas id="enSum" class="labcv" width="520" height="300"></canvas></div></div>
+    <div class="panel">
+      <label class="ctl">Субстрат [H₂O₂], %</label><div class="seg" id="enS"><button data-s="0.5">0,5</button><button data-s="1">1</button><button data-s="2" class="on">2</button><button data-s="3">3</button><button data-s="4">4</button><button data-s="6">6</button></div>
+      <label class="ctl">Температура: <b id="enTv">37</b> °C</label><input type="range" id="enT" min="10" max="70" step="5" value="37">
+      <label class="ctl">Буфер pH</label><div class="seg" id="enP"><button data-p="3">3</button><button data-p="5">5</button><button data-p="7" class="on">7</button><button data-p="9">9</button><button data-p="11">11</button></div>
+      <label class="ctl">Ингибитор</label><div class="seg" id="enI"><button data-i="0" class="on">Жоқ</button><button data-i="1">Бәсекелес</button><button data-i="2">Бәсекелес емес</button></div>
+      <div class="row" style="margin-top:12px"><button class="btn" id="enRun">▶ Бастау (60 с)</button><span class="pill" id="enTm">⏱ 0 с</span><span class="pill" id="enVv">V = 0 см³</span></div>
+      <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>№</th><th>[S], %</th><th>t, °C</th><th>pH</th><th>Ингиб.</th><th>V₁₀, см³</th><th>V₆₀, см³</th><th>v₀, см³/с</th></tr></thead><tbody id="enTb"></tbody></table></div>
+      <button class="btn ghost sm" id="enClr" style="margin-top:8px">Кестені тазалау</button>
+      <div class="q" id="enQ1"></div><div class="q" id="enQ2"></div>
+    </div></div></div>
+
+  <div class="tp" data-p="lab-wp"><div class="labhead" data-lab="wp"></div><div class="grid2">
+    <div><canvas id="wpCv" class="labcv" width="720" height="360"></canvas><canvas id="wpChart" class="labcv" width="720" height="330" style="margin-top:12px"></canvas></div>
+    <div class="panel">
+      <div class="row"><button class="btn" id="wpB1">1. Бастапқы массаны өлшеу</button><button class="btn" id="wpB2" disabled>2. Ерітінділерге салу (24 сағ)</button><button class="btn" id="wpB3" disabled>3. Соңғы массаны өлшеу</button><button class="btn ghost sm" id="wpRe">🔄 Жаңадан</button></div>
+      <table class="tbl" id="wpTb"></table>
+      <div class="calc" id="wpCalc" style="display:none"><b>Деректерді өңдеу</b>
+        <p class="muted" style="margin:6px 0">Графиктегі түзудің x осімен қиылысу нүктесін тап (Δm = 0).</p>
+        <div class="row">C<sub>изо</sub> = <input type="text" id="wpIso" style="width:90px"> моль/дм³ <button class="btn sm" id="wpIsoChk">Тексеру</button><span id="wpIsoR"></span></div>
+        <div class="row" style="margin-top:8px">Ψ = <input type="text" id="wpPsi" style="width:110px"> кПа <button class="btn sm" id="wpPsiChk">Тексеру</button><span id="wpPsiR"></span></div></div>
+      <div class="q" id="wpQ1"></div><div class="q" id="wpQ2"></div>
+    </div></div></div>
+
+  <div class="tp" data-p="lab-gel"><div class="labhead" data-lab="gel"></div><div class="grid2">
+    <div><canvas id="gelCv" class="labcv" width="720" height="490" style="cursor:pointer"></canvas><canvas id="gelChart" class="labcv" width="720" height="300" style="margin-top:12px"></canvas></div>
+    <div class="panel">
+      <div class="row"><button class="btn" id="gelLoad">1. Үлгілерді ұяшықтарға құю</button></div>
+      <label class="ctl">Кернеу: <b id="gelVv">100</b> В</label><input type="range" id="gelV" min="50" max="150" step="10" value="100"><div id="gelHeat" class="muted"></div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="gelRun" disabled>▶ Токты қосу</button><button class="btn blue" id="gelUV">🟣 УК шамын қосу</button><span class="pill" id="gelTm">⏱ 0 мин</span><button class="btn ghost sm" id="gelRe">🔄</button></div>
+      <div id="gelMsg" style="margin-top:8px;font-size:13px"></div>
+      <p class="muted" style="margin-top:8px">УК шамында жолақты бассаң, оның қашықтығы өлшеніп, кестеге жазылады. Маркерден кемінде 3 жолақ өлшегенде стандартты қисық тұрғызылады.</p>
+      <div style="overflow-x:auto"><table class="tbl" id="gelTb"></table></div>
+      <div class="q" id="gelQ1"></div><div class="q" id="gelQ2"></div>
+    </div></div></div>
+
+  <div class="tp" data-p="lab-chi"><div class="labhead" data-lab="chi"></div><div class="grid2">
+    <div><canvas id="chiCv" class="labcv" width="720" height="440"></canvas>
+      <div class="panel" style="margin-top:12px"><b>Будандастыру сызбасы:</b> <span id="chiDesc">P: AABB (сұр, қалыпты) × aabb (қара, қысқа) → F₁: AaBb → F₁ × F₁</span><br><b>Нөлдік гипотеза:</b> <span id="chiHyp">H₀: гендер тәуелсіз тұқым қуалайды → F₂-де 9 : 3 : 3 : 1</span><p class="muted" style="margin-top:6px">A — сұр дене, a — қара дене; B — қалыпты қанат, b — қысқа (вестигиальды) қанат. Нұсқа A: ebony (III хромосома) және vestigial (II хромосома) гендері. Нұсқа B: black және vestigial гендері (екеуі де II хромосомада).</p></div></div>
+    <div class="panel">
+      <label class="ctl">Будандастыру түрі</label><div class="seg" id="chiX"><button data-x="f2" class="on">F₁ × F₁</button><button data-x="tc">Талдаушы (AaBb × aabb)</button></div>
+      <label class="ctl">Тәжірибе нұсқасы</label><div class="seg" id="chiV"><button data-v="A" class="on">Нұсқа A</button><button data-v="B">Нұсқа B</button></div>
+      <label class="ctl">Ұрпақ саны (шамамен)</label><div class="seg" id="chiN"><button data-n="200">200</button><button data-n="400" class="on">400</button><button data-n="800">800</button></div>
+      <button class="btn" id="chiGo" style="margin-top:12px">🪰 Будандастыру</button>
+      <div style="overflow-x:auto"><table class="tbl" id="chiTb"></table></div>
+      <div class="row" style="margin-top:10px">χ² = <input type="text" id="chiX2" style="width:90px"> <button class="btn sm" id="chiChk">Тексеру</button><span id="chiR"></span></div>
+      <div class="row" style="margin-top:10px"><select id="chiConS"><option value="">— Қорытынды —</option><option value="acc">χ² < 7,815 → H₀ қабылданады</option><option value="rej">χ² > 7,815 → H₀ жоққа шығарылады</option></select><button class="btn sm" id="chiCon">Тексеру</button></div><div id="chiConR" style="margin-top:6px;font-size:14px"></div>
+      <div class="q" id="chiQ"></div>
+    </div></div></div>
+  </div>
+</section>
+
+<!-- 3 SHEETS -->
+<section class="view" id="v-sheets">
+  <div class="sec-h"><h2><span class="num">3</span>Жұмыс <span>парақтары</span></h2><p>Дайын тапсырмалар: суретпен жұмыс, кесте толтыру, сәйкестендіру және бос орынды толтыру. Әр парақ автоматты түрде тексеріледі.</p></div>
+  <div class="tabs" data-tabs="ws">
+    <button data-t="pic" class="on">🖼 Суретпен жұмыс</button>
+    <button data-t="tab">📊 Кесте толтыру</button>
+    <button data-t="mat">🔗 Сәйкестендіру</button>
+    <button data-t="fill">✏️ Бос орынды толтыр</button>
+  </div>
+  <div class="tp on" data-p="ws-pic"><div class="panel">
+    <h3>№1 жұмыс парағы. Өсімдік жасушасының құрылысы</h3>
+    <p class="muted">Тапсырма: суреттегі нөмірленген бөліктердің атауын таңда.</p>
+    <div class="wsfig" style="margin-top:12px"><div id="wsSvg"></div><div><div class="wsl" id="wsLabels"></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="wsPicChk">Тексеру</button><button class="btn ghost" id="wsPicRe">Қайта бастау</button><span class="score" id="wsPicSc"></span></div></div></div>
+  </div></div>
+  <div class="tp" data-p="ws-tab"><div class="panel">
+    <h3>№2 жұмыс парағы. Адам ағзасының мүшелер жүйесі</h3>
+    <p class="muted">Тапсырма: кестені толтыр — әр жүйенің негізгі мүшелері мен қызметін таңда.</p>
+    <div style="overflow-x:auto"><table class="tbl" id="wsTab"></table></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="wsTabChk">Тексеру</button><button class="btn ghost" id="wsTabRe">Қайта бастау</button><span class="score" id="wsTabSc"></span></div>
+  </div></div>
+  <div class="tp" data-p="ws-mat"><div class="panel">
+    <h3>№3 жұмыс парағы. Ұғымдарды сәйкестендір</h3>
+    <p class="muted">Тапсырма: алдымен сол жақтағы ұғымды, сосын оған сәйкес анықтаманы бас. Жұптар бір түспен белгіленеді.</p>
+    <div class="match" id="wsMatch" style="margin-top:12px"></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="wsMatChk">Тексеру</button><button class="btn ghost" id="wsMatRe">Қайта бастау</button><span class="score" id="wsMatSc"></span></div>
+  </div></div>
+  <div class="tp" data-p="ws-fill"><div class="panel fill">
+    <h3>№4 жұмыс парағы. Сөйлемдерді толықтыр</h3>
+    <p class="muted">Тапсырма: бос орынға тиісті сөзді таңда.</p>
+    <div id="wsFill"></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="wsFillChk">Тексеру</button><button class="btn ghost" id="wsFillRe">Қайта бастау</button><span class="score" id="wsFillSc"></span></div>
+  </div></div>
+</section>
+
+<!-- 4 TASKS -->
+<section class="view" id="v-tasks">
+  <div class="sec-h"><h2><span class="num">4</span>Интерактивті <span>тапсырмалар</span></h2><p>Тесттер, пазлдар, биологиялық ойындар мен топтық викторина — сабақты қызықты етуге арналған.</p></div>
+  <div class="tabs" data-tabs="tk">
+    <button data-t="test" class="on">✅ Тест</button>
+    <button data-t="puz">🧩 Пазлдар</button>
+    <button data-t="game">🎮 Биологиялық ойындар</button>
+    <button data-t="quiz">🏅 Викторина</button>
+  </div>
+  <div class="tp on" data-p="tk-test"><div class="panel qcard" id="testBox"></div></div>
+  <div class="tp" data-p="tk-puz"><div class="grid2b">
+    <div class="panel"><h3>Пазл: жасушаны жина</h3><p class="muted">Екі бөлікті кезекпен басып, орнын ауыстыр. Суретті толық жина!</p>
+      <div class="jig" id="jig" style="margin-top:12px"></div>
+      <div class="row" style="margin-top:12px"><button class="btn ghost" id="jigNew">🔀 Араластыру</button><span class="score" id="jigSc"></span></div></div>
+    <div class="panel"><h3>Ретке келтір</h3><p class="muted">Екі жолды басып, орнын ауыстыр. Дұрыс ретті құрастыр.</p>
+      <div class="seg" id="ordSel" style="margin:10px 0"></div>
+      <div class="ord" id="ord"></div>
+      <div class="row" style="margin-top:12px"><button class="btn" id="ordChk">Тексеру</button><button class="btn ghost" id="ordNew">🔀 Араластыру</button><span class="score" id="ordSc"></span></div></div>
+  </div></div>
+  <div class="tp" data-p="tk-game"><div class="grid2b">
+    <div class="panel"><h3>Жұбын тап</h3><p class="muted">Мүшенің суретін және оның атауын тап.</p>
+      <div class="mem" id="mem" style="margin-top:12px"></div>
+      <div class="row" style="margin-top:12px"><button class="btn ghost" id="memNew">🔄 Жаңа ойын</button><span class="score" id="memSc"></span></div></div>
+    <div class="panel"><h3>Қай патшалыққа жатады?</h3><p class="muted">45 секунд ішінде мүмкіндігінше көп ағзаны дұрыс патшалыққа жібер.</p>
+      <div class="sortbox" style="margin-top:12px"><div class="row" style="justify-content:space-between"><span class="pill" id="srtT">⏱ 45</span><span class="pill" id="srtS">Ұпай: 0</span></div>
+      <div class="item" id="srtItem">Бастауға дайынсың ба?</div>
+      <div class="sortbtns" id="srtBtns"></div>
+      <button class="btn" id="srtGo" style="margin-top:16px">▶ Бастау</button></div></div>
+  </div></div>
+  <div class="tp" data-p="tk-quiz"><div class="panel">
+    <h3>«Биология сайысы» — топтық викторина</h3><p class="muted">Сынып екі топқа бөлінеді. Топ санат пен ұпайды таңдайды, дұрыс жауап берсе ұпай қосылады. Интерактивті тақтада көрсетуге ыңғайлы.</p>
+    <div class="teams"><div class="team">1-топ<b id="t1">0</b></div><div class="team">2-топ<b id="t2">0</b></div></div>
+    <div class="jeo" id="jeo"></div>
+    <button class="btn ghost" id="jeoRe" style="margin-top:14px">🔄 Ойынды қайта бастау</button>
+  </div></div>
+</section>
+
+<!-- 5 MODELS -->
+<section class="view" id="v-models">
+  <div class="sec-h"><h2><span class="num">5</span>3D <span>модельдер</span></h2><p>Жасушалар, адам мүшелері (жүрек, ми, өкпе, бүйрек, нефрон, көз, нейрон, ас қорыту жүйесі), өсімдіктер және ДНҚ-ның шынайы үшөлшемді модельдері. Айналдыр, жақындат, бөлікті басып сипаттамасын оқы. «Қима» режимі ішкі құрылысты көрсетеді.</p></div>
+  <div class="seg" id="m3sel" style="margin-bottom:14px"></div>
+  <div class="grid2">
+    <div class="m3wrap"><canvas id="m3d"></canvas>
+      <div class="m3tools"><div id="m3tog" class="row"></div><button class="btn sm ghost" id="m3rot">⟳ Айналу: қосулы</button><button class="btn sm ghost" id="m3reset" title="Бастапқы көрініс">⌖</button></div>
+      <div class="m3hint">🖱 Тартып айналдыр • дөңгелекпен/екі саусақпен жақындат • оң батырмамен жылжыт • бөлікті бас</div></div>
+    <div class="panel" id="m3info"><span class="pill" id="m3cat"></span><h3 id="m3name"></h3><p class="muted" id="m3txt"></p>
+      <div style="margin-top:14px;font-weight:700;font-size:13px">Бөліктері:</div><div class="chips" id="m3parts"></div></div>
+  </div>
+</section>
+
+<!-- 6 RESERVES -->
+<section class="view" id="v-reserves">
+  <div class="sec-h"><h2><span class="num">6</span>Қазақстан <span>қорықтары</span></h2><p>Ерекше қорғалатын табиғи аумақтар: 3D виртуалды турмен қорықты аралап шық, картадан қорықты таңдап, оның өсімдіктері мен жануарлары туралы біл.</p></div>
+  <div class="tours">
+    <button class="tourc" data-tour="aksu" style="--c1:#7f1d1d;--c2:#14532d"><i>🌷</i><b>Ақсу-Жабағылы</b><small>Тау шатқалы, қызғалдақтар, таутекелер</small><span>▶ 3D тур</span></button>
+    <button class="tourc" data-tour="korgal" style="--c1:#9d174d;--c2:#0e7490"><i>🦩</i><b>Қорғалжын</b><small>Теңіз көлі, қоқиқаздар, қамыс</small><span>▶ 3D тур</span></button>
+    <button class="tourc" data-tour="naurzum" style="--c1:#14532d;--c2:#365314"><i>🌲</i><b>Наурызым</b><small>Қарағайлы орман, ақбөкендер, бүркіт</small><span>▶ 3D тур</span></button>
+    <button class="tourc" data-tour="barsa" style="--c1:#92400e;--c2:#57534e"><i>🐴</i><b>Барсакелмес</b><small>Арал табаны, құландар, сексеуіл</small><span>▶ 3D тур</span></button>
+  </div>
+  <div class="grid2">
+    <div><div class="mapbox"><svg id="kzmap" viewBox="0 0 820 460"></svg></div>
+      <div class="rlist" id="rlist"></div></div>
+    <div><div class="panel" id="rinfo"></div>
+      <div class="panel" style="margin-top:14px"><h3>Мини-тест: «Қай қорық?»</h3><div id="rquiz"></div></div></div>
+  </div>
+</section>
+
+<!-- 7 OLYMP -->
+<section class="view" id="v-olymp">
+  <div class="sec-h"><h2><span class="num">7</span>Олимпиадаға <span>дайындық</span></h2><p>Күрделі тесттер түсіндірмесімен, логикалық және генетикалық есептер, биологиялық жағдаяттар.</p></div>
+  <div class="tabs" data-tabs="ol">
+    <button data-t="hard" class="on">🧠 Күрделі тест</button>
+    <button data-t="logic">🧮 Логикалық есептер</button>
+    <button data-t="gen">🧬 Генетика: Пеннет торы</button>
+    <button data-t="case">💡 Биологиялық жағдаяттар</button>
+  </div>
+  <div class="tp on" data-p="ol-hard"><div class="panel qcard" id="hardBox"></div></div>
+  <div class="tp" data-p="ol-logic"><div id="logicBox"></div></div>
+  <div class="tp" data-p="ol-gen"><div class="panel">
+    <h3>Пеннет торын құрастыр</h3><p class="muted">Ата-аналардың генотипін таңда. Тор, генотип және фенотип бойынша ажырау автоматты есептеледі (толық доминанттылық).</p>
+    <div class="row" style="margin-top:12px"><label class="muted">Белгілер саны:</label><div class="seg" id="genN"><button data-n="1" class="on">Моногибрид</button><button data-n="2">Дигибрид</button></div></div>
+    <div class="row" style="margin-top:12px" id="genSel"></div>
+    <div style="overflow-x:auto"><div id="genOut"></div></div>
+  </div></div>
+  <div class="tp" data-p="ol-case"><div id="caseBox"></div></div>
+</section>
+
+<!-- 8 AI -->
+<section class="view" id="v-ai">
+  <div class="aihero"><div><span class="pill">8-бөлім</span><h2>Жасанды интеллект — <span>адамзат дамуының жаңа кезеңі</span></h2><p>Жасанды интеллект (ЖИ) ғылымды, медицинаны және білім беруді өзгертіп жатыр. Бұл бөлімде ЖИ-дің биологиядағы рөлімен танысып, ЖИ көмекшісімен сөйлесіп, кез келген тақырыпқа тест құрастыра аласың.</p><div id="aiStatus" class="muted" style="margin-top:8px">⏳ ЖИ көмекшісі қосылуда…</div></div><div class="aiorb"><i></i><i></i><i></i><b>🤖</b></div></div>
+  <div class="grid2" style="margin-top:20px">
+    <div class="panel aichat"><h3>💬 BioAI — биология көмекшісі</h3><p class="muted">Биология бойынша кез келген сұрақ қой. ЖИ қазақ тілінде қысқа әрі түсінікті жауап береді.</p>
+      <div class="chips" id="aiQuick"></div>
+      <div id="aiLog" class="ailog"><div class="msg ai">Сәлем! Мен BioAI — биология көмекшісімін 🌿 Жасуша, генетика, адам анатомиясы, экология — кез келген тақырыпты түсіндіріп берейін.</div></div>
+      <form id="aiForm" class="row" style="margin-top:10px"><input type="text" id="aiIn" placeholder="Сұрағыңды жаз…" style="flex:1" autocomplete="off"><button class="btn ai-need" id="aiSend">Жіберу ➤</button></form>
+      <p class="muted" style="margin-top:8px;font-size:12px">⚠️ ЖИ қателесуі мүмкін — маңызды деректерді оқулықтан тексер.</p></div>
+    <div><div class="panel"><h3>📝 ЖИ тест құрастырушы</h3><p class="muted">Тақырыпты жаз — ЖИ сол бойынша түсіндірмесі бар тест жасайды. Мұғалімге сабаққа жедел тест дайындауға ыңғайлы.</p>
+      <label class="ctl">Тақырып</label><input type="text" id="aiTopic" placeholder="Мысалы: Фотосинтез, Митоз, Қан айналымы" style="width:100%">
+      <div class="row" style="margin-top:10px"><select id="aiGrade"><option>7 сынып</option><option>8 сынып</option><option>9 сынып</option><option selected>10 сынып</option><option>11 сынып</option></select><select id="aiN"><option value="5">5 сұрақ</option><option value="8" selected>8 сұрақ</option><option value="10">10 сұрақ</option></select><select id="aiLvl"><option>жеңіл</option><option selected>орташа</option><option>күрделі (олимпиада)</option></select></div>
+      <button class="btn ai-need" id="aiGen" style="margin-top:12px">✨ Тест құрастыру</button><div id="aiGenMsg" class="muted" style="margin-top:8px"></div></div>
+      <div class="panel qcard" id="aiTest" style="margin-top:14px;display:none"></div></div>
+  </div>
+  <h3 style="font-size:22px;margin:28px 0 14px">🧬 ЖИ биологияда</h3>
+  <div class="cards aicards">
+    <div class="card"><div class="ic">🧬</div><h3>Ақуыз құрылымын болжау</h3><p>AlphaFold жүйесі амин қышқылдарының тізбегінен ақуыздың кеңістіктік құрылымын жоғары дәлдікпен болжайды. Бұл жұмыс үшін Д. Хассабис пен Дж. Джампер 2024 жылы химия бойынша Нобель сыйлығын алды (Д. Бейкермен бірге).</p></div>
+    <div class="card"><div class="ic">🩺</div><h3>Медицина</h3><p>ЖИ рентген, КТ және МРТ суреттерінен ауруларды ерте анықтауға көмектеседі, жаңа дәрілік заттарды іздеуді жеделдетеді.</p></div>
+    <div class="card"><div class="ic">🧫</div><h3>Геномика</h3><p>Миллиардтаған нуклеотидтен тұратын геномдарды талдап, мутацияларды және тұқым қуалайтын аурулардың себептерін табуға көмектеседі.</p></div>
+    <div class="card"><div class="ic">🐾</div><h3>Экология және қорықтар</h3><p>Фототұзақ пен дрон суреттерінен жануарларды автоматты түрде таниды, популяция санын бағалайды, орман өрттерінің қаупін болжайды.</p></div>
+    <div class="card"><div class="ic">🌾</div><h3>Ауыл шаруашылығы</h3><p>Жапырақтың суретінен өсімдік ауруларын таниды, егін өнімін болжайды, суаруды үнемдеуге көмектеседі.</p></div>
+    <div class="card"><div class="ic">⚖️</div><h3>Жауапкершілік</h3><p>ЖИ — көмекші құрал. Ол қателесуі мүмкін, сондықтан деректерді тексеріп, дереккөзді көрсету және өз ойыңмен жұмыс істеу маңызды.</p></div>
+  </div>
+  <div class="panel" style="margin-top:18px"><h3>✨ Бұл сайттағы ЖИ</h3><ul class="muted" style="margin:8px 0 0 18px;line-height:1.8"><li>«Бейнесабақтар» бөліміндегі бейнелердің бір бөлігі ЖИ көмегімен жасалған.</li><li>BioAI көмекші сұрақтарға қазақ тілінде жауап береді.</li><li>ЖИ тест құрастырушы кез келген тақырыпқа тест жасайды.</li><li>3D зертханада жұмыс соңында ЖИ нәтижені түсіндіріп береді.</li></ul></div>
+</section>
+
+<div id="tour"><div id="tview"><canvas id="tourCv"></canvas></div>
+  <div class="ttop"><div class="row"><button class="btn sm ghost" id="tClose">← Шығу</button><button class="btn sm ghost" id="tHQ">⚙</button></div><div class="ttitle"><b id="tName"></b><small id="tSub"></small></div><div class="row tctl"><div class="row" id="tTod"></div><button class="btn sm ghost" id="tSnd" title="Табиғат дыбысы">🔈</button><button class="btn sm pink" id="tQ">🧠 Тест</button><button class="btn sm ghost" id="tPrev">←</button><button class="btn sm ghost" id="tNext">→</button><button class="btn sm ghost" id="tAuto">▶ Автотур</button></div></div>
+  <button class="btn sm ghost" id="tPhoto" title="Фото режимі">📷</button><canvas id="tMap" class="tmap" width="170" height="170" title="Мини-карта: нүктені басып ауыс"></canvas><div id="tQuiz"></div>
+  <div class="tcard" id="tCard"></div><div class="tstops" id="tStops"></div>
+  <div class="thint">🖱 Тартып айналдыр • дөңгелекпен жақындат • оң батырмамен жылжыт • 🌅☀️🌇 күн уақыты • 📷 фото режимі</div>
+  <div class="tload" id="tLoad"><div><div class="spin"></div><p>3D әлем құрастырылуда…</p></div></div></div>
+<div id="modal"><div class="box" id="mbox"></div></div>
+<footer>BIO 3D ӘЛЕМІ — биология пәніне арналған интерактивті цифрлық білім беру ресурсы</footer>
+
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),lerp=(a,b,k)=>a+(b-a)*k;
+const ease=x=>{x=clamp(x,0,1);return x*x*(3-2*x)},seg=(t,a,b)=>ease((t-a)/(b-a));
+function circ(c,x,y,r,f,s,lw){c.beginPath();c.arc(x,y,Math.max(0,r),0,Math.PI*2);if(f){c.fillStyle=f;c.fill()}if(s){c.strokeStyle=s;c.lineWidth=lw||2;c.stroke()}}
+function txt(c,s,x,y,sz,col,al,w){c.font=`${w||700} ${sz||18}px Montserrat,sans-serif`;c.fillStyle=col||'#fff';c.textAlign=al||'center';c.textBaseline='middle';c.fillText(s,x,y)}
+function rrect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function tag(c,s,x,y,col,a){c.save();c.globalAlpha=a==null?1:a;c.font='700 15px Montserrat,sans-serif';const w=c.measureText(s).width+20;c.fillStyle='rgba(2,10,8,.78)';rrect(c,x-w/2,y-15,w,30,9);c.fill();c.strokeStyle=col||'#34e5a0';c.lineWidth=1.5;c.stroke();txt(c,s,x,y,15,col||'#fff');c.restore()}
+function modal(html){$('#mbox').innerHTML=html;$('#modal').classList.add('on')}
+function closeModal(){$('#modal').classList.remove('on')}
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+
+/* ---------- ROUTER ---------- */
+const VIEWS=['home','lessons','lab','sheets','tasks','models','reserves','olymp','ai'];
+let cur='home';const onEnter={};
+function route(){let v=location.hash.slice(1)||'home';if(!VIEWS.includes(v))v='home';cur=v;
+  $$('.view').forEach(e=>e.classList.toggle('active',e.id==='v-'+v));
+  $$('nav.nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===v));
+  window.scrollTo(0,0);if(onEnter[v])onEnter[v]();}
+window.addEventListener('hashchange',route);
+let curTab={};
+function initTabs(){$$('[data-tabs]').forEach(tb=>{const g=tb.dataset.tabs;curTab[g]=$('button.on',tb).dataset.t;
+  $$('button',tb).forEach(b=>b.addEventListener('click',()=>{$$('button',tb).forEach(x=>x.classList.toggle('on',x===b));curTab[g]=b.dataset.t;
+    $$(`[data-p^="${g}-"]`).forEach(p=>p.classList.toggle('on',p.dataset.p===g+'-'+b.dataset.t));if(onTab[g])onTab[g](b.dataset.t)}))})}
+const onTab={};
+
+/* ---------- HOME ---------- */
+const SECTIONS=[
+ ['lessons','🎬','Бейнесабақтар','Тақырыптарға арналған анимациялық видеолар мен 3D түсіндірмелер: фотосинтез, митоз, қан айналымы, жасуша.'],
+ ['lab','🔬','Виртуалды зертхана','11 интерактивті 3D зертханалық жұмыс (микроскоп, ферменттер, ДНҚ бөлу, хроматография…) — өзің орында! + 6 деректерді талдау жұмысы.'],
+ ['sheets','📝','Жұмыс парақтары','Дайын тапсырмалар: суретпен жұмыс, кесте толтыру, сәйкестендіру, бос орынды толтыру.'],
+ ['tasks','🧩','Интерактивті тапсырмалар','Тесттер, пазлдар, биологиялық ойындар және топтық викторина.'],
+ ['models','🫀','3D модельдер','Шынайы 3D модельдер: қимасы бар жасушалар, адам ағзасы, жүрек, ДНҚ, өсімдік және жапырақтың ішкі құрылысы.'],
+ ['reserves','🏞️','Қазақстан қорықтары','Ақсу-Жабағылы, Қорғалжын, Наурызым, Барсакелмес және басқа қорғалатын аумақтар.'],
+ ['olymp','🏆','Олимпиадаға дайындық','Күрделі тесттер, логикалық есептер, генетика және биологиялық жағдаяттар.'],
+ ['ai','🤖','ЖИ — жаңа кезең','Жасанды интеллект көмекшісі, ЖИ тест құрастырушы және ЖИ-дің биологиядағы рөлі.']];
+$('#homeCards').innerHTML=SECTIONS.map((s,i)=>`<a class="card" href="#${s[0]}"><span class="n">0${i+1}</span><div class="ic">${s[1]}</div><h3>${s[2]}</h3><p>${s[3]}</p></a>`).join('');
+
+/* ---------- 1. LESSONS ---------- */
+const LESSONS=[
+{icon:'🌿',title:'Фотосинтез',sub:'6–7 сынып • 26 с',dur:26,link:'Өсімдік құрылысының 3D моделін «3D модельдер» бөлімінен қара.',
+ caps:[[0,'Фотосинтез — жасыл өсімдіктердің жарық энергиясын пайдаланып, бейорганикалық заттардан органикалық зат түзуі.'],[4,'Жапырақ жасушаларындағы хлоропластар хлорофилл пигменті арқылы күн жарығын сіңіреді.'],[8,'Ауадағы көмірқышқыл газы (CO₂) жапырақтың лептесіктері арқылы енеді.'],[12,'Тамыр сіңірген су (H₂O) сабақтағы өткізгіш ұлпалар арқылы жапыраққа көтеріледі.'],[16,'Нәтижесінде глюкоза (C₆H₁₂O₆) түзіліп, ал оттек (O₂) атмосфераға бөлінеді.'],[20,'Фотосинтездің жалпы теңдеуі: 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂. Жердегі тіршілік осы үдеріске тәуелді!']],
+ draw:drawPhoto},
+{icon:'🧫',title:'Митоз — жасушаның бөлінуі',sub:'8–9 сынып • 26 с',dur:26,link:'Жасушаның 3D моделінде центриольдер мен ядроны тауып көр.',
+ caps:[[0,'Интерфаза: жасуша бөлінуге дайындалады, ДНҚ екі еселенеді. Хроматин ядрода жіңішке жіп түрінде болады.'],[5,'Профаза: хромосомалар спиральданып жуандайды, ядро қабықшасы ериді, ұршық түзіле бастайды.'],[10,'Метафаза: хромосомалар жасушаның экваторында бір қатарға тізіледі, ұршық жіпшелері центромераларға бекиді.'],[15,'Анафаза: әр хромосоманың хроматидтері ажырап, жасушаның қарама-қарсы полюстеріне тартылады.'],[20,'Телофаза мен цитокинез: жаңа ядролар түзіліп, цитоплазма бөлінеді. Нәтижесінде генетикалық бірдей 2 жасуша пайда болады.']],
+ draw:drawMitosis},
+{icon:'❤️',title:'Қан айналым шеңберлері',sub:'8 сынып • 23 с',dur:23,link:'Жүректің 3D моделінде камералар мен ірі қан тамырларын қара.',
+ caps:[[0,'Жүрек — төрт камералы бұлшықетті мүше: екі жүрекше және екі қарынша. Ол қанды тынымсыз айдайды.'],[4,'Кіші шеңбер: оң қарыншадан веналық қан өкпе артериясы арқылы өкпеге барады.'],[7.5,'Өкпеде қан көмірқышқыл газынан арылып, оттекке қанығады да, өкпе веналары арқылы сол жүрекшеге оралады.'],[11,'Үлкен шеңбер: сол қарыншадан артериялық қан қолқа арқылы бүкіл денеге тарайды.'],[14.5,'Мүшелерде қан оттегін беріп, веналық қанға айналады да, қуыс веналар арқылы оң жүрекшеге қайтады.'],[18,'Екі шеңбер бірге жұмыс істеп, ағзаны оттекпен және қоректік заттармен қамтамасыз етеді.']],
+ draw:drawCirc},
+{icon:'🔬',title:'Жануар жасушасының құрылысы',sub:'7 сынып • 23 с',dur:23,link:'Жануар және өсімдік жасушасының 3D моделін салыстыр.',
+ caps:[[0,'Жануар жасушасының құрылысымен танысайық.'],[1.5,'Жасуша мембранасы — жасушаны қоршап, заттардың өтуін реттейді.'],[4,'Цитоплазма — органоидтар орналасқан жартылай сұйық ішкі орта.'],[6,'Ядро — тұқым қуалау ақпаратын (ДНҚ) сақтап, жасуша тіршілігін басқарады.'],[8.5,'Митохондриялар — жасушаның «энергия станциясы», АТФ түзеді.'],[11,'Эндоплазмалық тор (ЭПТ) — заттарды тасымалдайтын каналдар жүйесі.'],[13,'Рибосомалар — белок синтезін жүзеге асырады.'],[15,'Гольджи кешені — заттарды жинақтап, өңдеп, жасушадан шығарады.'],[17,'Лизосомалар — ферменттер арқылы қажетсіз заттарды ыдыратады.'],[19,'Барлық органоидтар бірлесе жұмыс істеп, жасушаның тіршілігін қамтамасыз етеді.']],
+ draw:drawCell}];
+
+function drawPhoto(c,t){const W=960,H=540;
+ let g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0c4a6e');g.addColorStop(.78,'#16687e');g.addColorStop(1,'#14532d');c.fillStyle=g;c.fillRect(0,0,W,H);
+ c.fillStyle='#3f2a14';c.fillRect(0,445,W,95);c.fillStyle='#4d3519';for(let i=0;i<40;i++){c.fillRect((i*137)%W,455+(i*53)%80,6,4)}
+ const p=1+.06*Math.sin(t*3);const sg=c.createRadialGradient(120,95,8,120,95,95*p);sg.addColorStop(0,'#fffbe0');sg.addColorStop(.45,'#facc15');sg.addColorStop(1,'rgba(250,204,21,0)');c.fillStyle=sg;c.fillRect(0,0,280,230);
+ txt(c,'Күн',120,95,18,'#713f12');
+ const ra=seg(t,1.5,3);if(ra>0){c.save();c.globalAlpha=ra;c.strokeStyle='#fde047';c.lineWidth=4;c.setLineDash([16,12]);c.lineDashOffset=-t*50;for(let k=0;k<4;k++){c.beginPath();c.moveTo(175,115+k*14);c.lineTo(500+k*40,205+k*16);c.stroke()}c.restore();tag(c,'Күн жарығы',300,135,'#fde047',ra)}
+ c.strokeStyle='#b7791f';c.lineWidth=5;c.lineCap='round';[[-70,525],[-25,535],[25,532],[75,518],[0,540]].forEach(([dx,y])=>{c.beginPath();c.moveTo(520,448);c.quadraticCurveTo(520+dx*.3,485,520+dx,y);c.stroke()});
+ c.strokeStyle='#22c55e';c.lineWidth=14;c.beginPath();c.moveTo(520,448);c.lineTo(520,300);c.stroke();
+ c.save();c.translate(605,248);c.rotate(-.35);const lg=c.createLinearGradient(-170,0,170,0);lg.addColorStop(0,'#15803d');lg.addColorStop(1,'#4ade80');c.fillStyle=lg;c.beginPath();c.ellipse(0,0,175,74,0,0,Math.PI*2);c.fill();c.strokeStyle='#14532d';c.lineWidth=3;c.beginPath();c.moveTo(-170,0);c.lineTo(170,0);c.stroke();
+ for(let k=-3;k<=3;k++){c.beginPath();c.moveTo(k*40,0);c.lineTo(k*40+30,-50);c.moveTo(k*40,0);c.lineTo(k*40+30,50);c.lineWidth=1.5;c.stroke()}
+ const ch=seg(t,4,5.5);if(ch>0){c.globalAlpha=ch;for(let k=0;k<14;k++){const x=-125+(k%7)*42,y=k<7?-28:28;c.fillStyle='#166534';c.beginPath();c.ellipse(x,y,14,7,.4,0,Math.PI*2);c.fill();c.strokeStyle=`rgba(253,224,71,${.4+.6*Math.abs(Math.sin(t*4+k))})`;c.lineWidth=2.5;c.stroke()}c.globalAlpha=1}
+ const gn=t>16?Math.min(5,Math.floor((t-16)*1.4)+1):0;for(let k=0;k<gn;k++){const x=-100+k*50;c.beginPath();for(let j=0;j<6;j++){const a=j*Math.PI/3;c.lineTo(x+16*Math.cos(a),16*Math.sin(a))}c.closePath();c.fillStyle='#fef3c7';c.fill();c.strokeStyle='#b45309';c.lineWidth=2;c.stroke()}
+ c.restore();
+ if(ch>0)tag(c,'Хлоропластар',660,345,'#86efac',ch*(t<16?1:.0));
+ if(gn)tag(c,'Глюкоза C₆H₁₂O₆',650,345,'#fde68a');
+ tag(c,'Тамыр',430,500,'#fcd34d',.9);tag(c,'Сабақ',445,385,'#86efac',.9);
+ if(t>8){const fa=Math.min(1,t-8);for(let k=0;k<7;k++){const q=((t-8)*.22+k/7)%1,x=lerp(990,680,q),y=lerp(110+k*45,255,q);c.globalAlpha=fa*(q<.85?1:(1-q)/.15);circ(c,x,y,18,'#94a3b8','#e2e8f0',2);txt(c,'CO₂',x,y,12,'#0f172a');}c.globalAlpha=1;tag(c,'CO₂ лептесік арқылы енеді',820,60,'#cbd5e1',fa)}
+ if(t>12){const fa=Math.min(1,t-12);c.globalAlpha=fa;for(let k=0;k<6;k++){const q=((t-12)*.3+k/6)%1;const y=lerp(520,300,q);const x=520+(q>.85?(q-.85)/.15*45:0);circ(c,x,y,8,'#38bdf8','#e0f2fe',1.5)}c.globalAlpha=1;tag(c,'H₂O',465,445,'#7dd3fc',fa)}
+ if(t>16){const fa=Math.min(1,t-16);for(let k=0;k<7;k++){const q=((t-16)*.25+k/7)%1;const x=lerp(530,340,q)+Math.sin(q*12+k)*10,y=lerp(210,30,q);c.globalAlpha=fa*(1-q*.6);circ(c,x,y,15,'rgba(125,211,252,.25)','#bae6fd',2);txt(c,'O₂',x,y,11,'#e0f2fe')}c.globalAlpha=1;tag(c,'O₂ бөлінеді',300,240,'#bae6fd',fa)}
+ const eq=seg(t,20,21.5);if(eq>0){c.globalAlpha=eq;c.fillStyle='rgba(2,6,23,.82)';rrect(c,130,462,700,62,14);c.fill();c.strokeStyle='#fde68a';c.lineWidth=2;c.stroke();txt(c,'6CO₂ + 6H₂O  —жарық, хлорофилл→  C₆H₁₂O₆ + 6O₂',480,493,22,'#fde68a');c.globalAlpha=1}
+}
+function drawX(c,x,y,a,col,al){c.save();c.globalAlpha=al;c.translate(x,y);c.rotate(a);c.strokeStyle=col;c.lineWidth=10;c.lineCap='round';c.beginPath();c.moveTo(-13,-26);c.quadraticCurveTo(-1,0,-13,26);c.moveTo(13,-26);c.quadraticCurveTo(1,0,13,26);c.stroke();circ(c,0,0,5,'#fff');c.restore()}
+function drawCh(c,x,y,col,d){c.save();c.strokeStyle=col;c.lineWidth=9;c.lineCap='round';c.beginPath();c.moveTo(x-d*16,y-22);c.quadraticCurveTo(x+d*5,y,x-d*16,y+22);c.stroke();circ(c,x+d*1,y,4,'#fff');c.restore()}
+function drawMitosis(c,t){const W=960,H=540,cx=480,cy=285;
+ const g=c.createRadialGradient(480,270,50,480,270,600);g.addColorStop(0,'#2a0f2e');g.addColorStop(1,'#0b0414');c.fillStyle=g;c.fillRect(0,0,W,H);
+ const cols=['#f87171','#60a5fa','#facc15','#4ade80'];const sc=[[-38,-32,.5],[36,-30,-.7],[-30,34,1.3],[40,30,-1.1]];
+ const ph=t<5?0:t<10?1:t<15?2:t<20?3:4;const names=['Интерфаза','Профаза','Метафаза','Анафаза','Телофаза және цитокинез'];
+ const fill='#3a1838',edge='#f9a8d4';
+ if(t<20){const rx=185+40*seg(t,15,20),ry=185-12*seg(t,15,20);c.beginPath();c.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);c.fillStyle=fill;c.fill();c.strokeStyle=edge;c.lineWidth=5;c.stroke()}
+ else{const k=seg(t,20,24),o=lerp(45,128,k),r=lerp(195,128,k);circ(c,cx-o,cy,r,null,edge,5);circ(c,cx+o,cy,r,null,edge,5);circ(c,cx-o,cy,r-2.6,fill);circ(c,cx+o,cy,r-2.6,fill)}
+ if(t<10){const a=t<5?1:1-seg(t,5,9)*.9;c.globalAlpha=a;circ(c,cx,cy,88,'rgba(139,92,246,.22)','#a78bfa',3);c.globalAlpha=1}
+ if(t<6.5){const R=rng(7);c.globalAlpha=t<5?1:1-seg(t,5,6.5);for(let j=0;j<4;j++){c.strokeStyle=cols[j];c.lineWidth=2;c.beginPath();let x=cx+(R()-.5)*90,y=cy+(R()-.5)*90;c.moveTo(x,y);for(let s=0;s<14;s++){x=clamp(x+(R()-.5)*34,cx-65,cx+65);y=clamp(y+(R()-.5)*34,cy-65,cy+65);c.lineTo(x,y)}c.stroke()}c.globalAlpha=1}
+ const pole=lerp(178,215,seg(t,15,20));
+ const eqY=i=>cy-105+i*70;
+ if(t>=10&&t<22.5){const a=seg(t,10,11.5)*(t>20?1-seg(t,20,22.5):1);c.globalAlpha=a*.7;c.strokeStyle='#c4b5fd';c.lineWidth=1.3;for(let i=0;i<4;i++){const y=t<15?eqY(i):lerp(eqY(i),cy-45+i*30,seg(t,17,20));const k=seg(t,15,19.5);[[-1,lerp(cx-8,cx-150,k)],[1,lerp(cx+8,cx+150,k)]].forEach(([d,x])=>{for(let s=-1;s<=1;s++){c.beginPath();c.moveTo(cx+d*pole,cy);c.lineTo(x,y+s*4);c.stroke()}})}
+  c.globalAlpha=a;[-1,1].forEach(d=>{circ(c,cx+d*pole,cy,9,'#fde68a');for(let s=0;s<8;s++){const an=s*Math.PI/4;c.beginPath();c.moveTo(cx+d*pole,cy);c.lineTo(cx+d*pole+Math.cos(an)*22,cy+Math.sin(an)*22);c.strokeStyle='#fde68a';c.stroke()}});c.globalAlpha=1}
+ if(t>=5&&t<15){const ap=seg(t,5,7),k=seg(t,10,13);for(let i=0;i<4;i++){drawX(c,lerp(cx+sc[i][0],cx,k),lerp(cy+sc[i][1],eqY(i),k),lerp(sc[i][2],0,k),cols[i],ap)}}
+ if(t>=15){const k=seg(t,15,19.5);for(let i=0;i<4;i++){const y=lerp(eqY(i),cy-45+i*30,seg(t,17,20));drawCh(c,lerp(cx-8,cx-150,k),y,cols[i],-1);drawCh(c,lerp(cx+8,cx+150,k),y,cols[i],1)}}
+ if(t>=20.5){const a=seg(t,20.5,22.5);c.globalAlpha=a;[-1,1].forEach(d=>circ(c,cx+d*150,cy,62,'rgba(139,92,246,.18)','#a78bfa',3));c.globalAlpha=1;if(t>23)tag(c,'2 жас жасуша (2n)',480,500,'#f9a8d4',seg(t,23,24))}
+ txt(c,names[ph],480,42,30,'#fbcfe8',null,900);
+ const nm=['Интерфаза','Профаза','Метафаза','Анафаза','Телофаза'];for(let i=0;i<5;i++){const x=150+i*165;c.fillStyle=i===ph?'#f472b6':'rgba(255,255,255,.08)';rrect(c,x-70,500,140,28,14);c.fill();txt(c,nm[i],x,514,13,i===ph?'#3b0720':'#e9d5ff')}
+}
+function pathPts(P){let L=[0];for(let i=1;i<P.length;i++)L.push(L[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]));return L}
+function ptAt(P,L,u){const d=u*L[L.length-1];for(let i=1;i<P.length;i++){if(d<=L[i]){const k=(d-L[i-1])/(L[i]-L[i-1]);return[lerp(P[i-1][0],P[i][0],k),lerp(P[i-1][1],P[i][1],k)]}}return P[P.length-1]}
+const SMALL=[[430,335],[330,335],[330,120],[480,95],[630,120],[630,245],[530,245]],BIG=[[530,335],[800,335],[800,470],[480,492],[160,470],[160,245],[430,245]];
+const SL=pathPts(SMALL),BL=pathPts(BIG);
+function drawLoop(c,P,L,firstCol,secCol,al,t,lw){c.save();c.globalAlpha=al;c.lineWidth=lw;c.lineCap='round';c.lineJoin='round';const N=120;for(let i=0;i<N;i++){const a=ptAt(P,L,i/N),b=ptAt(P,L,(i+1)/N);c.strokeStyle=i<N/2?firstCol:secCol;c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.stroke()}
+ for(let k=0;k<12;k++){const u=(t*.11+k/12)%1;const p=ptAt(P,L,u);circ(c,p[0],p[1],7,u<.5?firstCol:secCol,'#fff',1.5)}c.restore()}
+function drawCirc(c,t){const W=960,H=540;const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1a0b10');g.addColorStop(1,'#0b1220');c.fillStyle=g;c.fillRect(0,0,W,H);
+ const sa=t<4?.25:t<11?1:t<18?.25:1,ba=t<11?.25:1;
+ c.fillStyle='rgba(251,113,133,.25)';rrect(c,385,55,190,80,30);c.fill();c.strokeStyle='#fda4af';c.lineWidth=2;c.stroke();txt(c,'Өкпе капиллярлары',480,95,16,'#fecdd3');
+ c.fillStyle='rgba(148,163,184,.2)';rrect(c,330,465,300,58,20);c.fill();c.strokeStyle='#94a3b8';c.stroke();txt(c,'Дене мүшелерінің капиллярлары',480,494,15,'#e2e8f0');
+ drawLoop(c,SMALL,SL,'#3b82f6','#ef4444',sa,t,9);drawLoop(c,BIG,BL,'#ef4444','#3b82f6',ba,t,9);
+ const b=1+.05*Math.max(0,Math.sin(t*7));c.save();c.translate(480,290);c.scale(b,b);c.translate(-480,-290);
+ [[430,245,'#2563eb','Оң жүрекше'],[530,245,'#dc2626','Сол жүрекше'],[430,335,'#1d4ed8','Оң қарынша'],[530,335,'#b91c1c','Сол қарынша']].forEach(([x,y,col,n])=>{c.fillStyle=col;rrect(c,x-48,y-38,96,76,22);c.fill();c.strokeStyle='#fff';c.lineWidth=2;c.stroke();const w=n.split(' ');txt(c,w[0],x,y-9,13,'#fff');txt(c,w[1],x,y+10,13,'#fff')});c.restore();
+ if(t>=4&&t<11)tag(c,'КІШІ ШЕҢБЕР (өкпелік)',480,30,'#93c5fd');
+ if(t>=11&&t<18)tag(c,'ҮЛКЕН ШЕҢБЕР (денелік)',480,30,'#fca5a5');
+ if(t>=18)tag(c,'Екі шеңбер бірге',480,30,'#fde68a');
+ tag(c,'Өкпе артериясы',245,230,'#93c5fd',sa);tag(c,'Өкпе веналары',715,190,'#fca5a5',sa);tag(c,'Қолқа',860,300,'#fca5a5',ba);tag(c,'Қуыс веналар',95,330,'#93c5fd',ba);
+ c.fillStyle='#ef4444';circ(c,40,520,7,'#ef4444');txt(c,'артериялық қан',115,520,13,'#fecaca');circ(c,210,520,7,'#3b82f6');txt(c,'веналық қан',275,520,13,'#bfdbfe');
+}
+function drawCell(c,t){const W=960,H=540;const g=c.createRadialGradient(480,270,40,480,270,560);g.addColorStop(0,'#0b2b3d');g.addColorStop(1,'#020b12');c.fillStyle=g;c.fillRect(0,0,W,H);
+ const A=(a)=>seg(t,a,a+1);const cx=480,cy=275;
+ c.globalAlpha=A(4);c.fillStyle='rgba(250,204,21,.12)';c.beginPath();c.ellipse(cx,cy,300,200,0,0,Math.PI*2);c.fill();c.globalAlpha=1;
+ c.globalAlpha=Math.max(.15,A(1.5));c.strokeStyle='#38bdf8';c.lineWidth=7;c.beginPath();c.ellipse(cx,cy,300,200,0,0,Math.PI*2);c.stroke();c.globalAlpha=1;
+ c.globalAlpha=A(11);for(let j=0;j<3;j++){c.strokeStyle='#60a5fa';c.lineWidth=5;c.beginPath();c.arc(440,270,100+j*15,-2.7,-.5);c.stroke();for(let s=0;s<9;s++){const a=-2.7+s*.25;circ(c,440+Math.cos(a)*(100+j*15+5),270+Math.sin(a)*(100+j*15+5),2.6,'#fde047')}}c.globalAlpha=1;
+ c.globalAlpha=A(6);circ(c,440,270,72,'rgba(139,92,246,.55)','#c4b5fd',3);circ(c,452,262,22,'#4c1d95');c.globalAlpha=1;
+ c.globalAlpha=A(8.5);[[660,205,.3],[320,385,-.4],[630,380,.1]].forEach(([x,y,r])=>{c.save();c.translate(x,y);c.rotate(r);c.fillStyle='#f97316';c.beginPath();c.ellipse(0,0,44,20,0,0,Math.PI*2);c.fill();c.strokeStyle='#fed7aa';c.lineWidth=2;c.beginPath();c.moveTo(-34,0);for(let i=0;i<8;i++)c.lineTo(-30+i*9,i%2?-11:11);c.stroke();c.restore()});c.globalAlpha=1;
+ c.globalAlpha=A(13);const R=rng(3);for(let i=0;i<40;i++){const a=R()*6.28,r=R();const x=cx+Math.cos(a)*270*Math.sqrt(r),y=cy+Math.sin(a)*175*Math.sqrt(r);if(Math.hypot(x-440,y-270)>120)circ(c,x,y,3,'#fde047')}c.globalAlpha=1;
+ c.globalAlpha=A(15);for(let j=0;j<4;j++){c.strokeStyle='#f472b6';c.lineWidth=7;c.lineCap='round';c.beginPath();c.arc(640,320+j*14,48-j*4,-2.5,-.6);c.stroke()}c.globalAlpha=1;
+ c.globalAlpha=A(17);[[370,165],[735,280],[560,420]].forEach(([x,y])=>circ(c,x,y,15,'#22c55e','#bbf7d0',2));c.globalAlpha=1;
+ const L=[[1.5,'Жасуша мембранасы',140,90,230,165],[4,'Цитоплазма',820,480,680,400],[6,'Ядро',150,280,370,270],[8.5,'Митохондрия',820,130,690,195],[11,'ЭПТ',300,60,380,150],[13,'Рибосомалар',150,430,265,370],[15,'Гольджи кешені',840,360,680,315],[17,'Лизосома',560,60,375,162]];
+ L.forEach(([a,n,lx,ly,px,py])=>{const al=A(a);if(al<=0)return;c.save();c.globalAlpha=al;c.strokeStyle='#e2e8f0';c.lineWidth=1.5;c.setLineDash([5,4]);c.beginPath();c.moveTo(lx,ly);c.lineTo(px,py);c.stroke();c.restore();circ(c,px,py,4,'#fff');tag(c,n,lx,ly,'#fde68a',al)});
+}
+const PL={i:0,t:0,play:true,last:0,speed:1};
+function lessonsBuild(){$('#lessonList').innerHTML=LESSONS.map((l,i)=>`<button class="litem" data-i="${i}"><span class="ic">${l.icon}</span><span><b>${l.title}</b><small>${l.sub}</small></span></button>`).join('');
+ $$('#lessonList .litem').forEach(b=>b.onclick=()=>lessonSel(+b.dataset.i));
+ $('#plPlay').onclick=()=>{const L=LESSONS[PL.i];if(PL.t>=L.dur)PL.t=0;PL.play=!PL.play;updPlay()};
+ $('#plRe').onclick=()=>{PL.t=0;PL.play=true;updPlay()};
+ $('#plSpeed').onchange=e=>PL.speed=+e.target.value;
+ $('#plProg').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();PL.t=clamp((e.clientX-r.left)/r.width,0,1)*LESSONS[PL.i].dur};
+ lessonSel(0);requestAnimationFrame(plLoop)}
+function updPlay(){$('#plPlay').textContent=PL.play?'❚❚':'▶'}
+function lessonSel(i){const vp=document.getElementById('vPlayer');if(vp)vp.pause();PL.i=i;PL.t=0;PL.play=true;updPlay();$$('#lessonList .litem').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));const L=LESSONS[i];
+ $('#plProg').innerHTML='<i id="plFill"></i>'+L.caps.slice(1).map(c=>`<em style="left:${c[0]/L.dur*100}%"></em>`).join('');$('#plLink').textContent=L.link}
+const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+function plLoop(ts){const dt=Math.min(.1,(ts-PL.last)/1000);PL.last=ts;if(cur==='lessons'){const L=LESSONS[PL.i];if(PL.play){PL.t+=dt*PL.speed;if(PL.t>=L.dur){PL.t=L.dur;PL.play=false;updPlay()}}
+ const c=$('#lessonCv').getContext('2d');c.save();L.draw(c,PL.t);c.restore();$('#plFill').style.width=(PL.t/L.dur*100)+'%';$('#plTime').textContent=fmt(PL.t)+' / '+fmt(L.dur);
+ let cap='';L.caps.forEach(k=>{if(PL.t>=k[0])cap=k[1]});const el=$('#plCap');if(el.textContent!==cap)el.textContent=cap}requestAnimationFrame(plLoop)}
+
+/* ---------- 3. WORKSHEETS ---------- */
+const WS_PARTS=['Жасуша қабырғасы','Жасуша мембранасы','Ядро','Хлоропласт','Орталық вакуоль','Митохондрия','Цитоплазма'];
+function wsSvg(){return `<svg viewBox="0 0 520 360" style="width:100%;background:#f8fafc;border-radius:16px">
+<rect x="40" y="40" width="380" height="280" rx="26" fill="#bbf7d0" stroke="#15803d" stroke-width="12"/>
+<rect x="54" y="54" width="352" height="252" rx="18" fill="#fef9c3" stroke="#ca8a04" stroke-width="2.5"/>
+<ellipse cx="250" cy="185" rx="120" ry="85" fill="#bae6fd" stroke="#0284c7" stroke-width="2.5"/>
+<circle cx="100" cy="105" r="30" fill="#c4b5fd" stroke="#6d28d9" stroke-width="2.5"/><circle cx="106" cy="100" r="9" fill="#6d28d9"/>
+${[[95,250,.4],[140,285,-.2],[385,90,.6],[390,250,-.5],[210,80,0],[300,290,.2],[380,170,1.4]].map(([x,y,r])=>`<ellipse cx="${x}" cy="${y}" rx="17" ry="9" transform="rotate(${r*57} ${x} ${y})" fill="#16a34a" stroke="#14532d" stroke-width="1.5"/>`).join('')}
+${[[85,180],[330,78]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="13" ry="7" fill="#fb923c" stroke="#9a3412" stroke-width="1.5"/>`).join('')}
+${[[1,30,30,470,40],[2,58,140,470,95],[3,100,105,470,150],[4,385,90,470,205],[5,250,185,470,260],[6,85,180,470,315]].map(([n,x,y,lx,ly])=>`<line x1="${x}" y1="${y}" x2="${lx-14}" y2="${ly}" stroke="#334155" stroke-width="1.6"/>`).join('')}
+<line x1="170" y1="290" x2="456" y2="345" stroke="#334155" stroke-width="1.6"/>
+${[[1,470,40],[2,470,95],[3,470,150],[4,470,205],[5,470,260],[6,470,315],[7,470,345]].map(([n,x,y])=>`<circle cx="${x}" cy="${y}" r="13" fill="#fbbf24" stroke="#92400e"/><text x="${x}" y="${y+5}" text-anchor="middle" font-size="14" font-weight="800" fill="#3a2500" font-family="Montserrat">${n}</text>`).join('')}
+</svg>`}
+const WS_PIC_ANS=['Жасуша қабырғасы','Жасуша мембранасы','Ядро','Хлоропласт','Орталық вакуоль','Митохондрия','Цитоплазма'];
+function wsPicInit(){$('#wsSvg').innerHTML=wsSvg();const opts=shuffle(WS_PARTS);$('#wsLabels').innerHTML=WS_PIC_ANS.map((a,i)=>`<div><b>${i+1}</b><select data-i="${i}"><option value="">— таңда —</option>${opts.map(o=>`<option>${o}</option>`).join('')}</select></div>`).join('');$('#wsPicSc').textContent=''}
+$('#wsPicChk').onclick=()=>{let s=0;$$('#wsLabels select').forEach(x=>{const ok=x.value===WS_PIC_ANS[+x.dataset.i];if(ok)s++;x.classList.toggle('okb',ok);x.classList.toggle('badb',!ok)});$('#wsPicSc').innerHTML=`Нәтиже: <span class="${s===7?'ok':''}">${s} / 7</span>`};
+$('#wsPicRe').onclick=wsPicInit;
+const SYS=[['Тыныс алу жүйесі','Өкпе, кеңірдек, бронхылар','Газ алмасу: оттек алу, CO₂ шығару'],['Қан айналым жүйесі','Жүрек, қан тамырлары','Заттар мен газдарды тасымалдау'],['Ас қорыту жүйесі','Асқазан, ішек, бауыр','Қоректі ыдырату және сіңіру'],['Зәр шығару жүйесі','Бүйрек, несепағар, қуық','Зиянды заттарды ағзадан шығару'],['Жүйке жүйесі','Ми, жұлын, жүйкелер','Ағза қызметін реттеу және басқару'],['Тірек-қимыл жүйесі','Сүйектер, бұлшықеттер','Тірек, қорғау және қозғалыс']];
+function wsTabInit(){const o1=shuffle(SYS.map(s=>s[1])),o2=shuffle(SYS.map(s=>s[2]));$('#wsTab').innerHTML=`<tr><th>Мүшелер жүйесі</th><th>Негізгі мүшелері</th><th>Қызметі</th></tr>`+SYS.map((s,i)=>`<tr><td><b>${s[0]}</b></td><td><select data-r="${i}" data-c="1" style="width:100%"><option value="">—</option>${o1.map(o=>`<option>${o}</option>`).join('')}</select></td><td><select data-r="${i}" data-c="2" style="width:100%"><option value="">—</option>${o2.map(o=>`<option>${o}</option>`).join('')}</select></td></tr>`).join('');$('#wsTabSc').textContent=''}
+$('#wsTabChk').onclick=()=>{let s=0;$$('#wsTab select').forEach(x=>{const ok=x.value===SYS[+x.dataset.r][+x.dataset.c];if(ok)s++;x.classList.toggle('okb',ok);x.classList.toggle('badb',!ok)});$('#wsTabSc').innerHTML=`Нәтиже: ${s} / 12`};
+$('#wsTabRe').onclick=wsTabInit;
+const MATCH=[['Фотосинтез','Жарық энергиясы арқылы органикалық зат түзу'],['Тыныс алу','Органикалық заттарды тотықтырып, энергия алу'],['Митоз','Жасушаның генетикалық бірдей екі жасушаға бөлінуі'],['Фермент','Биохимиялық реакцияны жылдамдататын белок'],['Ген','ДНҚ-ның белгілі бір белгіні анықтайтын бөлігі'],['Экожүйе','Тірі ағзалар мен қоршаған ортаның бірлестігі']];
+const MCOL=['#f87171','#60a5fa','#facc15','#4ade80','#c084fc','#fb923c'];let MSEL=null,MPAIR={};
+function wsMatInit(){MSEL=null;MPAIR={};const R=shuffle(MATCH.map((m,i)=>i));$('#wsMatch').innerHTML=MATCH.map((m,i)=>`<button class="mi" data-l="${i}">${m[0]}</button><button class="mi" data-r="${R[i]}">${MATCH[R[i]][1]}</button>`).join('');
+ $$('#wsMatch [data-l]').forEach(b=>b.onclick=()=>{$$('#wsMatch [data-l]').forEach(x=>x.classList.remove('sel'));MSEL=+b.dataset.l;b.classList.add('sel')});
+ $$('#wsMatch [data-r]').forEach(b=>b.onclick=()=>{if(MSEL==null)return;const r=+b.dataset.r;for(const k in MPAIR)if(MPAIR[k]===r)delete MPAIR[k];MPAIR[MSEL]=r;MSEL=null;wsMatPaint()});$('#wsMatSc').textContent='';wsMatPaint()}
+function wsMatPaint(){$$('#wsMatch .mi').forEach(b=>{b.classList.remove('sel','okb','badb');b.style.borderColor='';b.style.boxShadow=''});for(const k in MPAIR){const col=MCOL[k];[$(`#wsMatch [data-l="${k}"]`),$(`#wsMatch [data-r="${MPAIR[k]}"]`)].forEach(b=>{b.style.borderColor=col;b.style.boxShadow=`inset 6px 0 0 ${col}`})}}
+$('#wsMatChk').onclick=()=>{let s=0;for(let i=0;i<MATCH.length;i++){const ok=MPAIR[i]===i;if(ok)s++;const b=$(`#wsMatch [data-l="${i}"]`);b.classList.add(ok?'okb':'badb')}$('#wsMatSc').innerHTML=`Нәтиже: ${s} / ${MATCH.length}`};
+$('#wsMatRe').onclick=wsMatInit;
+const FILL=[['Фотосинтез жүретін органоид — ','хлоропласт','.'],['Тұқым қуалау ақпаратын сақтайтын молекула — ','ДНҚ','.'],['Оттекті тасымалдайтын қан жасушалары — ','эритроциттер','.'],['Жүректің ең қалың қабырғалы бөлігі — ','сол жақ қарынша','.'],['Өсімдік тамыры топырақтан ','су',' мен минерал тұздарды сіңіреді.'],['Өкпеде газ алмасу ','альвеолаларда',' жүреді.'],['Қоректік тізбекті әрқашан ','продуценттер',' бастайды.']];
+function wsFillInit(){const o=shuffle(FILL.map(f=>f[1]).concat(['митохондрия','лейкоциттер','консументтер']));$('#wsFill').innerHTML=FILL.map((f,i)=>`<p>${i+1}. ${f[0]}<select class="blank" data-i="${i}"><option value="">..........</option>${o.map(x=>`<option>${x}</option>`).join('')}</select>${f[2]}</p>`).join('');$('#wsFillSc').textContent=''}
+$('#wsFillChk').onclick=()=>{let s=0;$$('#wsFill select').forEach(x=>{const ok=x.value===FILL[+x.dataset.i][1];if(ok)s++;x.classList.toggle('okb',ok);x.classList.toggle('badb',!ok)});$('#wsFillSc').innerHTML=`Нәтиже: ${s} / ${FILL.length}`};
+$('#wsFillRe').onclick=wsFillInit;
+
+/* ---------- 4. TASKS ---------- */
+function runTest(box,Q,title,withExpl){let i=0,s=0;const order=shuffle(Q);function show(){if(i>=order.length){const p=Math.round(s/order.length*100);box.innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:60px">${p>=85?'🏆':p>=60?'👍':'📚'}</div><h3 style="font-size:26px;margin:10px 0">Нәтиже: ${s} / ${order.length} (${p}%)</h3><p class="muted">${p>=85?'Тамаша! Өте жақсы білесің.':p>=60?'Жақсы! Тағы аздап қайталап ал.':'Тақырыпты қайталап, қайта тапсыр.'}</p><button class="btn" style="margin-top:16px">🔄 Қайта бастау</button></div>`;$('button',box).onclick=()=>runTest(box,Q,title,withExpl);return}
+ const q=order[i],ops=shuffle(q.o.map((o,k)=>({o,k})));box.innerHTML=`<div class="row" style="justify-content:space-between"><span class="pill">${title} • ${i+1} / ${order.length}</span><span class="pill">Ұпай: ${s}</span></div><div class="prog" style="margin-top:12px;cursor:default"><i style="width:${i/order.length*100}%"></i></div><div class="qtitle">${q.q}</div><div class="q" style="background:none;border:0;padding:0"><div class="opts">${ops.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div></div><div class="muted" id="qx" style="margin-top:10px"></div>`;
+ $$('.opt',box).forEach(b=>b.onclick=()=>{const ok=+b.dataset.k===q.a;if(ok)s++;$$('.opt',box).forEach(x=>{x.disabled=true;if(+x.dataset.k===q.a)x.classList.add('okb')});if(!ok)b.classList.add('badb');
+  $('#qx',box).innerHTML=(ok?'<b class="ok">✓ Дұрыс!</b> ':'<b class="badc">✗ Қате.</b> ')+(q.e?q.e:'')+'<br><button class="btn sm" style="margin-top:10px">Келесі →</button>';$('#qx button',box).onclick=()=>{i++;show()}})}show()}
+const TEST=[{q:'Жасушаның «энергия станциясы» деп аталатын органоид?',o:['Митохондрия','Рибосома','Лизосома','Гольджи кешені'],a:0},{q:'Фотосинтез жасушаның қай органоидында жүреді?',o:['Хлоропласт','Ядро','Вакуоль','Митохондрия'],a:0},{q:'Қан айналымның үлкен шеңбері жүректің қай бөлігінен басталады?',o:['Сол жақ қарыншадан','Оң жақ қарыншадан','Оң жүрекшеден','Сол жүрекшеден'],a:0},{q:'Тұқым қуалау ақпаратын сақтайтын молекула?',o:['ДНҚ','Глюкоза','Крахмал','АТФ'],a:0},{q:'Өсімдіктің топырақтан су мен минерал тұздарды сіңіретін мүшесі?',o:['Тамыр','Жапырақ','Гүл','Сабақ'],a:0},{q:'Адам ағзасындағы ең ірі без?',o:['Бауыр','Қалқанша без','Ұйқы безі','Сілекей безі'],a:0},{q:'Өкпеде газ алмасу жүретін құрылымдар?',o:['Альвеолалар','Бронхылар','Кеңірдек','Көмей'],a:0},{q:'Қоректік тізбектегі продуценттер — бұл ...',o:['Жасыл өсімдіктер','Жыртқыш жануарлар','Саңырауқұлақтар','Шөпқоректілер'],a:0},{q:'Оттекті тасымалдайтын қан жасушалары?',o:['Эритроциттер','Лейкоциттер','Тромбоциттер','Лимфоциттер'],a:0},{q:'Қазақстандағы (және Орталық Азиядағы) ең алғашқы қорық?',o:['Ақсу-Жабағылы','Қорғалжын','Барсакелмес','Марқакөл'],a:0}];
+/* jigsaw */
+let JIG=[],JSEL=null,jigImg=null;
+function jigImage(){const cv=document.createElement('canvas');cv.width=cv.height=480;const c=cv.getContext('2d');const g=c.createRadialGradient(240,240,20,240,240,340);g.addColorStop(0,'#0b3b5c');g.addColorStop(1,'#02121d');c.fillStyle=g;c.fillRect(0,0,480,480);
+ c.fillStyle='rgba(250,204,21,.18)';c.strokeStyle='#38bdf8';c.lineWidth=8;c.beginPath();c.ellipse(240,240,215,195,0,0,Math.PI*2);c.fill();c.stroke();
+ for(let j=0;j<3;j++){c.strokeStyle='#60a5fa';c.lineWidth=5;c.beginPath();c.arc(210,230,88+j*14,-2.6,-.4);c.stroke()}
+ circ(c,210,230,64,'rgba(139,92,246,.8)','#ddd6fe',3);circ(c,222,222,20,'#4c1d95');
+ [[360,150,.4],[150,370,-.5],[360,330,.1]].forEach(([x,y,r])=>{c.save();c.translate(x,y);c.rotate(r);c.fillStyle='#f97316';c.beginPath();c.ellipse(0,0,40,18,0,0,Math.PI*2);c.fill();c.strokeStyle='#fed7aa';c.lineWidth=2;c.beginPath();c.moveTo(-30,0);for(let i=0;i<7;i++)c.lineTo(-26+i*9,i%2?-10:10);c.stroke();c.restore()});
+ for(let j=0;j<4;j++){c.strokeStyle='#f472b6';c.lineWidth=7;c.lineCap='round';c.beginPath();c.arc(330,250+j*13,42-j*4,-2.5,-.6);c.stroke()}
+ [[120,140],[380,420],[270,400]].forEach(([x,y])=>circ(c,x,y,14,'#22c55e','#bbf7d0',2));const R=rng(9);for(let i=0;i<40;i++){const a=R()*6.28,r=Math.sqrt(R())*180;circ(c,240+Math.cos(a)*r,240+Math.sin(a)*r*.9,3,'#fde047')}
+ txt(c,'ЖАСУША',240,40,26,'#e0f2fe',null,900);return cv}
+function jigNew(){if(!jigImg)jigImg=jigImage();do{JIG=shuffle([0,1,2,3,4,5,6,7,8])}while(JIG.every((v,i)=>v===i));JSEL=null;jigDraw()}
+function jigDraw(){const box=$('#jig');box.innerHTML='';JIG.forEach((p,i)=>{const cv=document.createElement('canvas');cv.width=cv.height=160;cv.getContext('2d').drawImage(jigImg,(p%3)*160,Math.floor(p/3)*160,160,160,0,0,160,160);if(JSEL===i)cv.classList.add('sel');cv.onclick=()=>{if(JSEL==null){JSEL=i}else{[JIG[JSEL],JIG[i]]=[JIG[i],JIG[JSEL]];JSEL=null}jigDraw()};box.appendChild(cv)});
+ const ok=JIG.filter((v,i)=>v===i).length;$('#jigSc').innerHTML=ok===9?'<span class="ok">🎉 Жарайсың! Пазл жиналды!</span>':`Орнында: ${ok} / 9`}
+const ORDS={food:{n:'Қоректік тізбек',a:['🌾 Шөп','🦗 Шегіртке','🐸 Бақа','🐍 Жылан','🦅 Бүркіт']},mit:{n:'Митоз фазалары',a:['Интерфаза','Профаза','Метафаза','Анафаза','Телофаза']},circ:{n:'Кіші қан айналым',a:['Оң қарынша','Өкпе артериясы','Өкпе капиллярлары','Өкпе веналары','Сол жүрекше']},dig:{n:'Ас қорыту жолы',a:['Ауыз қуысы','Жұтқыншақ','Өңеш','Асқазан','Аш ішек','Тоқ ішек']}};
+let ORD='food',OCUR=[],OSEL=null;
+function ordNew(){OCUR=shuffle(ORDS[ORD].a);while(OCUR.join()===ORDS[ORD].a.join())OCUR=shuffle(ORDS[ORD].a);OSEL=null;$('#ordSc').textContent='';ordDraw()}
+function ordDraw(){$('#ord').innerHTML=OCUR.map((x,i)=>`<button data-i="${i}" class="${OSEL===i?'sel':''}"><i>${i+1}</i>${x}</button>`).join('');$$('#ord button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(OSEL==null)OSEL=i;else{[OCUR[OSEL],OCUR[i]]=[OCUR[i],OCUR[OSEL]];OSEL=null}ordDraw()})}
+$('#ordChk').onclick=()=>{let s=0;$$('#ord button').forEach((b,i)=>{const ok=OCUR[i]===ORDS[ORD].a[i];if(ok)s++;b.classList.add(ok?'okb':'badb')});$('#ordSc').innerHTML=s===OCUR.length?'<span class="ok">🎉 Барлығы дұрыс!</span>':`Дұрыс орында: ${s} / ${OCUR.length}`};
+$('#ordNew').onclick=ordNew;$('#jigNew').onclick=jigNew;
+$('#ordSel').innerHTML=Object.keys(ORDS).map(k=>`<button data-k="${k}" class="${k===ORD?'on':''}">${ORDS[k].n}</button>`).join('');
+$$('#ordSel button').forEach(b=>b.onclick=()=>{$$('#ordSel button').forEach(x=>x.classList.toggle('on',x===b));ORD=b.dataset.k;ordNew()});
+/* memory */
+const MEMP=[['🫀','Жүрек'],['🫁','Өкпе'],['🧠','Ми'],['🦴','Сүйек'],['👁️','Көз'],['🦷','Тіс'],['🌿','Жапырақ'],['🍄','Саңырауқұлақ']];
+let MEM=[],MOPEN=[],MDONE=0,MMOVES=0,MLOCK=false;
+function memNew(){MEM=shuffle(MEMP.flatMap((p,i)=>[{id:i,v:p[0],big:1},{id:i,v:p[1]}]));MOPEN=[];MDONE=0;MMOVES=0;MLOCK=false;memDraw()}
+function memDraw(){$('#mem').innerHTML=MEM.map((m,i)=>`<button class="mc ${m.done?'done':''} ${MOPEN.includes(i)?'open':''}" data-i="${i}"><span class="${m.big?'big':''}">${m.v}</span>${!m.done&&!MOPEN.includes(i)?'<b style="position:absolute;font-size:22px;opacity:.5">?</b>':''}</button>`).join('');$('#memSc').innerHTML=MDONE===MEMP.length?`<span class="ok">🎉 Барлық жұп табылды! Жүрістер: ${MMOVES}</span>`:`Жұп: ${MDONE} / ${MEMP.length} • Жүріс: ${MMOVES}`;
+ $$('#mem .mc').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(MLOCK||MEM[i].done||MOPEN.includes(i))return;MOPEN.push(i);if(MOPEN.length===2){MMOVES++;const[a,c]=MOPEN;if(MEM[a].id===MEM[c].id){MEM[a].done=MEM[c].done=true;MDONE++;MOPEN=[]}else{MLOCK=true;setTimeout(()=>{MOPEN=[];MLOCK=false;memDraw()},850)}}memDraw()})}
+$('#memNew').onclick=memNew;
+/* sorting */
+const KING=['🌱 Өсімдіктер','🐾 Жануарлар','🍄 Саңырауқұлақтар','🦠 Бактериялар'];
+const SORTI=[['Қарағай',0],['Қызғалдақ',0],['Бидай',0],['Мүк',0],['Сексеуіл',0],['Арқар',1],['Бүркіт',1],['Құлан',1],['Ақбөкен',1],['Барыс',1],['Жауынқұрт',1],['Ақ саңырауқұлақ',2],['Ашытқы',2],['Пеницилл',2],['Қара көгерткіш',2],['Ішек таяқшасы',3],['Сүтқышқыл бактериясы',3],['Туберкулез таяқшасы',3],['Цианобактерия',3]];
+let SRT={on:false,t:45,s:0,cur:null,timer:null,bag:[]};
+$('#srtBtns').innerHTML=KING.map((k,i)=>`<button class="btn ghost" data-k="${i}" disabled>${k}</button>`).join('');
+function srtNext(){if(!SRT.bag.length)SRT.bag=shuffle(SORTI);SRT.cur=SRT.bag.pop();$('#srtItem').textContent=SRT.cur[0];$('#srtItem').style.color=''}
+$('#srtGo').onclick=()=>{SRT={on:true,t:45,s:0,cur:null,bag:shuffle(SORTI)};$('#srtGo').style.display='none';$$('#srtBtns button').forEach(b=>b.disabled=false);$('#srtS').textContent='Ұпай: 0';srtNext();
+ clearInterval(window._st);window._st=setInterval(()=>{SRT.t--;$('#srtT').textContent='⏱ '+SRT.t;if(SRT.t<=0){clearInterval(window._st);SRT.on=false;$$('#srtBtns button').forEach(b=>b.disabled=true);$('#srtItem').innerHTML=`Уақыт бітті! Ұпайың: <span class="ok">${SRT.s}</span>`;$('#srtGo').style.display='';$('#srtGo').textContent='🔄 Қайта ойнау'}},1000)};
+$$('#srtBtns button').forEach(b=>b.onclick=()=>{if(!SRT.on)return;const ok=+b.dataset.k===SRT.cur[1];SRT.s+=ok?1:-1;if(SRT.s<0)SRT.s=0;$('#srtS').textContent='Ұпай: '+SRT.s;$('#srtItem').style.color=ok?'#34e5a0':'#f87171';b.classList.add(ok?'okb':'badb');setTimeout(()=>{b.classList.remove('okb','badb');if(SRT.on)srtNext()},ok?250:700);if(!ok)$('#srtItem').textContent=SRT.cur[0]+' → '+KING[SRT.cur[1]]});
+/* jeopardy */
+const JEO=[['🔬 Жасуша',[['Жасушаны сыртынан қаптап, заттардың өтуін реттейтін құрылым?','Жасуша мембранасы'],['Өсімдік жасушасында бар, жануар жасушасында жоқ үш құрылымды ата.','Жасуша қабырғасы, хлоропластар, ірі орталық вакуоль'],['Белок синтезі жүретін мембранасыз органоид?','Рибосома']]],['🧍 Адам',[['Инсулин гормонын қай без бөледі?','Ұйқы безі'],['Қанның сұйық бөлігі қалай аталады?','Плазма'],['Жүрек неше камерадан тұрады және олар қалай аталады?','4 камера: 2 жүрекше, 2 қарынша']]],['🌻 Өсімдіктер',[['Жапырақтағы газ алмасатын тесіктер?','Лептесіктер (устьицалар)'],['Сабақтың жуандап өсуін қамтамасыз ететін ұлпа?','Камбий'],['Тозаңданғаннан кейін аналықтың түйінінен не дамиды?','Жеміс (ішінде тұқым)']]],['🌍 Экология',[['Сирек және жойылып бара жатқан түрлер тіркелген кітап?','Қызыл кітап'],['Арал теңізіндегі бұрынғы аралда орналасқан қорық?','Барсакелмес'],['Келесі қоректік деңгейге энергияның шамамен қанша пайызы өтеді?','~10% (Линдеман ережесі)']]]];
+let JS={t1:0,t2:0,used:{}};
+function jeoDraw(){const g=$('#jeo');g.innerHTML=JEO.map(c=>`<div class="hd">${c[0]}</div>`).join('');for(let r=0;r<3;r++)JEO.forEach((c,ci)=>{const k=ci+'-'+r;g.innerHTML+=`<button data-k="${k}" class="${JS.used[k]?'used':''}">${(r+1)*100}</button>`});
+ $$('#jeo button').forEach(b=>b.onclick=()=>{const[ci,r]=b.dataset.k.split('-').map(Number);const q=JEO[ci][1][r],v=(r+1)*100;
+  modal(`<span class="pill">${JEO[ci][0]} • ${v} ұпай</span><h3 style="font-size:24px;margin:16px 0;line-height:1.4">${q[0]}</h3><div id="jans" class="q" style="display:none"><b>Жауабы:</b> ${q[1]}</div><div class="row" style="margin-top:18px"><button class="btn blue" id="jshow">👁 Жауабын көрсету</button></div><div class="row" style="margin-top:12px"><button class="btn" data-w="1">+${v} 1-топқа</button><button class="btn pink" data-w="2">+${v} 2-топқа</button><button class="btn ghost" data-w="0">Ешкім</button></div>`);
+  $('#jshow').onclick=()=>$('#jans').style.display='block';$$('#mbox [data-w]').forEach(x=>x.onclick=()=>{const w=+x.dataset.w;if(w===1)JS.t1+=v;if(w===2)JS.t2+=v;JS.used[b.dataset.k]=1;$('#t1').textContent=JS.t1;$('#t2').textContent=JS.t2;closeModal();jeoDraw()})})}
+$('#jeoRe').onclick=()=>{JS={t1:0,t2:0,used:{}};$('#t1').textContent=0;$('#t2').textContent=0;jeoDraw()};
+
+/* ---------- 6. RESERVES ---------- */
+const KZ=[[46.7,48.3],[47.3,50.3],[48.7,49.9],[48.8,51],[50.6,51.6],[52.3,51.8],[55.6,50.6],[57,51],[59.6,50.6],[60,51.9],[61.5,52],[60.9,52.6],[61,53.6],[61.2,54],[65.2,54.6],[68.2,55],[69.2,55.4],[70.8,55.3],[73.4,53.5],[76.3,54.3],[76.8,53.7],[78,52.8],[80.1,50.8],[83.4,51],[85.2,49.7],[87.3,49.1],[85.7,48.4],[85.5,47.1],[83.1,47.2],[82.3,45.5],[80.1,45],[80.3,43],[78.5,42.9],[76,43],[74.2,43.2],[71.8,42.8],[70.9,42.3],[69.1,41.4],[68.2,40.7],[67.8,41.2],[66.6,41.2],[66,42.9],[64,43.6],[61,44.4],[58.5,45.6],[55.9,45],[56,41.3],[55.4,41.3],[54.1,42.3],[52.9,42.1],[52.6,42.9],[51.3,43.2],[50.8,44.4],[51.3,45.2],[53,45.3],[53.2,46.6],[51.2,47.1],[49.2,46.4],[48.6,46.6],[48,47.8]];
+const pj=([lo,la])=>[(lo-46)*19.5+10,(55.6-la)*29+12];
+const RES=[
+ {n:'Ақсу-Жабағылы',y:1926,reg:'Түркістан және Жамбыл облыстары',ll:[70.5,42.4],ic:'🌷',col:'#ef4444',zone:'Батыс Тянь-Шань таулары',flora:'Грейг және Кауфман қызғалдақтары, арша, жабайы алма мен өрік',fauna:'Барыс, тянь-шань қоңыр аюы, арқар, таутеке, Мензбир суыры, бүркіт',fact:'Орталық Азиядағы ең алғашқы қорық. Аумағында юра кезеңінің балықтары мен өсімдіктерінің іздері сақталған Қарабастау палеонтологиялық орны бар.'},
+ {n:'Қорғалжын',y:1968,reg:'Ақмола облысы',ll:[69.6,50.4],ic:'🦩',col:'#f472b6',zone:'Теңіз-Қорғалжын көлдер жүйесі, дала',flora:'Қамыс, қоға, бетеге, жусан, селеу',fauna:'Қызғылт қоқиқаз (фламинго), бірқазан, аққу, дуадақ, ақбөкен',fact:'Қызғылт қоқиқаздың ұя салатын әлемдегі ең солтүстік мекені. 2008 жылы Наурызыммен бірге «Сарыарқа» атауымен ЮНЕСКО-ның Бүкіләлемдік мұра тізіміне енді.'},
+ {n:'Наурызым',y:1931,reg:'Қостанай облысы',ll:[64.4,51.5],ic:'🌲',col:'#22c55e',zone:'Дала, көлдер және аралшық қарағайлы ормандар',flora:'Наурызым қарағайлы орманы, қайың, ақ терек, қауырсынды селеу',fauna:'Ақбөкен, бүркіт, ақ иықты бүркіт, дуадақ, қарабауыр бұлдырық',fact:'Құрғақ дала аймағындағы реликт қарағайлы ормандарымен ерекше. «Сарыарқа — Солтүстік Қазақстанның даласы мен көлдері» ЮНЕСКО нысанының бөлігі.'},
+ {n:'Барсакелмес',y:1939,reg:'Қызылорда облысы',ll:[60.1,45.6],ic:'🐴',col:'#f59e0b',zone:'Арал өңірі, шөл және бұрынғы теңіз табаны',flora:'Сексеуіл, жүзгін, жусан, сораң',fauna:'Құлан, ақбөкен, қарақұйрық, жайрандар',fact:'Бұрын Арал теңізіндегі арал болған. Құланды сақтап қалуда маңызды рөл атқарды. Теңіз тартылғаннан кейін арал құрлыққа қосылды.'},
+ {n:'Алматы қорығы',y:1931,reg:'Алматы облысы',ll:[77.4,43.1],ic:'🏔️',col:'#38bdf8',zone:'Іле Алатауы, биік таулы аймақ',flora:'Тянь-Шань шыршасы, Сиверс алмасы, арша, альпі шалғыны',fauna:'Барыс, тянь-шань қоңыр аюы, таутеке, ұлар',fact:'Аумағында Іле Алатауының ең биік нүктесі — Талғар шыңы орналасқан. Жабайы алма — мәдени алманың арғы тегі.'},
+ {n:'Марқакөл',y:1976,reg:'Шығыс Қазақстан облысы',ll:[86,48.75],ic:'🐟',col:'#0ea5e9',zone:'Оңтүстік Алтай, Марқакөл көлі',flora:'Сібір балқарағайы, самырсын, шырша',fauna:'Ускуч балығы, марал, қоңыр аю, қара құр',fact:'Марқакөл — Алтайдағы ең ірі көлдердің бірі. Тек осы көлде мекендейтін эндемик ускуч балығымен белгілі.'},
+ {n:'Батыс Алтай',y:1992,reg:'Шығыс Қазақстан облысы',ll:[83.7,50.4],ic:'🌲',col:'#16a34a',zone:'Батыс Алтай, қара тайга',flora:'Сібір самырсыны, май қарағай, қара тайга өсімдіктері',fauna:'Қоңыр аю, бұлғын, сілеусін, құр',fact:'Қазақстандағы қара тайганың ең жақсы сақталған бөліктерінің бірі.'},
+ {n:'Үстірт',y:1984,reg:'Маңғыстау облысы',ll:[55.6,43.6],ic:'🐏',col:'#a16207',zone:'Үстірт үстірті, шыңдар (чинктер), шөл',flora:'Сексеуіл, боялыч, жусан',fauna:'Үстірт арқары, қарақал, қарақұйрық, шұбар күзен',fact:'Биіктігі 300 метрге жететін тік жартастары — шыңдары бар. Ежелгі Тетис теңізінің шөгінділері көрініп тұр.'},
+ {n:'Алакөл',y:1998,reg:'Жетісу облысы',ll:[81.2,46.3],ic:'🕊️',col:'#06b6d4',zone:'Алакөл-Сасықкөл көлдер жүйесі, Тентек сағасы',flora:'Қамыс, тоғай өсімдіктері',fauna:'Реликт шағала, бірқазан, қасқалдақ, қаз-үйректер',fact:'Сирек кездесетін реликт шағаланың ірі колониясын қорғау үшін құрылған.'},
+ {n:'Қаратау',y:2004,reg:'Түркістан облысы',ll:[69.2,43.6],ic:'🌼',col:'#e879f9',zone:'Қаратау жотасы, тау етегі',flora:'Көптеген эндемик өсімдіктер, жабайы қызғалдақтар',fauna:'Қаратау арқары, таутеке, бүркіт',fact:'Қаратау — Батыс Тянь-Шаньның ежелгі жотасы. Қорықта тек осы өңірде өсетін эндемик өсімдіктер көп.'}];
+function resInit(){const svg=$('#kzmap');let s=`<defs><linearGradient id="kzg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14532d"/><stop offset="1" stop-color="#365314"/></linearGradient></defs>`;
+ s+=`<path d="M${pj([46.2,47.2]).join(',')} Q${pj([47.5,42]).join(',')} ${pj([52.3,37]).join(',')}" fill="none"/><polygon points="${KZ.map(p=>pj(p).join(',')).join(' ')}" fill="url(#kzg)" stroke="#86efac" stroke-width="2.5" stroke-linejoin="round"/>`;
+ s+=`<text x="${pj([48.2,44.5])[0]}" y="${pj([48.2,44.5])[1]}" fill="#7dd3fc" font-size="13" font-family="Montserrat" font-weight="700" text-anchor="middle">Каспий</text><text x="${pj([60,47])[0]}" y="${pj([60,47.1])[1]}" fill="#7dd3fc" font-size="11" font-family="Montserrat" font-weight="600">Арал</text>`;
+ s+=`<ellipse cx="${pj([59.8,45.8])[0]}" cy="${pj([59.8,45.8])[1]}" rx="18" ry="22" fill="rgba(56,189,248,.35)"/><ellipse cx="${pj([74.5,46.5])[0]}" cy="${pj([74.5,46.5])[1]}" rx="40" ry="6" fill="rgba(56,189,248,.5)" transform="rotate(-8 ${pj([74.5,46.5]).join(' ')})"/><text x="${pj([73.5,46.1])[0]}" y="${pj([73.5,46.1])[1]+8}" fill="#7dd3fc" font-size="11" font-family="Montserrat" font-weight="600">Балқаш</text>`;
+ s+=`<circle cx="${pj([71.45,51.17])[0]}" cy="${pj([71.45,51.17])[1]}" r="4" fill="#fff"/><text x="${pj([71.45,51.17])[0]+8}" y="${pj([71.45,51.17])[1]-6}" fill="#fff" font-size="12" font-family="Montserrat" font-weight="700">Астана</text>`;
+ RES.forEach((r,i)=>{const[x,y]=pj(r.ll);s+=`<g class="mk" data-i="${i}"><circle cx="${x}" cy="${y}" r="16" fill="${r.col}" opacity=".25"><animate attributeName="r" values="10;20;10" dur="2.4s" begin="${i*.2}s" repeatCount="indefinite"/></circle><circle class="dot" cx="${x}" cy="${y}" r="8" fill="${r.col}" stroke="#fff" stroke-width="2"/><text x="${x}" y="${y-14}" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700" font-family="Montserrat" style="paint-order:stroke;stroke:#03120d;stroke-width:3px">${r.n}</text></g>`});
+ s+=`<text x="12" y="450" fill="#9cc9b8" font-size="11" font-family="Montserrat">Схемалық карта</text>`;svg.innerHTML=s;
+ $$('.mk',svg).forEach(g=>g.onclick=()=>resSel(+g.dataset.i));
+ $('#rlist').innerHTML=RES.map((r,i)=>`<button class="rcard" data-i="${i}"><b>${r.ic} ${r.n}</b><small>${r.y} ж. • ${r.reg}</small></button>`).join('');$$('#rlist .rcard').forEach(b=>b.onclick=()=>resSel(+b.dataset.i));resSel(0);
+ const RQ=[['Қызғылт қоқиқаз (фламинго) ұя салатын қорық?',1],['Дала аймағындағы реликт қарағайлы орманымен белгілі қорық?',2],['Бұрын Арал теңізіндегі арал болған, құланды сақтаған қорық?',3],['Грейг қызғалдағы өсетін, Орталық Азиядағы ең көне қорық?',0],['Эндемик ускуч балығы мекендейтін көл-қорық?',5]];
+ let qi=0,qs=0;function rq(){if(qi>=RQ.length){$('#rquiz').innerHTML=`<p style="margin:10px 0"><b>Нәтиже: ${qs} / ${RQ.length}</b></p><button class="btn sm">🔄 Қайта</button>`;$('#rquiz button').onclick=()=>{qi=0;qs=0;rq()};return}const q=RQ[qi];const ops=shuffle([q[1],...shuffle([0,1,2,3,4,5,6,7,8,9].filter(x=>x!==q[1])).slice(0,3)]);
+  $('#rquiz').innerHTML=`<p class="muted" style="margin-top:6px">${qi+1} / ${RQ.length}</p><p style="font-weight:700;margin:6px 0 10px">${q[0]}</p><div class="opts" style="display:flex;flex-direction:column;gap:6px">${ops.map(o=>`<button class="opt" data-o="${o}">${RES[o].ic} ${RES[o].n}</button>`).join('')}</div>`;
+  $$('#rquiz .opt').forEach(b=>b.onclick=()=>{const ok=+b.dataset.o===q[1];if(ok)qs++;$$('#rquiz .opt').forEach(x=>{x.disabled=true;if(+x.dataset.o===q[1])x.classList.add('okb')});if(!ok)b.classList.add('badb');setTimeout(()=>{qi++;rq()},1100)})}rq()}
+function resSel(i){const r=RES[i];$$('.mk').forEach(g=>g.classList.toggle('on',+g.dataset.i===i));$$('#rlist .rcard').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));
+ $('#rinfo').innerHTML=`<div class="rhero" style="background:linear-gradient(135deg,${r.col}55,#03120d)">${r.ic}</div><h3>${r.n} қорығы</h3><div class="facts"><span>Құрылған жылы:</span><b>${r.y}</b><span>Орналасуы:</span><b>${r.reg}</b><span>Табиғат аймағы:</span><b>${r.zone}</b></div><div><b>🌿 Өсімдіктері:</b> <span class="muted">${r.flora}</span></div><div style="margin-top:6px"><b>🐾 Жануарлары:</b> <span class="muted">${r.fauna}</span></div><div class="q" style="margin-top:12px">💡 <b>Қызықты дерек:</b> ${r.fact}</div>`}
+
+/* ---------- 7. OLYMPIAD ---------- */
+const HARD=[{q:'Қай органоидтардың өз ДНҚ-сы және рибосомалары бар?',o:['Митохондрия мен хлоропласт','Рибосома мен лизосома','Гольджи кешені мен ЭПТ','Вакуоль мен лизосома'],a:0,e:'Симбиогенез теориясы бойынша митохондрия мен хлоропласт бұрын дербес прокариоттар болған — олардың өз сақиналы ДНҚ-сы мен 70S рибосомалары бар.'},
+ {q:'Адамның соматикалық жасушасында 2n=46. Митоздың анафазасында жасушада неше хромосома (хроматид) болады?',o:['92','46','23','69'],a:0,e:'Анафазада әр хромосоманың екі хроматиді ажырап, дербес хромосомаға айналады: 46×2 = 92.'},
+ {q:'Хромосомалар саны екі есе азаятын кезең?',o:['Мейоздың I бөлінуі','Мейоздың II бөлінуі','Митоздың анафазасы','Интерфаза'],a:0,e:'Мейоздың I бөлінуінде гомологты хромосомалар ажырайды — бұл редукциялық бөліну (2n → n).'},
+ {q:'Кребс циклі жасушаның қай бөлігінде жүреді?',o:['Митохондрия матриксінде','Цитоплазмада','Хлоропласт стромасында','Ядрода'],a:0,e:'Гликолиз цитоплазмада, ал Кребс циклі митохондрия матриксінде, тотығу фосфорлануы — ішкі мембранада жүреді.'},
+ {q:'Фотосинтездің жарық сатысының өнімдері?',o:['АТФ, НАДФ·Н және O₂','Глюкоза және O₂','CO₂ және H₂O','Крахмал және АТФ'],a:0,e:'Жарық сатысында судың фотолизі жүріп, O₂ бөлінеді, ал АТФ пен НАДФ·Н қараңғы сатыда (Кальвин циклі) CO₂-ні тотықсыздандыруға жұмсалады.'},
+ {q:'ДНҚ молекуласында аденин 20%. Цитозин неше пайыз?',o:['30%','20%','40%','60%'],a:0,e:'Чаргафф ережесі: A=T=20%, сонда G+C=60%, G=C=30%.'},
+ {q:'Ұзындығы 450 нуклеотид иРНҚ (стоп-кодонсыз) неше амин қышқылын кодтайды?',o:['150','450','225','900'],a:0,e:'Әр амин қышқылын бір кодон (3 нуклеотид) кодтайды: 450 : 3 = 150.'},
+ {q:'Қан тобы II (IᴬI⁰) ана мен III (IᴮI⁰) әкеден қандай қан тобы бар бала тууы мүмкін?',o:['I, II, III, IV — төртеуі де','Тек II және III','Тек IV','Тек I'],a:0,e:'Гаметалар: Iᴬ, I⁰ және Iᴮ, I⁰ → IᴬIᴮ (IV), IᴬI⁰ (II), IᴮI⁰ (III), I⁰I⁰ (I).'},
+ {q:'Ұйқы безі бөлмейтін гормон?',o:['Тироксин','Инсулин','Глюкагон','Соматостатин'],a:0,e:'Тироксинді қалқанша без бөледі. Ұйқы безінің Лангерганс аралшықтары инсулин, глюкагон және соматостатин бөледі.'},
+ {q:'Популяцияда рецессивті гомозиготалар 16%. Гетерозиготалар үлесі (Харди–Вайнберг)?',o:['48%','24%','36%','16%'],a:0,e:'q² = 0,16 → q = 0,4; p = 0,6; 2pq = 2·0,6·0,4 = 0,48 → 48%.'}];
+const LOGIC=[{h:'№1. Чаргафф ережесі',q:'ДНҚ молекуласы 600 нуклеотидтен тұрады, оның 20%-ы аденин. Молекулада неше гуанин нуклеотиді бар?',a:180,s:'A = 600·0,2 = 120, T = A = 120. G + C = 600 − 240 = 360. G = C = 360 : 2 = <b>180</b>.'},
+ {h:'№2. Харди–Вайнберг заңы',q:'Популяцияда рецессивті белгісі бар даралар 9%. Гетерозиготалы даралар неше пайыз?',a:42,s:'q² = 0,09 → q = 0,3; p = 1 − 0,3 = 0,7. 2pq = 2·0,7·0,3 = 0,42 → <b>42%</b>.'},
+ {h:'№3. Экологиялық пирамида',q:'Продуценттер 10 000 кДж энергия жинады. 10% ережесі бойынша екінші реттік консументтерге неше кДж өтеді?',a:100,s:'Продуцент (10 000) → I реттік консумент (1 000) → II реттік консумент (<b>100 кДж</b>).'},
+ {h:'№4. Генетикалық код',q:'Белок 120 амин қышқылынан тұрады. Оны кодтайтын иРНҚ-да неше нуклеотид бар (стоп-кодонды есептемегенде)?',a:360,s:'1 амин қышқылы = 1 кодон = 3 нуклеотид. 120 · 3 = <b>360</b>.'},
+ {h:'№5. Дигибридті будандастыру',q:'AaBb × AaBb будандастыруда ұрпақтың неше пайызы aabb генотипті болады? (бүтін санға дейін дөңгелекте)',a:6,s:'aabb = 1/4 · 1/4 = 1/16 ≈ 6,25% → <b>≈6%</b>. Фенотип бойынша ажырау 9 : 3 : 3 : 1.'}];
+const CASES=[{h:'Көлдегі балықтар неге қырылды?',q:'Көктемде егістік жанындағы көлдің суы ашық жасыл түске боялды, ал жаз ортасында балықтар жаппай қырылды. Себебін түсіндір.',k:['Тыңайтқыштар (азот, фосфор) суға шайылды','Балдырлар қарқынды көбейді («су гүлденуі», эвтрофикация)','Өлген балдырларды ыдыратқан бактериялар оттекті көп жұмсады','Судағы оттек жетіспеушілігінен балықтар қырылды'],m:'Егістіктен тыңайтқыштар (нитраттар, фосфаттар) көлге шайылып, балдырлардың жаппай көбеюіне әкелді (эвтрофикация). Балдырлар өлгенде оларды ыдырататын аэробты бактериялар судағы оттекті шығындайды. Оттек жетіспеушілігінен балықтар тұншығып қырылады.'},
+ {h:'Неге антибиотик тағайындалмады?',q:'Дәрігер тұмауға шалдыққан науқасқа антибиотик тағайындамады. Дәрігердің шешімін биологиялық тұрғыдан негізде.',k:['Тұмауды вирус қоздырады','Антибиотиктер бактерияның құрылымдарына (қабырға, рибосома) әсер етеді','Вирустарда ол құрылымдар жоқ, олар жасуша ішінде көбейеді','Негізсіз қолдану бактериялардың тұрақтылығын арттырады'],m:'Тұмау — вирустық ауру. Антибиотиктер бактерия жасушасының қабырғасына, рибосомаларына немесе зат алмасуына әсер етеді. Вирустардың жасушалық құрылысы жоқ, олар ие жасушасының ішінде көбейеді, сондықтан антибиотик әсер етпейді. Оны орынсыз қолдану бактериялардың антибиотикке төзімділігін арттырып, пайдалы микрофлораны бұзады.'},
+ {h:'Тауда эритроциттер неге көбейді?',q:'Альпинист биік таулы лагерьде бірнеше апта болғаннан кейін, оның қанындағы эритроциттер саны артқаны анықталды. Бұл құбылысты түсіндір.',k:['Биік тауда ауадағы оттектің парциал қысымы төмен','Ағза оттек жетіспеушілігін (гипоксия) сезеді','Бүйрек эритропоэтин гормонын көп бөледі','Қызыл сүйек кемігінде эритроциттер түзілуі артады — бейімделу'],m:'Биіктікке көтерілген сайын атмосфералық қысым және оттектің парциал қысымы төмендейді. Гипоксияға жауап ретінде бүйрек эритропоэтин бөледі, ол қызыл сүйек кемігінде эритроциттердің түзілуін күшейтеді. Нәтижесінде қанның оттек тасымалдау қабілеті артады — бұл ағзаның бейімделуі.'},
+ {h:'Арал дағдарысы және Барсакелмес',q:'Арал теңізінің тартылуы Барсакелмес қорығының экожүйесіне қалай әсер етті? Кемінде үш салдарын ата.',k:['Арал құрлыққа қосылып, оқшаулануы жойылды','Топырақтың тұздануы және тұзды-шаңды дауылдар','Жабайы аңдарға жыртқыштар мен адам әрекетінің қолжетімділігі артты','Құрғаған теңіз табаны — жаңа шөлді аумақтар пайда болды'],m:'Теңіз тартылғаннан кейін Барсакелмес аралы құрлыққа қосылып, жануарлардың табиғи оқшаулануы жойылды. Құрғаған табаннан көтерілетін тұзды шаң топырақ пен өсімдіктерге зиян келтіреді, климат құрғақ әрі континенттік бола түсті. Бұрынғы теңіз табанында жаңа шөлді аумақтар қалыптасты; оларды қорғау үшін қорық аумағын кеңейту маңызды болды.'}];
+function logicInit(){$('#logicBox').innerHTML=LOGIC.map((p,i)=>`<div class="panel prob"><h4>${p.h}</h4><p>${p.q}</p><div class="row" style="margin-top:10px"><input type="number" placeholder="Жауап" style="width:140px" data-i="${i}"><button class="btn sm" data-c="${i}">Тексеру</button><button class="btn sm ghost" data-s="${i}">💡 Шешімі</button><span data-r="${i}" class="score"></span></div><div class="sol" data-sol="${i}">${p.s}</div></div>`).join('');
+ $$('#logicBox [data-c]').forEach(b=>b.onclick=()=>{const i=+b.dataset.c,v=parseFloat($(`#logicBox input[data-i="${i}"]`).value.replace(',','.'));const ok=Math.abs(v-LOGIC[i].a)<.51;$(`#logicBox [data-r="${i}"]`).innerHTML=isNaN(v)?'':ok?'<span class="ok">✓ Дұрыс!</span>':'<span class="badc">✗ Қате, қайта есепте</span>'});
+ $$('#logicBox [data-s]').forEach(b=>b.onclick=()=>$(`#logicBox [data-sol="${b.dataset.s}"]`).classList.toggle('on'))}
+function caseInit(){$('#caseBox').innerHTML=CASES.map((c,i)=>`<div class="panel case"><span class="pill">Жағдаят №${i+1}</span><h4 style="font-size:17px;margin:10px 0 6px">${c.h}</h4><p style="line-height:1.6">${c.q}</p><textarea placeholder="Өз жауабыңды осында жаз..." style="margin-top:10px"></textarea><div class="row" style="margin-top:10px"><button class="btn sm" data-m="${i}">📖 Үлгі жауап және бағалау</button></div><div class="sol" data-sol="${i}"><b>Үлгі жауап:</b> ${c.m}<div class="chk" style="margin-top:10px"><b>Өзіңді бағала — жауабыңда бар ма?</b>${c.k.map(k=>`<label><input type="checkbox"> ${k}</label>`).join('')}<div class="score" data-sc></div></div></div></div>`).join('');
+ $$('#caseBox [data-m]').forEach(b=>b.onclick=()=>$(`#caseBox [data-sol="${b.dataset.m}"]`).classList.toggle('on'));
+ $$('#caseBox .chk').forEach(ch=>$$('input',ch).forEach(x=>x.onchange=()=>{const n=$$('input:checked',ch).length;$('[data-sc]',ch).innerHTML=`Негізгі ойлар: ${n} / 4 → ${n===4?'<span class="ok">5 балл — толық жауап!</span>':n===3?'4 балл':n===2?'3 балл':'жауапты толықтыр'}`}))}
+/* Punnett */
+let GN=1;
+function genSelDraw(){const o1=['AA','Aa','aa'],o2=['AABB','AaBb','AaBB','AABb','aabb','Aabb','aaBb'];const o=GN===1?o1:o2;$('#genSel').innerHTML=`<label class="muted">♀ Ана:</label><select id="gP1">${o.map(x=>`<option ${x===(GN===1?'Aa':'AaBb')?'selected':''}>${x}</option>`).join('')}</select><label class="muted">♂ Әке:</label><select id="gP2">${o.map(x=>`<option ${x===(GN===1?'Aa':'AaBb')?'selected':''}>${x}</option>`).join('')}</select><span class="muted">${GN===1?'A — сары түс (басым), a — жасыл (рецессив)':'A — сары / a — жасыл; B — тегіс / b — бүдір (Мендель бұршағы)'}</span>`;$('#gP1').onchange=$('#gP2').onchange=genCalc;genCalc()}
+function gametes(g){if(g.length===2)return[...new Set([g[0],g[1]])];const a=[...new Set([g[0],g[1]])],b=[...new Set([g[2],g[3]])];const r=[];a.forEach(x=>b.forEach(y=>r.push(x+y)));return r}
+function combine(x,y){const srt=(p,q)=>p<q?p+q:q+p;if(x.length===1)return srt(x,y);return srt(x[0],y[0])+srt(x[1],y[1])}
+function genCalc(){const p1=$('#gP1').value,p2=$('#gP2').value,g1=gametes(p1),g2=gametes(p2);const cnt={},ph={};let tot=0;
+ const phen=g=>GN===1?(g.includes('A')?'Сары':'Жасыл'):((/A/.test(g.slice(0,2))?'Сары':'Жасыл')+', '+(/B/.test(g.slice(2))?'тегіс':'бүдір'));
+ let h=`<table class="pun"><tr><th>♀ \\ ♂</th>${g2.map(x=>`<th>${x}</th>`).join('')}</tr>`;g1.forEach(a=>{h+=`<tr><th>${a}</th>`;g2.forEach(b=>{const z=combine(a,b);cnt[z]=(cnt[z]||0)+1;const f=phen(z);ph[f]=(ph[f]||0)+1;tot++;h+=`<td class="${/^[a-z]+$/.test(z)?'rec':'dom'}">${z}<br><small style="font-weight:500;font-size:11px">${f}</small></td>`});h+='</tr>'});h+='</table>';
+ const gcd=(a,b)=>b?gcd(b,a%b):a;const ratio=o=>{const v=Object.values(o),g=v.reduce(gcd);return v.map(x=>x/g).join(' : ')};
+ h+=`<div class="grid2b" style="margin-top:14px"><div class="q"><b>Генотип бойынша:</b><br>${Object.keys(cnt).map(k=>`${k} — ${cnt[k]}/${tot} (${Math.round(cnt[k]/tot*1000)/10}%)`).join('<br>')}<br><b>Қатынас: ${ratio(cnt)}</b></div><div class="q"><b>Фенотип бойынша:</b><br>${Object.keys(ph).map(k=>`${k} — ${ph[k]}/${tot} (${Math.round(ph[k]/tot*1000)/10}%)`).join('<br>')}<br><b>Қатынас: ${ratio(ph)}</b></div></div>`;
+ $('#genOut').innerHTML=`<p class="muted" style="margin-top:12px">Гаметалар: ♀ ${g1.join(', ')} &nbsp;|&nbsp; ♂ ${g2.join(', ')}</p>`+h}
+$$('#genN button').forEach(b=>b.onclick=()=>{$$('#genN button').forEach(x=>x.classList.toggle('on',x===b));GN=+b.dataset.n;genSelDraw()});
+
+
+/* ---------- VIDEO LESSONS ---------- */
+const VIDS=[
+ {f:'v1',t:'Хлоропласт және фотосинтез',g:'10 сынып',d:'1:57',x:'Хлоропласттың құрылысы: қос мембрана, тилакоидтар, граналар, строма. Фотосинтездің жарық және қараңғы сатылары қай жерде жүретіні.'},
+ {f:'v2',t:'Генетикалық код және трансляция',g:'11 сынып',d:'1:27',x:'иРНҚ кодондары, генетикалық кодтың қасиеттері және рибосомада ақуыз синтезі (трансляция).'},
+ {f:'v3',t:'ДНҚ, РНҚ және транскрипция',g:'11 сынып',d:'1:25',x:'ДНҚ мен РНҚ құрылысы, транскрипция, иРНҚ-ның өңделуі: 5′ қалпақша, экзондар мен интрондар, поли-А құйрық.'},
+ {f:'v4',t:'Ферменттер және ингибиция',g:'10 сынып',d:'1:13',x:'Ферменттің белсенді орталығы, фермент–субстрат кешені, бәсекелес және бәсекелес емес ингибиция.'},
+ {f:'v5',t:'Антиденелер және иммунитет',g:'10–11 сынып',d:'1:36',x:'Антидененің құрылысы (2 ауыр, 2 жеңіл тізбек), антигенмен байланысуы және иммундық жауап.'},
+ {f:'v6',t:'Дұғашыл шегіртке (богомол): даму циклі',g:'7 сынып • ЖИ бейне',d:'0:20',vert:1,x:'Аналығы жұмыртқаларын көбікті қапшыққа (оотекаға) салады, одан ересекке ұқсас дернәсілдер шығады — толымсыз түрлену: жұмыртқа → дернәсіл → ересек жәндік.'},
+ {f:'v7',t:'Құрлық ұлуы: көбеюі мен дамуы',g:'7 сынып • ЖИ бейне',d:'0:20',vert:1,x:'Ұлу жұмыртқаларын ылғалды топыраққа салады, жұмыртқадан бақалшағы бар кішкентай ұлу шығады — тура даму. Ұлулар — қос жынысты (гермафродит) моллюскалар.'},
+ {f:'v8',t:'Жеміс шыбыны: толық түрлену',g:'7 сынып • ЖИ бейне',d:'0:20',vert:1,x:'Аналық жұмыртқаны жеміс ішіне салады, дернәсілдер жемісті жеп өседі, сосын топырақта қуыршаққа айналады — толық түрлену: жұмыртқа → дернәсіл → қуыршақ → ересек шыбын.'}];
+function vSel(i,play){const v=VIDS[i],p=$('#vPlayer');p.style.aspectRatio=v.vert?'9/16':'848/464';p.style.maxHeight=v.vert?'72vh':'';p.style.width=v.vert?'auto':'100%';p.style.margin='0 auto';p.src='video/'+v.f+'.mp4';p.poster='video/'+v.f+'.jpg';$('#vCap').innerHTML=`<span class="pill">${v.g}</span> <b style="font-size:17px">${v.t}</b><div class="muted" style="margin-top:6px;font-size:14px">${v.x}</div>`;$$('#vList .vitem').forEach((b,k)=>b.classList.toggle('on',k===i));if(play){const pr=p.play();if(pr&&pr.catch)pr.catch(()=>{})}}
+$('#vList').innerHTML=VIDS.map((v,i)=>`<button class="vitem" data-i="${i}"><span class="th"><img src="video/${v.f}.jpg" alt=""><em>${v.d}</em></span><span><b>${v.t}</b><small>${v.g}</small></span></button>`).join('');
+$$('#vList .vitem').forEach(b=>b.onclick=()=>{PL.play=false;updPlay();vSel(+b.dataset.i,true)});vSel(0,false);
+$('#vPlayer').addEventListener('play',()=>{PL.play=false;updPlay()});
+window.addEventListener('hashchange',()=>{if(location.hash!=='#lessons')$('#vPlayer').pause()});
+/* ---------- INIT ---------- */
+initTabs();lessonsBuild();
+wsPicInit();wsTabInit();wsMatInit();wsFillInit();
+runTest($('#testBox'),TEST,'Тест',false);jigNew();ordNew();memNew();jeoDraw();
+resInit();runTest($('#hardBox'),HARD,'Олимпиада тесті',true);logicInit();caseInit();genSelDraw();
+route();
+</script>
+<script src="js/labs.js"></script>
+<script src="js/ai.js"></script>
+<script type="importmap">{"imports":{"three":"./lib/three.module.min.js","three/addons/":"./lib/addons/"}}</script>
+<script type="module" src="js/models3d.js"></script>
+<script type="module" src="js/lab3d.js"></script>
+<script type="module" src="js/tours3d.js"></script>
+</body>
+</html>
