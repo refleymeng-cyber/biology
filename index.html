@@ -425,6 +425,17 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
 .l3img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}.l3card:hover .l3img img{transform:scale(1.06)}
 .l3img .ic{position:absolute;left:10px;bottom:8px;font-size:26px!important;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.92);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.18)}
 .l3card .pill{align-self:flex-start;margin-top:8px}
+
+/* Титул: автор */
+.hero{display:flex;align-items:center;gap:24px}.hero-in{flex:1;min-width:0}
+.author{position:relative;z-index:2;flex:0 0 320px;margin:28px 40px 28px auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:20px 18px 18px;border-radius:26px;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border:1px solid rgba(22,163,74,.25);box-shadow:0 20px 50px rgba(22,101,52,.18);text-decoration:none;color:var(--txt);transition:.25s}
+.author:hover{transform:translateY(-4px);box-shadow:0 26px 60px rgba(22,101,52,.28)}
+.aph{width:220px;height:270px;border-radius:22px;padding:5px;background:linear-gradient(135deg,#16a34a,#0891b2,#a3e635);box-shadow:0 12px 30px rgba(22,101,52,.3)}
+.aph img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;border-radius:18px;display:block}
+.atx{display:flex;flex-direction:column;gap:4px}.atx small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--acc)}
+.atx b{font-size:19px;line-height:1.25;background:linear-gradient(90deg,#15803d,#0e7490);-webkit-background-clip:text;background-clip:text;color:transparent}
+.atx span{font-size:13px;font-weight:600;color:#2f5a43}.atx em{font-style:normal;margin-top:8px;align-self:center;font-size:13px;font-weight:800;color:#fff;background:linear-gradient(135deg,#f59e0b,#d97706);padding:7px 14px;border-radius:999px}
+@media(max-width:900px){.hero{flex-direction:column;align-items:stretch}.author{margin:0 18px 22px;flex-basis:auto;flex-direction:row;text-align:left}.aph{width:110px;height:135px;flex:0 0 110px}.atx em{align-self:flex-start}}
 </style>
 </head>
 <body>
@@ -432,6 +443,7 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
   <a class="logo" href="#home"><i>🧬</i><span>BIO <b>3D</b> ӘЛЕМІ</span></a>
   <nav class="nav">
     <a href="#home" data-v="home">🏠</a>
+    <a href="#results" data-v="results">🏅 Нәтижелер</a>
     <a href="#lessons" data-v="lessons">🎬 Бейнесабақтар</a>
     <a href="#lab" data-v="lab">🔬 Зертхана</a>
     <a href="#sheets" data-v="sheets">📝 Жұмыс парақтары</a>
@@ -440,7 +452,6 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
     <a href="#reserves" data-v="reserves">🏞️ Қорықтар</a>
     <a href="#olymp" data-v="olymp">🏆 Олимпиада</a>
     <a href="#ai" data-v="ai">🤖 ЖИ</a>
-    <a href="#results" data-v="results">🏅 Нәтижелер</a>
   </nav>
 </div></header>
 
@@ -455,6 +466,10 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
       <div class="row"><a class="btn" href="#lab">🧪 3D зертханаға кіру</a><a class="btn ghost" href="#models">🫀 3D модельдер</a><a class="btn blue" href="#ai">🤖 ЖИ көмекші</a></div>
       <div class="stats"><div><b>8</b>бөлім</div><div><b>15</b>3D модель</div><div><b>21</b>зертханалық жұмыс (ЖМБ)</div><div><b>4</b>3D тур</div></div>
     </div>
+    <a class="author" href="#results" title="Нәтижелер">
+      <div class="aph"><img src="img/res/r18.jpg" alt="Әлмұратова Бағдад Қонысбайқызы"></div>
+      <div class="atx"><small>Сайт авторы</small><b>Әлмұратова Бағдад Қонысбайқызы</b><span>🧬 Биология пәні мұғалімі</span><span>🏫 Жанқожа батыр атындағы №70 орта мектеп</span><em>🏅 Нәтижелерім →</em></div>
+    </a>
   </div>
   <div class="cards" id="homeCards"></div>
 </section>
