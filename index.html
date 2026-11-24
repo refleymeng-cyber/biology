@@ -418,6 +418,13 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
 .aimode{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.75);border:1px solid var(--line);font-size:13.5px;font-weight:600}
 .aisw{display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap}.aisw input{display:none}.aisw span{width:42px;height:24px;border-radius:999px;background:#cbd5e1;position:relative;transition:.2s}.aisw span:after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .aisw input:checked+span{background:#d97706}.aisw input:checked+span:after{left:21px}.aisw input:disabled+span{opacity:.6}
+
+/* зертхана карточкасының суреті */
+.l3card{padding:0 0 14px;overflow:hidden}.l3card>*:not(.l3img){margin-left:16px;margin-right:16px}
+.l3img{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#dcfce7,#cffafe);margin-bottom:4px}
+.l3img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}.l3card:hover .l3img img{transform:scale(1.06)}
+.l3img .ic{position:absolute;left:10px;bottom:8px;font-size:26px!important;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.92);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.l3card .pill{align-self:flex-start;margin-top:8px}
 </style>
 </head>
 <body>
