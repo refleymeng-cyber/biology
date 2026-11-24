@@ -276,6 +276,7 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top
 #l3eyeCv{width:min(52vh,360px);height:min(52vh,360px);border-radius:50%;box-shadow:0 0 0 8px #111,0 0 0 10px #444,0 20px 60px rgba(0,0,0,.6);background:#000}
 #l3eye small{display:block;color:#cde;margin-top:10px;font-weight:600}
 #l3eyeX{position:absolute;right:-6px;top:-6px;width:34px;height:34px;border-radius:50%;border:0;background:#fff;color:#111;font-weight:800;cursor:pointer}
+#l3data:empty{display:none}#l3data{margin-top:10px;padding:10px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:13px;overflow-x:auto}#l3data svg{max-width:100%}
 #l3res{margin-top:14px;display:grid;gap:10px}
 #l3res .q{padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--card)}
 .tbl3{border-collapse:collapse;width:100%;margin-top:8px;font-size:13.5px}.tbl3 td,.tbl3 th{border:1px solid var(--line);padding:6px 8px;text-align:center}.tbl3 th{background:var(--card2)}
@@ -335,6 +336,46 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top
 .tfbtns{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}.tfbtns button{padding:18px;border-radius:16px;border:0;font:800 19px Montserrat,sans-serif;cursor:pointer}.tfy{background:var(--acc);color:#04241a}.tfn{background:var(--bad);color:#3a0a0a}.tfbtns button:disabled{opacity:.35;cursor:default}
 .gentask{display:grid;gap:14px}.genq p{margin:6px 0}.genx{font-size:20px}.gpun table{margin:0}.gpun th,.gpun td{border-color:var(--line)!important;background:rgba(255,255,255,.04)}.gpun input{background:#fffdf5;color:#0f172a;border-radius:8px;border:2px solid #94a3b8}
 .genqs{display:flex;flex-direction:column;gap:10px}.genqs label{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* ===== АШЫҚ ЖАСЫЛ БИОЛОГИЯЛЫҚ ТЕМА ===== */
+:root{--bg:#e8f8ea;--card:rgba(255,255,255,.82);--card2:#f1fbf2;--line:rgba(21,128,61,.18);--acc:#16a34a;--acc2:#0891b2;--acc3:#db2777;--warn:#d97706;--bad:#dc2626;--txt:#0c2a1a;--mut:#4a6857}
+body{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%2316a34a' stroke-opacity='.10' stroke-width='2'%3E%3Ccircle cx='40' cy='44' r='22'/%3E%3Ccircle cx='44' cy='40' r='7' fill='%2316a34a' fill-opacity='.06'/%3E%3Cpath d='M150 20c20 10 20 30 0 40s-20 30 0 40M170 20c-20 10-20 30 0 40s20 30 0 40'/%3E%3Cpath d='M154 30h12M152 50h16M154 70h12M152 90h16'/%3E%3Cpath d='M60 170c30-40 70-40 90 0-30 30-60 30-90 0z'/%3E%3Cpath d='M60 170h90M80 158l10 12M100 154l10 16M120 156l10 14'/%3E%3Cellipse cx='205' cy='180' rx='18' ry='10'/%3E%3Cpath d='M190 180q8-8 15 0t15 0'/%3E%3Ccircle cx='110' cy='110' r='3' fill='%2316a34a' fill-opacity='.1'/%3E%3Ccircle cx='20' cy='130' r='4' fill='%2316a34a' fill-opacity='.1'/%3E%3Ccircle cx='225' cy='100' r='3' fill='%2316a34a' fill-opacity='.1'/%3E%3C/g%3E%3C/svg%3E") repeat,radial-gradient(1000px 600px at 90% -10%,#bbf7d0 0%,transparent 60%),radial-gradient(900px 520px at -10% 30%,#d9f99d 0%,transparent 55%),radial-gradient(800px 500px at 60% 110%,#a7f3d0 0%,transparent 60%),var(--bg);background-attachment:fixed}
+header{background:rgba(240,253,244,.88);box-shadow:0 4px 20px rgba(22,101,52,.08)}
+nav.nav a{color:#2f5a43}nav.nav a.on,.btn,.btn.blue,.btn.pink,.tabs button.on,.seg button.on,.chips button.on,.tfy,.wsfilter button.on,.tkchips button.on,.l3card em{color:#fff}
+.l3card em{color:var(--acc)}
+.btn.ghost{color:var(--txt);background:#fff}
+.panel,.card,.l3card,.wscard,.tabs button,.opt,.chips button{box-shadow:0 4px 18px rgba(22,101,52,.07)}
+.card:hover{box-shadow:0 14px 34px rgba(22,101,52,.18);border-color:rgba(22,163,74,.5)}
+.card .n{color:rgba(22,101,52,.08)}
+select,input[type=text],input[type=number],textarea{background:#fff;color:var(--txt);border-color:rgba(21,128,61,.28)}
+.okb{background:rgba(22,163,74,.14)!important}
+.hero{background:linear-gradient(120deg,rgba(220,252,231,.95),rgba(236,252,203,.9) 55%,rgba(207,250,254,.9));box-shadow:0 20px 50px rgba(22,101,52,.12)}
+.hero p{color:#2f5a43}
+.litem .ic{background:rgba(22,163,74,.1)}
+.cap{background:linear-gradient(180deg,#f0fdf4,#dcfce7);color:var(--txt)}
+.pbar{background:#14532d}
+.q{background:rgba(8,145,178,.07);border-color:rgba(8,145,178,.25)}
+.calc{background:rgba(22,163,74,.07)}
+.mc{background:linear-gradient(135deg,#dcfce7,#cffafe);color:var(--txt)}.mc.open{background:#bbf7d0}
+.jeo button{background:linear-gradient(135deg,#dcfce7,#cffafe);color:#b45309}
+#modal .box{background:#fff;color:var(--txt)}
+.ailog{background:rgba(255,255,255,.65)}.msg.ai{background:rgba(124,58,237,.08)}
+#m3load{background:rgba(240,253,244,.75);color:var(--txt)}
+.m3hint{background:rgba(255,255,255,.8);color:var(--mut)}
+.wsbar{background:rgba(240,253,244,.92);box-shadow:0 4px 16px rgba(22,101,52,.1)}
+.wscard{background:linear-gradient(165deg,color-mix(in srgb,var(--c) 16%,#fff),#fff 60%)}.wscard em{filter:none}
+.cwscroll{background:linear-gradient(160deg,#bbf7d0,#a7f3d0)}
+.gpun th,.gpun td{background:#fff}
+.tfcard{background:linear-gradient(145deg,#e0f2fe,#dcfce7)}
+.tfcard.ok{background:#bbf7d0}.tfcard.bad{background:#fecaca}
+footer{background:rgba(220,252,231,.6)}
+.seg{background:#fff}
+#l3view{background:#dff3e4}
+.l3grp{margin:22px 0 10px;display:flex;align-items:center;gap:10px;font-size:18px;font-weight:900}.l3grp span{font-size:12px;font-weight:700;color:#fff;background:var(--acc);padding:4px 10px;border-radius:999px}
+
+.m3wrap{background:radial-gradient(ellipse at 50% 35%,#ffffff 0%,#e3f6e8 45%,#c6ead2 100%)!important}
+.aihero{background:radial-gradient(600px 300px at 90% 20%,rgba(124,58,237,.16),transparent),radial-gradient(500px 300px at 0% 100%,rgba(6,182,212,.16),transparent),linear-gradient(120deg,#f5f3ff,#ecfeff)!important;color:var(--txt)}
+.aihero p{color:#3f4f63!important}
 </style>
 </head>
 <body>
@@ -362,7 +403,7 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top
       <h1>Тірі табиғатты <b>3D әлемде</b> зертте</h1>
       <p>Анимациялық бейнесабақтар, виртуалды зертхана, дайын жұмыс парақтары, ойындар мен викториналар, адам ағзасы мен жасушаның 3D модельдері, Қазақстан қорықтары және олимпиадаға дайындық — бәрі бір сайтта.</p>
       <div class="row"><a class="btn" href="#lab">🧪 3D зертханаға кіру</a><a class="btn ghost" href="#models">🫀 3D модельдер</a><a class="btn blue" href="#ai">🤖 ЖИ көмекші</a></div>
-      <div class="stats"><div><b>8</b>бөлім</div><div><b>15</b>3D модель</div><div><b>17</b>зертханалық жұмыс</div><div><b>4</b>3D тур</div></div>
+      <div class="stats"><div><b>8</b>бөлім</div><div><b>15</b>3D модель</div><div><b>21</b>зертханалық жұмыс (ЖМБ)</div><div><b>4</b>3D тур</div></div>
     </div>
   </div>
   <div class="cards" id="homeCards"></div>
@@ -397,17 +438,17 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:26px;border-top
 
 <!-- 2 LAB -->
 <section class="view" id="v-lab">
-  <div class="sec-h"><h2><span class="num">2</span>Виртуалды <span>зертхана</span></h2><p>3D зертханада жұмысты өзің орында: құралдарды бас, сүйреп апар, реактив тамыз, микроскоппен қара, өлше және қорытынды жаса. Сонымен қатар 6 деректерді талдау зертханасы бар.</p></div>
+  <div class="sec-h"><h2><span class="num">2</span>Виртуалды <span>зертхана</span></h2><p>Жаратылыстану-математикалық бағыттағы 10-сыныптың 8 және 11-сыныптың 13 зертханалық жұмысы 3D форматта: құралдарды бас, сүйреп апар, реактив тамыз, микроскоппен қара, өлше, есепте және қорытынды жаса.</p></div>
   <div class="seg" id="labMode"><button data-m="3d" class="on">🧪 3D зертхана — өзің жаса</button><button data-m="an">📈 Деректерді талдау (6 жұмыс)</button></div>
   <div id="lab3dWrap">
-    <div id="l3cards" class="l3grid"></div>
+    <div id="l3cards"></div>
     <div id="l3work" style="display:none">
       <div class="l3top"><button class="btn ghost sm" id="l3back">← Барлық жұмыстар</button><div><span class="pill" id="l3grade"></span> <b id="l3title"></b></div><div class="row" style="gap:6px"><button class="btn ghost sm" id="l3hint">💡 Көмек</button><button class="btn ghost sm" id="l3lbl">🏷 Атаулар</button><button class="btn ghost sm" id="l3re">↺ Қайта бастау</button></div></div>
       <div class="l3lay">
         <div id="l3view"><canvas id="l3cv"></canvas><div id="l3toast" class="l3toast"></div>
           <div id="l3eye"><div class="eyeIn"><canvas id="l3eyeCv" width="420" height="420"></canvas><button id="l3eyeX">✕</button><small>Окуляр арқылы көрініс</small></div></div>
           <div class="l3help">🖱 Айналдыру: тышқанмен сүйреу • Жақындату: дөңгелек • Жасыл шеңбер — қазіргі зат, сары — апаратын орын</div></div>
-        <div class="l3side panel"><div id="l3goal" class="muted" style="font-size:13px"></div><div id="l3cur" style="margin-top:10px"></div><h4 style="margin:14px 0 6px">Жұмыс барысы</h4><ol id="l3steps"></ol></div>
+        <div class="l3side panel"><div id="l3goal" class="muted" style="font-size:13px"></div><div id="l3cur" style="margin-top:10px"></div><div id="l3data"></div><h4 style="margin:14px 0 6px">Жұмыс барысы</h4><ol id="l3steps"></ol></div>
       </div>
       <div id="l3res"></div>
     </div>
@@ -671,7 +712,7 @@ const onTab={};
 /* ---------- HOME ---------- */
 const SECTIONS=[
  ['lessons','🎬','Бейнесабақтар','Тақырыптарға арналған анимациялық видеолар мен 3D түсіндірмелер: фотосинтез, митоз, қан айналымы, жасуша.'],
- ['lab','🔬','Виртуалды зертхана','11 интерактивті 3D зертханалық жұмыс (микроскоп, ферменттер, ДНҚ бөлу, хроматография…) — өзің орында! + 6 деректерді талдау жұмысы.'],
+ ['lab','🔬','Виртуалды зертхана','ЖМБ бағдарламасы бойынша 10–11-сыныптың 21 зертханалық жұмысы интерактивті 3D форматта — өзің орында! + қосымша жұмыстар мен деректерді талдау.'],
  ['sheets','📝','Жұмыс парақтары','12 әдемі жұмыс парағы: 11 түрлі тапсырма, автотексеру, баға және басып шығару.'],
  ['tasks','🧩','Интерактивті тапсырмалар','Тақырыптық тесттер, кроссворд, жылдам жауап ойыны, генетика тренажері, пазлдар және топтық викторина.'],
  ['models','🫀','3D модельдер','Шынайы 3D модельдер: қимасы бар жасушалар, адам ағзасы, жүрек, ДНҚ, өсімдік және жапырақтың ішкі құрылысы.'],

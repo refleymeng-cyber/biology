@@ -1,0 +1,10 @@
+import {L_onion,L_starch,L_biuret,L_bene,L_cat,L_amyl,L_elo,L_osm,L_chr,L_dna,L_yeast,L_stoma} from './lab3d_defs.js';
+import {NEW10,NEW11} from './lab3d_defs2.js';
+const {L_denat,L_beet,L_sav,L_mitos,L_var}=NEW10;const {L_immob,L_inhib,L_pig,L_c3c4,L_lim,L_wpot,L_aux,L_chi,L_em,L_mcal,L_lacto,L_gram,L_eco}=NEW11;
+L_amyl.goal='Сілекей амилазасының крахмалды ыдырату белсенділігіне температураның (0, 37, 100 °C) әсерін йод сынамасы арқылы зерттеу.';
+const G11=[L_immob,L_inhib,L_pig,L_c3c4,L_lim,L_wpot,L_aux,L_chi,L_em,L_mcal,L_lacto,L_gram,L_eco];
+const G10=[L_bene,L_denat,L_biuret,L_beet,L_amyl,L_sav,L_mitos,L_var];
+const EXTRA=[L_onion,L_starch,L_cat,L_elo,L_osm,L_chr,L_dna,L_yeast,L_stoma];
+G11.forEach(l=>l.gr='11-сынып');G10.forEach(l=>l.gr='10-сынып');
+export const LABS3D=[...G11,...G10,...EXTRA];
+export const GROUPS=[{t:'11-сынып • ЖМБ бағыты',p:'11-сынып • №',ids:G11.map(l=>l.id)},{t:'10-сынып • ЖМБ бағыты',p:'10-сынып • №',ids:G10.map(l=>l.id)},{t:'Қосымша зертханалық жұмыстар',p:'Қосымша • ',ids:EXTRA.map(l=>l.id)}];
