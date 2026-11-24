@@ -376,6 +376,32 @@ footer{background:rgba(220,252,231,.6)}
 .m3wrap{background:radial-gradient(ellipse at 50% 35%,#ffffff 0%,#e3f6e8 45%,#c6ead2 100%)!important}
 .aihero{background:radial-gradient(600px 300px at 90% 20%,rgba(124,58,237,.16),transparent),radial-gradient(500px 300px at 0% 100%,rgba(6,182,212,.16),transparent),linear-gradient(120deg,#f5f3ff,#ecfeff)!important;color:var(--txt)}
 .aihero p{color:#3f4f63!important}
+
+/* НӘТИЖЕЛЕР */
+.resHero{display:grid;grid-template-columns:300px 1fr;gap:34px;align-items:center;padding:30px;border-radius:28px;background:linear-gradient(120deg,rgba(220,252,231,.95),rgba(236,252,203,.9) 60%,rgba(207,250,254,.9));border:1px solid var(--line);box-shadow:0 20px 50px rgba(22,101,52,.12);position:relative;overflow:hidden}
+.resHero:after{content:"🧬";position:absolute;right:24px;top:10px;font-size:120px;opacity:.08}
+.resPh{position:relative;width:280px;height:340px;border-radius:26px;padding:6px;background:linear-gradient(135deg,#16a34a,#0891b2,#a3e635);box-shadow:0 18px 40px rgba(22,101,52,.3);transform:rotate(-2deg)}
+.resPh img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;border-radius:21px;display:block}
+.resTx h2{font-size:42px;margin:8px 0 2px}.resTx h3{font-size:26px;margin:4px 0 10px;background:linear-gradient(90deg,#15803d,#0e7490);-webkit-background-clip:text;background-clip:text;color:transparent}
+.resRole{font-size:16px;font-weight:600;line-height:1.8;color:#2f5a43}
+.resStats{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}.resStats div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 18px;text-align:center;box-shadow:0 4px 14px rgba(22,101,52,.08)}.resStats b{display:block;font-size:28px;color:var(--acc)}.resStats span{font-size:12px;color:var(--mut);font-weight:700}
+.wsfilter button small{opacity:.7;margin-left:3px}
+.resGal{columns:4 240px;column-gap:16px}
+.resi{break-inside:avoid;margin:0 0 16px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 6px 20px rgba(22,101,52,.1);cursor:zoom-in;transition:.25s}
+.resi:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(22,101,52,.2)}.resi img{width:100%;display:block}
+.resi figcaption{padding:10px 12px 12px;font-size:13px;font-weight:600;line-height:1.4}
+.rescat{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:999px;margin:0 6px 5px 0;color:#fff}.c-lesson{background:#0891b2}.c-award{background:#d97706}.c-ai{background:#7c3aed}
+.resLb{position:fixed;inset:0;z-index:100;background:rgba(5,20,12,.88);display:none;align-items:center;justify-content:center;flex-direction:column;padding:20px}
+.resLb.on{display:flex}.resLb img{max-width:min(92vw,1100px);max-height:78vh;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.resLb p{color:#fff;margin-top:14px;font-weight:600;text-align:center;max-width:800px}.resLb p small{opacity:.6;margin-left:8px}
+.resLb button{position:absolute;border:0;background:rgba(255,255,255,.15);color:#fff;width:52px;height:52px;border-radius:50%;font-size:30px;cursor:pointer}.resLb button:hover{background:rgba(255,255,255,.3)}
+.lbx{top:18px;right:18px;font-size:22px!important}.lbp{left:18px;top:45%}.lbn{right:18px;top:45%}
+@media(max-width:800px){.resHero{grid-template-columns:1fr;justify-items:center;text-align:center}.resStats{justify-content:center}.resPh{width:230px;height:290px}}
+
+.hwrap{max-width:1480px}
+nav.nav{gap:2px}nav.nav a{padding:7px 8px;font-size:12.5px}
+nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);color:#713f12}nav.nav a[data-v="results"].on{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
+@media(max-width:1300px){nav.nav a[data-v="ai"],nav.nav a[data-v="home"]{font-size:0}nav.nav a[data-v="ai"]:before{content:"🤖";font-size:14px}nav.nav a[data-v="home"]:before{content:"🏠";font-size:14px}}
 </style>
 </head>
 <body>
@@ -391,6 +417,7 @@ footer{background:rgba(220,252,231,.6)}
     <a href="#reserves" data-v="reserves">🏞️ Қорықтар</a>
     <a href="#olymp" data-v="olymp">🏆 Олимпиада</a>
     <a href="#ai" data-v="ai">🤖 ЖИ</a>
+    <a href="#results" data-v="results">🏅 Нәтижелер</a>
   </nav>
 </div></header>
 
@@ -670,6 +697,18 @@ footer{background:rgba(220,252,231,.6)}
   </div>
   <div class="panel" style="margin-top:18px"><h3>✨ Бұл сайттағы ЖИ</h3><ul class="muted" style="margin:8px 0 0 18px;line-height:1.8"><li>«Бейнесабақтар» бөліміндегі бейнелердің бір бөлігі ЖИ көмегімен жасалған.</li><li>BioAI көмекші сұрақтарға қазақ тілінде жауап береді.</li><li>ЖИ тест құрастырушы кез келген тақырыпқа тест жасайды.</li><li>3D зертханада жұмыс соңында ЖИ нәтижені түсіндіріп береді.</li></ul></div>
 </section>
+<section class="view" id="v-results">
+  <div class="resHero">
+    <div class="resPh"><img src="img/res/r18.jpg" alt="Әлмұратова Бағдад Қонысбайқызы"></div>
+    <div class="resTx"><span class="pill">9-бөлім • Портфолио</span><h2>Нәтижелер</h2>
+      <h3>Әлмұратова Бағдад Қонысбайқызы</h3>
+      <p class="resRole">🧬 Биология пәні мұғалімі<br>🏫 Жанқожа батыр атындағы №70 орта мектеп</p>
+      <div class="resStats" id="resStats"></div></div>
+  </div>
+  <div class="wsfilter" id="resFilt" style="margin-top:22px"></div>
+  <div class="resGal" id="resGal"></div>
+  <div class="resLb" id="resLb"><button class="lbx">✕</button><button class="lbp">‹</button><img alt=""><button class="lbn">›</button><p></p></div>
+</section>
 
 <div id="tour"><div id="tview"><canvas id="tourCv"></canvas></div>
   <div class="ttop"><div class="row"><button class="btn sm ghost" id="tClose">← Шығу</button><button class="btn sm ghost" id="tHQ">⚙</button></div><div class="ttitle"><b id="tName"></b><small id="tSub"></small></div><div class="row tctl"><div class="row" id="tTod"></div><button class="btn sm ghost" id="tSnd" title="Табиғат дыбысы">🔈</button><button class="btn sm pink" id="tQ">🧠 Тест</button><button class="btn sm ghost" id="tPrev">←</button><button class="btn sm ghost" id="tNext">→</button><button class="btn sm ghost" id="tAuto">▶ Автотур</button></div></div>
@@ -696,7 +735,7 @@ function closeModal(){$('#modal').classList.remove('on')}
 $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
 
 /* ---------- ROUTER ---------- */
-const VIEWS=['home','lessons','lab','sheets','tasks','models','reserves','olymp','ai'];
+const VIEWS=['home','lessons','lab','sheets','tasks','models','reserves','olymp','ai','results'];
 let cur='home';const onEnter={};
 function route(){let v=location.hash.slice(1)||'home';if(!VIEWS.includes(v))v='home';cur=v;
   $$('.view').forEach(e=>e.classList.toggle('active',e.id==='v-'+v));
@@ -973,6 +1012,7 @@ route();
 <script src="js/labs.js"></script>
 <script src="js/sheets.js"></script>
 <script src="js/tasks2.js"></script>
+<script src="js/results.js"></script>
 <script src="js/ai.js"></script>
 <script type="importmap">{"imports":{"three":"./lib/three.module.min.js","three/addons/":"./lib/addons/"}}</script>
 <script type="module" src="js/models3d.js"></script>
