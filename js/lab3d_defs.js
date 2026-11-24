@@ -4,13 +4,13 @@ const tbl=(h,rows)=>`<table class="tbl3"><tr>${h.map(x=>`<th>${x}</th>`).join(''
 const xs=(n,sp=.55,x0=0)=>Array.from({length:n},(_,i)=>x0-(n-1)*sp/2+i*sp);
 
 // бір ыдыстан бірнеше ыдысқа кезекпен құю
-async function pourMany(A,src,dsts,{to=.3,color,dur=.6}={}){const S=A.LB.O[src],o=S.obj,home=o.position.clone();const th=-1.65,hB=S.mouth||S.top||1;const mx=-hB*Math.sin(th),my=hB*Math.cos(th);const c=color!=null?color:(S.liq?S.liq.m.color.getHex():0xd6ecff);
+async function pourMany(A,src,dsts,{to=.3,color,dur=.6}={}){if(A.LB.manual){for(const d of dsts)await A.pour(src,d,{to,color});return}const S=A.LB.O[src],o=S.obj,home=o.position.clone();const th=-1.65,hB=S.mouth||S.top||1;const mx=-hB*Math.sin(th),my=hB*Math.cos(th);const c=color!=null?color:(S.liq?S.liq.m.color.getHex():0xd6ecff);
  const posFor=n=>{const D=A.LB.O[n];const dp=A.wp(D.obj);return A.V3(dp.x-.05-mx,dp.y+(D.top||1)+.1-my,dp.z)};
  let p=posFor(dsts[0]);const up=p.clone().add(A.V3(-.25,.7,0));await A.moveTo(o,up,.7,.4);await A.tween(.45,k=>{o.rotation.z=th*ezq(k);o.position.lerpVectors(up,p,ezq(k))});
  for(let i=0;i<dsts.length;i++){const D=A.LB.O[dsts[i]];if(i){p=posFor(dsts[i]);await A.moveTo(o,p,.35,.15)}const m=A.wp(o).add(A.V3(mx,my,0));const s=A.stream(m,A.V3(m.x,A.wp(D.obj).y+D.liq.top(),m.z),c);
   if(D.liq.level<.02)D.liq.m.color.set(c);else D.liq.color(D.liq.m.color.clone().lerp(A.col(c),.4).getHex(),dur);await D.liq.set(Math.max(to,D.liq.level+.05),dur);A.LB.g.remove(s);s.geometry.dispose()}
  if(S.liq)S.liq.set(Math.max(.08,S.liq.level-.1),.3);const q=o.position.clone();await A.tween(.4,k=>{o.rotation.z=th*(1-ezq(k));o.position.lerpVectors(q,q.clone().add(A.V3(0,.5,0)),ezq(k))});await A.moveTo(o,home,.6,.3)}
-async function dripMany(A,src,dsts,{n=2,color,onEach}={}){const P=A.LB.pip,o=P.obj,home=o.position.clone(),bl=o.userData.bulb;const S=A.LB.O[src];const sp=A.wp(S.obj);const c=color!=null?color:(S.liq?S.liq.m.color.getHex():0xb5651d);
+async function dripMany(A,src,dsts,{n=2,color,onEach}={}){if(A.LB.manual){for(let i=0;i<dsts.length;i++){await A.drip(src,dsts[i],{n,color});if(onEach)await onEach(dsts[i],i)}return}const P=A.LB.pip,o=P.obj,home=o.position.clone(),bl=o.userData.bulb;const S=A.LB.O[src];const sp=A.wp(S.obj);const c=color!=null?color:(S.liq?S.liq.m.color.getHex():0xb5651d);
  await A.moveTo(o,A.V3(sp.x,sp.y+(S.top||1)+.35,sp.z),.6,.5);await A.moveTo(o,A.V3(sp.x,sp.y+(S.top||1)-.25,sp.z),.25);await A.tween(.25,k=>bl.scale.set(1+.3*Math.sin(Math.PI*k),1.7-.4*Math.sin(Math.PI*k),1));await A.moveTo(o,A.V3(sp.x,sp.y+(S.top||1)+.4,sp.z),.25);
  for(let i=0;i<dsts.length;i++){const D=A.LB.O[dsts[i]];const dp=A.wp(D.obj);const surf=D.liq?dp.y+D.liq.top():dp.y+.15;await A.moveTo(o,A.V3(dp.x,dp.y+(D.top||.2)+.3,dp.z),.45,.2);
   for(let j=0;j<n;j++){const d=new A.THREE.Mesh(new A.THREE.SphereGeometry(.025,10,8),new A.THREE.MeshPhysicalMaterial({color:c,transparent:true,opacity:.85}));const st=A.wp(o);d.position.copy(st);A.LB.g.add(d);await A.tween(.3,k=>{d.position.y=A.LB.g.position.y+st.y+(surf-st.y)*k*k;bl.scale.set(1+.2*k,1.7-.3*k,1)});A.LB.g.remove(d)}bl.scale.set(1,1.7,1);if(onEach)await onEach(dsts[i],i)}
