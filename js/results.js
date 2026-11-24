@@ -26,7 +26,10 @@ const cnt=k=>RES.filter(r=>r[1]===k).length;
 document.querySelector('#resStats').innerHTML=[['award','Марапат'],['lesson','Сабақтан сәт'],['ai','ЖИ жұмысы'],['video','Бейне']].map(([k,l])=>`<div><b>${cnt(k)}</b><span>${l}</span></div>`).join('');
 fl.innerHTML=Object.entries(CAT).map(([k,l],i)=>`<button class="${i?'':'on'}" data-k="${k}">${l}${k==='all'?'':` <small>${cnt(k)}</small>`}</button>`).join('');
 let list=RES;
-function draw(k){list=k==='all'?RES:RES.filter(r=>r[1]===k);box.innerHTML=list.map((r,i)=>`<figure class="resi" data-i="${i}"><div class="resth${r[1]==='video'?' isv':''}"><img src="img/res/t${r[0].slice(1).replace(/^(\d)$/,'v$1')}.jpg" alt="${r[2]}" loading="lazy"></div><figcaption><span class="rescat c-${r[1]}">${CAT[r[1]]}</span>${r[2]}</figcaption></figure>`).join('');
+const card=(r,i)=>`<figure class="resi" data-i="${i}"><div class="resth${r[1]==='video'?' isv':''}"><img src="img/res/t${r[0].slice(1).replace(/^(\d)$/,'v$1')}.jpg" alt="${r[2]}" ></div><figcaption>${r[2]}</figcaption></figure>`;
+const ORDER=['award','lesson','ai','video'];
+function draw(k){const ks=k==='all'?ORDER:[k];list=ks.flatMap(c=>RES.filter(r=>r[1]===c));let i=0;
+ box.innerHTML=ks.map(c=>{const L=RES.filter(r=>r[1]===c);return `<div class="resSec"><h3 class="resH c-${c}t">${CAT[c]} <span>${L.length}</span></h3><div class="resGrid">${L.map(r=>card(r,i++)).join('')}</div></div>`}).join('');
  box.querySelectorAll('.resi').forEach(f=>f.onclick=()=>open(+f.dataset.i))}
 fl.querySelectorAll('button').forEach(b=>b.onclick=()=>{fl.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));draw(b.dataset.k)});
 const lb=document.querySelector('#resLb');let at=0;

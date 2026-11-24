@@ -386,7 +386,7 @@ footer{background:rgba(220,252,231,.6)}
 .resRole{font-size:16px;font-weight:600;line-height:1.8;color:#2f5a43}
 .resStats{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}.resStats div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 18px;text-align:center;box-shadow:0 4px 14px rgba(22,101,52,.08)}.resStats b{display:block;font-size:28px;color:var(--acc)}.resStats span{font-size:12px;color:var(--mut);font-weight:700}
 .wsfilter button small{opacity:.7;margin-left:3px}
-.resGal{columns:4 240px;column-gap:16px}
+.resGal{display:block}
 .resi{break-inside:avoid;margin:0 0 16px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 6px 20px rgba(22,101,52,.1);cursor:zoom-in;transition:.25s}
 .resi:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(22,101,52,.2)}.resi img{width:100%;display:block}
 .resi figcaption{padding:10px 12px 12px;font-size:13px;font-weight:600;line-height:1.4}
@@ -403,6 +403,17 @@ footer{background:rgba(220,252,231,.6)}
 nav.nav{gap:2px}nav.nav a{padding:7px 8px;font-size:12.5px}
 nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);color:#713f12}nav.nav a[data-v="results"].on{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
 @media(max-width:1300px){nav.nav a[data-v="ai"],nav.nav a[data-v="home"]{font-size:0}nav.nav a[data-v="ai"]:before{content:"🤖";font-size:14px}nav.nav a[data-v="home"]:before{content:"🏠";font-size:14px}}
+
+/* Нәтижелер — реттелген тор */
+.resSec{margin:26px 0 6px}.resH{display:flex;align-items:center;gap:10px;font-size:20px;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid var(--line)}
+.resH span{font-size:12px;font-weight:800;color:#fff;background:var(--acc);border-radius:999px;padding:3px 10px}
+.c-awardt span{background:#d97706}.c-lessont span{background:#0891b2}.c-ait span{background:#7c3aed}.c-videot span{background:#db2777}
+.resGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}@media(max-width:1100px){.resGrid{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.resGrid{grid-template-columns:repeat(2,1fr)}}
+.resi{margin:0!important;display:flex;flex-direction:column;break-inside:auto}
+.resth{aspect-ratio:4/5;overflow:hidden;background:#e7f5ea}.resth img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;transition:transform .4s}
+.resi:hover .resth img{transform:scale(1.05)}
+.resi figcaption{flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:62px;font-size:13px;padding:11px 13px 13px;border-top:3px solid var(--line)}
+@media(max-width:560px){.resGrid{grid-template-columns:repeat(2,1fr);gap:10px}.resi figcaption{font-size:11.5px;min-height:54px;padding:8px}}
 </style>
 </head>
 <body>
