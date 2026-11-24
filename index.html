@@ -1062,6 +1062,6 @@ route();
 <script type="module" src="js/models3d.js"></script>
 <script type="module" src="js/lab3d.js"></script>
 <script type="module" src="js/tours3d.js"></script>
-<script>if('serviceWorker' in navigator&&location.protocol==='https:'&&!/claude/.test(location.hostname)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'&&!/claude/.test(location.hostname)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(r=>r.update()).catch(()=>{}));let _rl=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!_rl){_rl=true;location.reload()}})}</script>
 </body>
 </html>
