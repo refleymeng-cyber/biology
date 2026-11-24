@@ -62,5 +62,5 @@ function genChk(){let ok=true;QA('#genBox input[data-g]').forEach(i=>{const v=i.
  const cnt={};GN.kids.forEach(k=>cnt[k]=(cnt[k]||0)+1);const vals=['AA','Aa','aa'].map(k=>cnt[k]||0).filter(Boolean);const r=vals.length===1?'1:0 (бәрі бірдей)':vals.length===3?'1:2:1':'1:1';const rg=Q('#genR').value===r;Q('#genR').className=rg?'okb':'badb';
  const all=ok&&pg&&rg;GS.all++;if(all)GS.ok++;Q('#genSc').textContent=`Шешілген: ${GS.ok} / ${GS.all}`;Q('#genEx').innerHTML=(all?'<b class="ok">✓ Барлығы дұрыс! </b>':'<b class="badc">Қате бар. </b>')+`Гаметалар: ♀ ${[...new Set(GN.g1)].join(', ')}; ♂ ${[...new Set(GN.g2)].join(', ')}. Ұрпақ: ${GN.kids.join(', ')}. Фенотип: ${GN.dom}% — ${GN.t[1]}, ${100-GN.dom}% — ${GN.t[2]}. Генотип бойынша ажырау: ${r}.`}
 
-testsInit();cwInit();tfInit();genNew();window.__tk2={cwBuild,CW};
+testsInit();cwInit();tfInit();genNew();window.__tk2={cwBuild,CW,BANK};
 })();

@@ -414,6 +414,10 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
 .resi:hover .resth img{transform:scale(1.05)}
 .resi figcaption{flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:62px;font-size:13px;padding:11px 13px 13px;border-top:3px solid var(--line)}
 @media(max-width:560px){.resGrid{grid-template-columns:repeat(2,1fr);gap:10px}.resi figcaption{font-size:11.5px;min-height:54px;padding:8px}}
+
+.aimode{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.75);border:1px solid var(--line);font-size:13.5px;font-weight:600}
+.aisw{display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap}.aisw input{display:none}.aisw span{width:42px;height:24px;border-radius:999px;background:#cbd5e1;position:relative;transition:.2s}.aisw span:after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.aisw input:checked+span{background:#d97706}.aisw input:checked+span:after{left:21px}.aisw input:disabled+span{opacity:.6}
 </style>
 </head>
 <body>
@@ -685,7 +689,7 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
 
 <!-- 8 AI -->
 <section class="view" id="v-ai">
-  <div class="aihero"><div><span class="pill">8-бөлім</span><h2>Жасанды интеллект — <span>адамзат дамуының жаңа кезеңі</span></h2><p>Жасанды интеллект (ЖИ) ғылымды, медицинаны және білім беруді өзгертіп жатыр. Бұл бөлімде ЖИ-дің биологиядағы рөлімен танысып, ЖИ көмекшісімен сөйлесіп, кез келген тақырыпқа тест құрастыра аласың.</p><div id="aiStatus" class="muted" style="margin-top:8px">⏳ ЖИ көмекшісі қосылуда…</div></div><div class="aiorb"><i></i><i></i><i></i><b>🤖</b></div></div>
+  <div class="aihero"><div><span class="pill">8-бөлім • онлайн / оффлайн</span><h2>Жасанды интеллект — <span>адамзат дамуының жаңа кезеңі</span></h2><p>Жасанды интеллект (ЖИ) ғылымды, медицинаны және білім беруді өзгертіп жатыр. Бұл бөлімде ЖИ-дің биологиядағы рөлімен танысып, ЖИ көмекшісімен сөйлесіп, кез келген тақырыпқа тест құрастыра аласың.</p><div class="aimode"><div id="aiStatus">⏳ ЖИ көмекшісі қосылуда…</div><label class="aisw"><input type="checkbox" id="aiOff"><span></span> Оффлайн режим</label></div></div><div class="aiorb"><i></i><i></i><i></i><b>🤖</b></div></div>
   <div class="grid2" style="margin-top:20px">
     <div class="panel aichat"><h3>💬 BioAI — биология көмекшісі</h3><p class="muted">Биология бойынша кез келген сұрақ қой. ЖИ қазақ тілінде қысқа әрі түсінікті жауап береді.</p>
       <div class="chips" id="aiQuick"></div>
@@ -1025,10 +1029,12 @@ route();
 <script src="js/sheets.js"></script>
 <script src="js/tasks2.js"></script>
 <script src="js/results.js"></script>
+<script src="js/ai_offline.js"></script>
 <script src="js/ai.js"></script>
 <script type="importmap">{"imports":{"three":"./lib/three.module.min.js","three/addons/":"./lib/addons/"}}</script>
 <script type="module" src="js/models3d.js"></script>
 <script type="module" src="js/lab3d.js"></script>
 <script type="module" src="js/tours3d.js"></script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'&&!/claude/.test(location.hostname)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}</script>
 </body>
 </html>
