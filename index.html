@@ -395,6 +395,7 @@ footer{background:rgba(220,252,231,.6)}
 .resLb.on{display:flex}.resLb img{max-width:min(92vw,1100px);max-height:78vh;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .resLb p{color:#fff;margin-top:14px;font-weight:600;text-align:center;max-width:800px}.resLb p small{opacity:.6;margin-left:8px}
 .resLb button{position:absolute;border:0;background:rgba(255,255,255,.15);color:#fff;width:52px;height:52px;border-radius:50%;font-size:30px;cursor:pointer}.resLb button:hover{background:rgba(255,255,255,.3)}
+.resLb video{max-width:min(92vw,1100px);max-height:78vh;border-radius:14px;background:#000}.resth{position:relative}.resth.isv:after{content:'▶';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:rgba(22,163,74,.9);color:#fff;display:grid;place-items:center;font-size:22px;padding-left:4px;box-shadow:0 6px 20px rgba(0,0,0,.35)}.c-video{background:#db2777}
 .lbx{top:18px;right:18px;font-size:22px!important}.lbp{left:18px;top:45%}.lbn{right:18px;top:45%}
 @media(max-width:800px){.resHero{grid-template-columns:1fr;justify-items:center;text-align:center}.resStats{justify-content:center}.resPh{width:230px;height:290px}}
 
@@ -707,7 +708,7 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
   </div>
   <div class="wsfilter" id="resFilt" style="margin-top:22px"></div>
   <div class="resGal" id="resGal"></div>
-  <div class="resLb" id="resLb"><button class="lbx">✕</button><button class="lbp">‹</button><img alt=""><button class="lbn">›</button><p></p></div>
+  <div class="resLb" id="resLb"><button class="lbx">✕</button><button class="lbp">‹</button><img alt=""><video controls playsinline style="display:none"></video><button class="lbn">›</button><p></p></div>
 </section>
 
 <div id="tour"><div id="tview"><canvas id="tourCv"></canvas></div>
