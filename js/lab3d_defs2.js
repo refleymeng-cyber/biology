@@ -1,7 +1,7 @@
 // ЖМБ бағдарламасы бойынша 10–11-сынып зертханалық жұмыстары (3D)
 import {pourMany,dripMany,rowTubes,clock,tbl,xs,paperTex} from './lab3d_defs.js';
-const rng=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
-const r1=(x,d=1)=>Number(x).toFixed(d).replace('.',',');
+export const rng=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+export const r1=(x,d=1)=>Number(x).toFixed(d).replace('.',',');
 
 /* ---------- көмекші құралдар ---------- */
 // диаграмма (SVG)
@@ -15,23 +15,23 @@ export function chart(series,{xl='',yl='',w=330,h=210,xlab,ymin,ymax,xlog}={}){c
   g+=`<polyline fill="none" stroke="${s.c}" stroke-width="2.6" points="${s.pts.map(p=>sx(p[0])+','+sy(p[1])).join(' ')}"/>`+s.pts.map(p=>`<circle cx="${sx(p[0])}" cy="${sy(p[1])}" r="4" fill="#fff" stroke="${s.c}" stroke-width="2.5"/>`).join('')});
  if(series.length>1)g+=series.map((s,i)=>`<rect x="${P.l+8+i*110}" y="${P.t}" width="10" height="10" fill="${s.c}"/><text x="${P.l+22+i*110}" y="${P.t+9}" font-size="10" fill="#0f172a">${s.name}</text>`).join('');return g+'</svg>'}
 // микроскоп окуляры
-function eyeV(A,content,{bg='#f3efe2'}={}){return c=>{const st=A.LB.st,W=420;c.save();c.fillStyle='#000';c.fillRect(0,0,W,W);c.beginPath();c.arc(W/2,W/2,W/2-2,0,7);c.clip();
+export function eyeV(A,content,{bg='#f3efe2'}={}){return c=>{const st=A.LB.st,W=420;c.save();c.fillStyle='#000';c.fillRect(0,0,W,W);c.beginPath();c.arc(W/2,W/2,W/2-2,0,7);c.clip();
  if(!st.light){c.fillStyle='#111';c.fillRect(0,0,W,W);c.restore();return}c.fillStyle=typeof bg==='function'?bg(st):bg;c.fillRect(0,0,W,W);
  const blur=Math.min(14,Math.abs((st.focus??20)-(st.fz??60))/3.2);c.save();c.filter=`blur(${blur.toFixed(1)}px)`;const s=({4:.45,10:1,40:2.4,100:5.2})[st.mag||10]/(st.mbase||1);c.translate(W/2,W/2);c.scale(s,s);c.translate(-W/2,-W/2);content(c,W,st,rng(7));c.restore();
  if(st.over)st.over(c,W,st);const g=c.createRadialGradient(W/2,W/2,W*.3,W/2,W/2,W/2);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.5)');c.fillStyle=g;c.fillRect(0,0,W,W);c.restore()}}
 const OBJ=['4×','10×','40×','100× (иммерсия)'],MAGS=[4,10,40,100],TUR=[0,-2.09,-4.19,-4.19];
-function microSteps({slide,draw,fz=60,mag=2,swap,wrong}){return[
+export function microSteps({slide,draw,fz=60,mag=2,swap,wrong}){return[
  {t:'drag',o:slide,to:'micro',off:[.04,1.24,.15],r:.9,text:'Препаратты микроскоптың заттық үстеліне қой',run:async A=>{A.LB.st.fz=fz;A.LB.st.focus=20;A.LB.st.mag=10;if(swap){const o=A.LB.O[swap.o].obj;await A.moveTo(o,A.V3(...swap.to),.6,.5)}if(A.LB.st.light)A.eye(draw(A))}},
  {t:'click',o:'micro',text:'Жарықты қосып, 10× объективпен қара (микроскопты бас)',run:async A=>{A.LB.st.light=1;A.LB.st.mag=10;A.LB.O.micro.obj.userData.light.material.emissiveIntensity=3;await A.rotTo(A.LB.O.micro.obj.userData.tur,[0,TUR[1],0],.4);A.eye(draw(A))}},
  {t:'ctrl',text:'Макро- және микробұранданы бұрап, кескінді анық келтір',ui:{label:'Фокус',min:0,max:100,val:20,on:(v,A)=>{A.LB.st.focus=v;A.eyeRedraw();A.LB.O.micro.obj.userData.knobs.forEach(k=>k.rotation.x=v/10)}},check:v=>Math.abs(v-fz)<=5,tip:'Кескін ең айқын болған жерде тоқта.'},
  {t:'choice',text:'Жасушаларды егжей-тегжейлі көру үшін қай объективке ауыстырасың?',options:OBJ,correct:mag,wrong:wrong||'Бұл объективте құрылымдар жеткілікті үлкен көрінбейді.',run:async A=>{A.LB.st.mag=MAGS[mag];await A.rotTo(A.LB.O.micro.obj.userData.tur,[0,TUR[mag],0],.5);A.eyeRedraw()}}]}
-function micro(A,pos=[-2.6,0,-.6]){A.add('micro',A.microscope(),'Микроскоп',pos,.25)}
-function mkSlide(A,name,label,pos,spot){const S=A.slide();if(spot){const m=A.mesh(new A.THREE.CircleGeometry(.08,20),new A.THREE.MeshStandardMaterial({color:spot,transparent:true,opacity:.85}));m.rotation.x=-Math.PI/2;m.position.y=.009;S.obj.add(m);S.spot=m}return A.add(name,S,label,pos)}
-function scalpel(A){const g=new A.THREE.Group();const h=A.mesh(new A.THREE.BoxGeometry(.05,.03,.55),A.M(0x2563eb,{roughness:.4}));h.position.z=-.2;g.add(h);const b=A.mesh(new A.THREE.BoxGeometry(.012,.04,.25),A.M(0xd1d5db,{metalness:.9,roughness:.15}));b.position.z=.18;g.add(b);return{obj:g}}
-function device(A,label,col=0xeef2f5){const g=new A.THREE.Group();const b=A.mesh(new A.THREE.BoxGeometry(1.2,.55,.9),A.M(col,{roughness:.4}));b.position.y=.275;g.add(b);const cv=document.createElement('canvas');cv.width=256;cv.height=96;const tx=new A.THREE.CanvasTexture(cv);tx.colorSpace=A.THREE.SRGBColorSpace;const d=new A.THREE.Mesh(new A.THREE.PlaneGeometry(.8,.3),new A.THREE.MeshBasicMaterial({map:tx}));d.position.set(0,.33,.452);g.add(d);
+export function micro(A,pos=[-2.6,0,-.6]){A.add('micro',A.microscope(),'Микроскоп',pos,.25)}
+export function mkSlide(A,name,label,pos,spot){const S=A.slide();if(spot){const m=A.mesh(new A.THREE.CircleGeometry(.08,20),new A.THREE.MeshStandardMaterial({color:spot,transparent:true,opacity:.85}));m.rotation.x=-Math.PI/2;m.position.y=.009;S.obj.add(m);S.spot=m}return A.add(name,S,label,pos)}
+export function scalpel(A){const g=new A.THREE.Group();const h=A.mesh(new A.THREE.BoxGeometry(.05,.03,.55),A.M(0x2563eb,{roughness:.4}));h.position.z=-.2;g.add(h);const b=A.mesh(new A.THREE.BoxGeometry(.012,.04,.25),A.M(0xd1d5db,{metalness:.9,roughness:.15}));b.position.z=.18;g.add(b);return{obj:g}}
+export function device(A,label,col=0xeef2f5){const g=new A.THREE.Group();const b=A.mesh(new A.THREE.BoxGeometry(1.2,.55,.9),A.M(col,{roughness:.4}));b.position.y=.275;g.add(b);const cv=document.createElement('canvas');cv.width=256;cv.height=96;const tx=new A.THREE.CanvasTexture(cv);tx.colorSpace=A.THREE.SRGBColorSpace;const d=new A.THREE.Mesh(new A.THREE.PlaneGeometry(.8,.3),new A.THREE.MeshBasicMaterial({map:tx}));d.position.set(0,.33,.452);g.add(d);
  const show=s=>{const c=cv.getContext('2d');c.fillStyle='#062014';c.fillRect(0,0,256,96);c.fillStyle='#4ade80';c.font='800 44px monospace';c.textAlign='center';c.fillText(s,128,64);tx.needsUpdate=true};show(label);return{obj:g,show,top:.55}}
 const tagTex=(A,t)=>A.canvasTex(128,64,(c,w,h)=>{c.fillStyle='#fff';c.fillRect(0,0,w,h);c.fillStyle='#14532d';c.font='800 30px Montserrat,sans-serif';c.textAlign='center';c.fillText(t,w/2,42)});
-function sign(A,parent,t,y=.02,z=.55){const p=new A.THREE.Mesh(new A.THREE.PlaneGeometry(.42,.2),new A.THREE.MeshBasicMaterial({map:tagTex(A,t)}));p.rotation.x=-Math.PI/2;p.position.set(0,y,z);parent.add(p);return p}
+export function sign(A,parent,t,y=.02,z=.55){const p=new A.THREE.Mesh(new A.THREE.PlaneGeometry(.42,.2),new A.THREE.MeshBasicMaterial({map:tagTex(A,t)}));p.rotation.x=-Math.PI/2;p.position.set(0,y,z);parent.add(p);return p}
 
 /* ============ 10-СЫНЫП ============ */
 

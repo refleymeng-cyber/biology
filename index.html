@@ -449,6 +449,17 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
 #l3pbtn.hold{transform:scale(.97);background:linear-gradient(135deg,#0e7490,#15803d);box-shadow:inset 0 3px 10px rgba(0,0,0,.25)}#l3pbtn:disabled{opacity:.55;cursor:default}
 
 #l3load{position:absolute;inset:0;z-index:7;display:none;place-items:center;background:rgba(232,248,234,.85)}#l3load div{text-align:center;font-weight:700;color:var(--txt)}#l3load span{display:block;width:46px;height:46px;margin:0 auto 10px;border-radius:50%;border:5px solid #bbf7d0;border-top-color:#16a34a;animation:l3s 1s linear infinite}@keyframes l3s{to{transform:rotate(360deg)}}
+
+.l3panel{position:absolute;right:12px;top:12px;z-index:6;width:min(260px,60%);padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.96);border:2px solid var(--acc);box-shadow:0 12px 30px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:8px;text-align:center;font-size:13px}
+.l3panel .cnt{font-size:34px;font-weight:900;color:#0e7490}.l3panel .cv{font-weight:700}.l3panel .cv b{font-size:20px;color:var(--acc)}
+.l3panel .cb{border:0;border-radius:14px;padding:16px;font:900 22px Montserrat,sans-serif;color:#fff;background:linear-gradient(135deg,#dc2626,#db2777);cursor:pointer;user-select:none;touch-action:none}.l3panel .cb.hit{transform:scale(.94);filter:brightness(1.15)}
+.l3panel small{color:var(--mut)}
+
+.tkgrade{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 14px;padding:12px 16px;border-radius:18px;background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border:1.5px solid #bbf7d0}
+.tkgrade>span{font-weight:800;color:#166534}#tkGrade{display:flex;gap:6px;flex-wrap:wrap}
+#tkGrade button{border:1.5px solid #86efac;background:#fff;color:#166534;border-radius:999px;padding:8px 16px;font:800 14px Montserrat,sans-serif;cursor:pointer;transition:.2s}
+#tkGrade button.on{background:linear-gradient(135deg,#16a34a,#059669);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(22,163,74,.35)}
+#tkGradeInfo{color:#4b5563;flex-basis:100%}
 </style>
 </head>
 <body>
@@ -484,7 +495,7 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
       <h1>Тірі табиғатты <b>3D әлемде</b> зертте</h1>
       <p>Анимациялық бейнесабақтар, виртуалды зертхана, дайын жұмыс парақтары, ойындар мен викториналар, адам ағзасы мен жасушаның 3D модельдері, Қазақстан қорықтары және олимпиадаға дайындық — бәрі бір сайтта.</p>
       <div class="row"><a class="btn" href="#lab">🧪 3D зертханаға кіру</a><a class="btn ghost" href="#models">🫀 3D модельдер</a><a class="btn blue" href="#ai">🤖 ЖИ көмекші</a></div>
-      <div class="stats"><div><b>8</b>бөлім</div><div><b>15</b>3D модель</div><div><b>21</b>зертханалық жұмыс (ЖМБ)</div><div><b>4</b>3D тур</div></div>
+      <div class="stats"><div><b>8</b>бөлім</div><div><b>15</b>3D модель</div><div><b>39</b>зертханалық жұмыс (9–11)</div><div><b>4</b>3D тур</div></div>
     </div>
   </div>
   <div class="cards" id="homeCards"></div>
@@ -519,7 +530,7 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
 
 <!-- 2 LAB -->
 <section class="view" id="v-lab">
-  <div class="sec-h"><h2><span class="num">2</span>Виртуалды <span>зертхана</span></h2><p>Жаратылыстану-математикалық бағыттағы 10-сыныптың 8 және 11-сыныптың 13 зертханалық жұмысы 3D форматта: құралдарды бас, сүйреп апар, реактив тамыз, микроскоппен қара, өлше, есепте және қорытынды жаса.</p></div>
+  <div class="sec-h"><h2><span class="num">2</span>Виртуалды <span>зертхана</span></h2><p>9-сыныптың 18, жаратылыстану-математикалық бағыттағы 10-сыныптың 8 және 11-сыныптың 13 зертханалық жұмысы 3D форматта: құралдарды бас, сүйреп апар, реактив тамыз, микроскоппен қара, өлше, есепте және қорытынды жаса.</p></div>
   <div class="seg" id="labMode"><button data-m="3d" class="on">🧪 3D зертхана — өзің жаса</button><button data-m="an">📈 Деректерді талдау (6 жұмыс)</button></div>
   <div id="lab3dWrap">
     <div id="l3cards"></div>
@@ -633,7 +644,8 @@ nav.nav a[data-v="results"]{background:linear-gradient(135deg,#fde68a,#fbbf24);c
 
 <!-- 4 TASKS -->
 <section class="view" id="v-tasks">
-  <div class="sec-h"><h2><span class="num">4</span>Интерактивті <span>тапсырмалар</span></h2><p>5 тақырып бойынша 40 тест сұрағы, биологиялық кроссворд, «Жылдам жауап» ойыны, шексіз генетика тренажері, пазлдар, ойындар және топтық викторина — сабақты қызықты өткізуге арналған.</p></div>
+  <div class="sec-h"><h2><span class="num">4</span>Интерактивті <span>тапсырмалар</span></h2><p>7, 8, 9 және 10–11-сыныптарға бөлінген тапсырмалар: тақырыптық тесттер (130+ сұрақ), биологиялық кроссворд, «Жылдам жауап» ойыны, генетика тренажері, пазлдар мен викторина.</p></div>
+  <div class="tkgrade"><span>Сыныпты таңда:</span><div id="tkGrade"><button data-g="7" class="on">7-сынып</button><button data-g="8">8-сынып</button><button data-g="9">9-сынып</button><button data-g="10-11">10–11-сынып</button></div><small id="tkGradeInfo"></small></div>
   <div class="tabs" data-tabs="tk">
     <button data-t="test" class="on">✅ Тесттер</button>
     <button data-t="cw">🔤 Кроссворд</button>
@@ -1065,6 +1077,7 @@ route();
 </script>
 <script src="js/labs.js"></script>
 <script src="js/sheets.js"></script>
+<script src="js/tasks_grades.js"></script>
 <script src="js/tasks2.js"></script>
 <script src="js/results.js"></script>
 <script src="js/ai_offline.js"></script>
